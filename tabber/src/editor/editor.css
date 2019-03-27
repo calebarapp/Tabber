@@ -1,0 +1,42 @@
+.editor {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    height: 95vh;
+    overflow-y: scroll;
+}
+
+.tabs { 
+    display: inline;
+    top: 0;
+    right: 0;
+}
+
+.tab-row {
+    display: flex;
+    flex-direction: row;
+}
+
+.tab-row__Container { 
+    margin: 0  auto;
+    display: block;    
+    padding: 1.5em;
+}
+
+
+@media (max-width: 60em) { 
+
+}
+
+@media (max-width: 50em) { 
+
+}
+
+
+@media (max-width: 48em) { 
+
+}
+
+@media (max-width: 35em) { 
+
+}

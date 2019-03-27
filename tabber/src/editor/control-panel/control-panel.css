@@ -1,0 +1,20 @@
+.container { 
+    position:absolute;
+    display: sticky;
+    left: 0;
+    margin: 0;
+    background-color: rgba(100,100,100,1);
+    width: 5em;
+    height: 95vh;
+    border-right: 1px solid rgba(200,200,200, 0.5);
+}
+
+.input { 
+    width: 3em;
+    display: block;
+    border:none;
+    border-bottom: 2px solid rgba(200,200,200,1);
+    background-color: rgba(0,0,0,0,1);
+    margin:.1em;
+    box-shadow: none;
+}

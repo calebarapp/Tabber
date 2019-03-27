@@ -1,0 +1,30 @@
+.tab-column__container { 
+    display: flex;
+    flex-direction:column;
+}
+.tab-column { 
+    width: auto;
+    float:left;
+    cursor: pointer;
+    text-align: center;
+    border-radius: 3px;
+}
+.tab-column:hover { 
+    background-color: rgba(255,255,255,.4)}
+
+.tab-column--activated{ 
+    background-color: rgba(255,255,255,.3);
+    box-shadow: 1px 1px 5px 5px rgba(0,0,0,.01);
+}
+
+p { 
+    height: 1.5em;
+    width: 1.4em;
+    margin: 0;
+    color: rgb(180,180,180);
+}
+
+.text-box { 
+    cursor: pointer;
+    width: 99%;
+}
