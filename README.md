@@ -19,4 +19,5 @@ Left and right will navigate through the columns, down will navigate the string 
 # Known issues: 
 - Navigating back to a previous row is currently not possible. This bug was introduced with the newest feature.  
 Priority: High
-
+# Photos
+![alt text](Tabber/readMeImages/tabber.jpg)
