@@ -20,7 +20,7 @@ class Editor extends Component {
             d:'', 
             a:'',
             E:''
-        }
+        }, 
     }
 
     //utility for tabClick() method, returns a new object with the values of the passed object.
@@ -84,9 +84,14 @@ class Editor extends Component {
         newTabs[activeIdArr[0]].tabs[activeIdArr[1]] = newColumn;
         this.setState({tabs:newTabs});
     }
+    // highlights a string input when a tab column is selected
+    highlightInput = () => { 
+
+    }
     // when a text box is selected this changes the state to focus on it.
-    texBoxClick = (id) => { 
+    textBoxClick = (id) => { 
         this.setState({highlightedTextBox:id});
+        this.highlightInput();
     }
     // When a text box is deselected, this updates the state with new notes value form the text input in tab-row component
     textBoxOnBlur = (id, value) => {
@@ -94,7 +99,6 @@ class Editor extends Component {
         state[id]["notes"] = value;
         this.setState({state, highlightedTextBox:null})
     }
-
     // navigates through tab columns based on integer supplied paramater.
     NavigateTabColumn = (i) => { 
         let columnId = this.state.activeId;
@@ -114,11 +118,18 @@ class Editor extends Component {
         // if last index of columnId, check if tabColumn is in last row. If it is, create new row. Set activeId to
         // the first line in that row.
         else if(columnId[1] === 34) {
-            if(columnId[0] + 1 === this.state.tabs.length){
-                //returns new state.
-                newTabsState = this.generateBar(); 
+            // if movinf right
+            if(i === 1){
+                if(columnId[0] + 1 === this.state.tabs.length){
+                    //returns new state.
+                    newTabsState = this.generateBar(); 
+                }
+                newId = `${columnId[0]+1}-${0}`;
             } 
-            newId = `${columnId[0]+1}-${0}`;
+            //if moving left, newId should have same row 
+            else { 
+                newId = `${columnId[0]}-${columnId[1] + i}`;
+            }
         } else { 
             newId = `${columnId[0]}-${columnId[1] + i}`
         }
@@ -149,7 +160,7 @@ class Editor extends Component {
                     rowId = {index} 
                     activeId = {this.state.activeId} 
                     tabClick = { this.tabChange.bind(this) } 
-                    textClick = { this.texBoxClick.bind(this) }
+                    textClick = { this.textBoxClick.bind(this) }
                     textBlur = { this.textBoxOnBlur.bind(this) }
                     highlightedTextBox = { this.state.highlightedTextBox }
                     />

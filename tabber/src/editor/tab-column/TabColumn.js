@@ -2,9 +2,6 @@ import React, { Component } from 'react';
 import './TabColumn.css';
 
 class TabColumn extends Component {
-    
-
-
     render() {
         let activeColumn = 'tab-column'; 
         if (this.props.tab.id === this.props.activeId){ 

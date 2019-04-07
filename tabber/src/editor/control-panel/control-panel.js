@@ -61,7 +61,6 @@ class ControlPanel extends Component {
                 this.props.updateControlPanelsInputs(inputs); 
             };
             column.id = this.props.selectedColumn.activeId;
-            console.log(this.props.selectedColumn.activeId);
             this.props.updateTabData(column);
         }
     }
@@ -91,6 +90,7 @@ class ControlPanel extends Component {
         return ( 
             <div className = "container" onKeyUp ={(event) => this.onArrow(event) }> 
                  <div className = "tabs-input">
+                 
                     <input 
                     onChange = {(event) => this.onInputChange('e', event) }
                     ref = { (input) => { if(input) return this.inputs.push(input)} }
