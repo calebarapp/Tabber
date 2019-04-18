@@ -12,7 +12,7 @@ class TabRow extends Component {
         let textBox = null;
         if(this.props.highlightedTextBox === this.props.rowId) { 
             let notesValue = this.props.tabRow.notes
-            textBox = <input
+            textBox = <textarea
             className = "text-box"
             type = "text"
             defaultValue = {notesValue} 
@@ -35,7 +35,10 @@ class TabRow extends Component {
                         </div>
                         {/* creates a tab column for each tab column contained within tabRow prop */}
                         {this.props.tabRow.tabs.map((tab) => { 
-                            return <TabColumn key = { tab.id } activeId = { this.props.activeId } tabClick = { this.props.tabClick } tab = { tab } />
+                            return <TabColumn key = { tab.id } 
+                            activeId = { this.props.activeId } 
+                            tabClick = { this.props.tabClick } 
+                            tab = { tab } />
                             })
                         }
                         <div className = "tab-column__container">
@@ -46,12 +49,15 @@ class TabRow extends Component {
                             <p>|</p>
                             <p>|</p>
                         </div>
+                        <button onClick = {(e) => { this.props.deleteRow(this.props.rowId) }} 
+                        className = "settings" 
+                        type = "button">Delete</button>
                     </div>
                     <div className = "text-box" onClick = {() => {
                             this.props.textClick(this.props.rowId);
                             }}>
                         {textBox}
-                        </div>
+                    </div>
                 </div>
          );
     }

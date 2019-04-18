@@ -1,20 +1,26 @@
 .editor {
-    display: flex;
-    flex-direction: row;
+    background-color: rgb(200,200,200);
+    padding-top: 3em;
+    margin-left: 13em;
     justify-content: center;
-    height: 95vh;
+    height: 100vh;
     overflow-y: scroll;
 }
 
-.tabs { 
+.tabs {
     display: inline;
-    top: 0;
-    right: 0;
 }
 
 .tab-row {
     display: flex;
     flex-direction: row;
+}
+
+.text-box p { 
+    width: 60em;
+    overflow: hidden;
+    font-size: .9em;
+    height: auto;
 }
 
 .tab-row__Container { 
@@ -23,20 +29,64 @@
     padding: 1.5em;
 }
 
-
-@media (max-width: 60em) { 
-
+.settings { 
+    height: 2em;
+    border-radius: 5px;
+    background-color: rgb(250,50,50);
+    color: white;
+    font-weight: 600;
 }
 
-@media (max-width: 50em) { 
+@media (max-width:73em){
+    .editor {
+        margin-left:11em;
+    }
+}
 
+@media (max-width:70em){
+    .editor {
+        padding:2.5em;
+        margin-left:9em;
+    }
 }
 
 
-@media (max-width: 48em) { 
-
+@media (max-width:65em){
+    .editor {
+        margin-left:6.5em;
+    }
 }
 
-@media (max-width: 35em) { 
 
+@media (max-width:63em){
+    .editor {
+        margin-left:5em;
+        width: 50em;
+    }
+    .settings { 
+        font-size: .5em;
+    }
+}
+
+
+@media (max-width:45em) {
+    .editor {
+        margin-left:3em;
+        width: 48em;
+    }
+    
+}
+
+@media (max-width:40em) {
+    .editor {
+        margin-left:2em;
+        width: 45em;
+    }
+}
+
+
+@media (max-width:35em) {
+    .editor {
+        margin-left:1em;
+    }
 }

@@ -4,6 +4,7 @@ import './tab-column/TabColumn.css';
 import './editor.css';
 import TabRow from './tab-row/tab-row';
 import ControlPanel from './control-panel/control-panel'
+import Metadata from './Metadata/Metadata';
 
 // In editor, map list of tab rows, tab row will be its own seperate component with another array passed to it as prop.
 // challenge will be manipulating the state of the root component...
@@ -21,6 +22,12 @@ class Editor extends Component {
             a:'',
             E:''
         }, 
+        tuning: ['e','b','g','d','a','E']
+    }
+
+    componentDidMount() { 
+        this.generateBar();
+        this.highlightInput();
     }
 
     //utility for tabClick() method, returns a new object with the values of the passed object.
@@ -36,7 +43,7 @@ class Editor extends Component {
     generateBar() {
         const stateArray = this.state.tabs
         let newBar = {
-            notes: 'test',
+            notes: 'Insert notes...',
             tabs: []
         };
         for (let x = 0; x < 35; x++) {
@@ -66,17 +73,21 @@ class Editor extends Component {
             const newInputValue = tabValues[x].split('').filter(y => y!== '-').join('');
             tabValues[x] = newInputValue;
         }
+        // focus input 
+        this.highlightInput();
         this.setState({
             selectedColumn:tabState,
             activeId:id,
             ControlPanelInputs:tabValues
         })
     }
+
     // Sets the controlPanelInputs on the inputs Change so the value is reflected. 
-    // Sotred in state so that it could be cleared when a new column is selected.
+    // Sorted in state so that it could be cleared when a new column is selected.
     updateControlPanelsInputs = (updatedObject) => { 
         this.setState(updatedObject);
     }
+
     // updates the tab data to reflect user input. Called from the control panel component.
     updateTabData = (newColumn) => {
         let newTabs = this.state.tabs;
@@ -84,60 +95,87 @@ class Editor extends Component {
         newTabs[activeIdArr[0]].tabs[activeIdArr[1]] = newColumn;
         this.setState({tabs:newTabs});
     }
+
     // highlights a string input when a tab column is selected
     highlightInput = () => { 
-
+        this.controlPanel
+        .inputs[this.controlPanel.state.focus].focus();
     }
+
     // when a text box is selected this changes the state to focus on it.
     textBoxClick = (id) => { 
         this.setState({highlightedTextBox:id});
-        this.highlightInput();
     }
+
     // When a text box is deselected, this updates the state with new notes value form the text input in tab-row component
     textBoxOnBlur = (id, value) => {
         const state = this.state.tabs;
         state[id]["notes"] = value;
         this.setState({state, highlightedTextBox:null})
     }
+    
     // navigates through tab columns based on integer supplied paramater.
-    NavigateTabColumn = (i) => { 
-        let columnId = this.state.activeId;
-        columnId = columnId.split('-')
-                .map(x => parseInt(x));
-        let newId;
-        let newTabsState;
-        // less than zero: last of previous row unless first row.
-        if(columnId[1] + i < 0){
-            if(columnId[0] > 0){
-            newId = `${columnId[0] - 1}-${34}`;
-            } else { 
-                // if no previous rows use old ID, it will be the first column of the sheet.
-                newId = `${columnId[0]}-${columnId[1]}`
-            }
-        }  
-        // if last index of columnId, check if tabColumn is in last row. If it is, create new row. Set activeId to
-        // the first line in that row.
-        else if(columnId[1] === 34) {
-            // if movinf right
-            if(i === 1){
-                if(columnId[0] + 1 === this.state.tabs.length){
-                    //returns new state.
-                    newTabsState = this.generateBar(); 
+    NavigateTabColumn = (i) => {
+        if(this.state.tabs.length)
+        {
+            let columnId = this.state.activeId;
+            columnId = columnId.split('-')
+                    .map(x => parseInt(x));
+            let newId;
+            let newTabsState;
+            // less than zero: last of previous row unless first row.
+            if(columnId[1] + i < 0){
+                if(columnId[0] > 0){
+                newId = `${columnId[0] - 1}-${34}`;
+                } else { 
+                    // if no previous rows use old ID, it will be the first column of the sheet.
+                    newId = `${columnId[0]}-${columnId[1]}`
                 }
-                newId = `${columnId[0]+1}-${0}`;
-            } 
-            //if moving left, newId should have same row 
-            else { 
-                newId = `${columnId[0]}-${columnId[1] + i}`;
+            }  
+            // if last index of columnId, check if tabColumn is in last row. If it is, create new row. Set activeId to
+            // the first line in that row.
+            else if(columnId[1] === 34) {
+                // if movinf right
+                if(i === 1){
+                    if(columnId[0] + 1 === this.state.tabs.length){
+                        //returns new state.
+                        newTabsState = this.generateBar(); 
+                    }
+                    newId = `${columnId[0]+1}-${0}`;
+                } 
+                //if moving left, newId should have same row 
+                else { 
+                    newId = `${columnId[0]}-${columnId[1] + i}`;
+                }
+            } else { 
+                newId = `${columnId[0]}-${columnId[1] + i}`
             }
-        } else { 
-            newId = `${columnId[0]}-${columnId[1] + i}`
+            this.tabChange(newId, newTabsState);
+            this.setState({activeId:newId});
         }
-        this.tabChange(newId, newTabsState);
-        this.setState({activeId:newId});
-    }      
+    }
+    
+    deleteRow = (row) => {
+        let tabs = this.state.tabs;
+        let tabsBeforeDeletedRow;
+        let tabsAfterDeletedRow;
+        // if deleting middle or end
+        if(row > 0 && tabs.length > 1){
+            tabsBeforeDeletedRow = tabs.slice(0, row);
+            tabsAfterDeletedRow = tabs.slice(row + 1);
+            tabs = tabsBeforeDeletedRow.concat(tabsAfterDeletedRow);    
+        } 
+        // if deleteing begining
+        else if( row === 0) { 
+            if(tabs.length > 1){
+                tabs = tabs.slice(1);
+            } else { 
+                tabs = [];
+            }
+        }
+        this.setState({tabs:tabs});
+    }
 
-// <ControlPanel />
     render() {
         return (
             <div className = "editor">
@@ -149,7 +187,13 @@ class Editor extends Component {
                     updateControlPanelsInputs = { this.updateControlPanelsInputs.bind(this) }
                     NavigateTabColumn = { this.NavigateTabColumn.bind(this) }
                     generateBar = { this.generateBar.bind(this) }
+                    ref = { (node) => { this.controlPanel = node }}
                     />
+                </div>
+                <div>
+                <Metadata
+                tuning = {this.state.tuning}
+                />
                 </div>
                 <div className="tabs">
                 {
@@ -163,6 +207,7 @@ class Editor extends Component {
                     textClick = { this.textBoxClick.bind(this) }
                     textBlur = { this.textBoxOnBlur.bind(this) }
                     highlightedTextBox = { this.state.highlightedTextBox }
+                    deleteRow = { this.deleteRow.bind(this) }
                     />
                     )}
                 )}
@@ -171,5 +216,4 @@ class Editor extends Component {
         );
     }
 }
-
 export default Editor;

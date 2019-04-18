@@ -1,0 +1,29 @@
+.metadata {
+    margin: 1em 0 0 1.6em;
+}
+
+.metadata__title h2 {
+display: inline;
+}
+
+
+.metadata__title i {
+    display: inline;
+
+}
+
+.metadata__description {
+    margin-top: .3em;
+}
+
+.metadata__tuning {
+    display: flex;
+    flex-direction: row;
+    margin-top: .3em;    
+}
+
+.edit-button { 
+    cursor: pointer;
+
+    margin-left: 1em;
+}

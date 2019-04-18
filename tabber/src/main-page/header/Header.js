@@ -7,9 +7,9 @@ const Header = (props) => {
             <p>LOGO</p>
             <nav>
                 <ul>
-                    <li ><p>Home</p></li>
-                    <li ><p>Tabs</p></li>
-                    <li ><p>Editor</p></li>
+                    <li><p>Home</p></li>
+                    <li><p>Tabs</p></li>
+                    <li><p>Editor</p></li>
                 </ul>
             </nav>
         </div>

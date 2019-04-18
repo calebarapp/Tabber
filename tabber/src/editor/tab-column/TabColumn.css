@@ -20,11 +20,50 @@
 p { 
     height: 1.5em;
     width: 1.4em;
+    font-size: 1em;
     margin: 0;
-    color: rgb(180,180,180);
+    color: black;
 }
 
 .text-box { 
     cursor: pointer;
     width: 99%;
+}
+
+@media (max-width:70em) {
+    p {
+        width:1.44em;
+        font-size: .9em; 
+    }
+}
+
+@media (max-width:62em) {
+    p {
+        width:1.44em;
+        font-size: .7em; 
+    }
+}
+
+
+@media (max-width:50em) {
+    p {
+        width:1.5em;
+        font-size: .5em; 
+    }
+}
+
+
+@media (max-width:40em) {
+    p {
+        width:1.48em;
+        font-size: .1em; 
+    }
+}
+
+
+@media (max-width:30em) {
+    p {
+        width:1.5em;
+        font-size: .3em; 
+    }
 }

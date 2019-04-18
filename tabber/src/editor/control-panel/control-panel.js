@@ -148,11 +148,7 @@ class ControlPanel extends Component {
                     />
 
                 </div>
-                <div className = "control-panel">
-                    <button>Left</button>
-                    <button>Right</button>
-                    <button onClick={() => this.props.generateBar()}>Add Row</button>
-                </div>
+                <button type = "button" className = "add-row" onClick={() => this.props.generateBar()}>Add Row</button>
             </div>
          );
     }
