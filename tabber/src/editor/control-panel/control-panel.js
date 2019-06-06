@@ -39,13 +39,13 @@ class ControlPanel extends Component {
         this.setState({focus:focus})
     }
 
-    //When text input is chanegd in some way
+    
     onInputChange = (guitarString, event) => {
+        //if more than one column is selected, populate each column with input.
         const column = this.props.selectedColumn.column;
         const value = event.target.value.toString();
         const inputs = this.props.inputs;
-
-        if(this.state.tabRange.includes(value)) { 
+        if(this.state.tabRange.includes(value)) {
             if(value.split('').length === 2 || ['b','h', 'p', 'r'].includes(value)){
                 column[guitarString] = `${value}-`;
                 inputs[guitarString] = value; 
@@ -53,14 +53,14 @@ class ControlPanel extends Component {
                 }
             else if(value.split('').length === 1){
                 column[guitarString] = `-${value}-`;
-                inputs[guitarString] = value; 
+                inputs[guitarString] = value;
                 this.props.updateControlPanelsInputs(inputs);  
             } else {
                 column[guitarString] = '---'
                 inputs[guitarString] = value ; 
                 this.props.updateControlPanelsInputs(inputs); 
             };
-            column.id = this.props.selectedColumn.activeId;
+            column.id = this.props.selectedColumn.activeId[0];
             this.props.updateTabData(column);
         }
     }
@@ -72,11 +72,17 @@ class ControlPanel extends Component {
                 this.changeInput(1);
             break;
             case "ArrowRight":
-                this.props.NavigateTabColumn(1);
+                if(e.shiftKey)
+                    this.props.NavigateTabColumn(true, 1);
+                else 
+                    this.props.NavigateTabColumn(false, 1);
             break;
             case "ArrowLeft":
-            this.props.NavigateTabColumn(-1);
-            break;
+                if(e.shiftKey)
+                    this.props.NavigateTabColumn(true, -1);
+                else 
+                    this.props.NavigateTabColumn(false, -1);
+                break;
             case "ArrowUp":
                 this.changeInput(-1);
             break;

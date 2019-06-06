@@ -1,0 +1,31 @@
+.settings {
+    height: 2em;
+    border: none;
+    background-color:rgba(0,0,0,0);
+    color: rgba(220,80,80, 1);
+    font-weight: 600;
+    font-size: .8em;
+    cursor: pointer;
+    padding: 0;
+    display: none;
+}
+
+.tab-row:hover .settings{ 
+    display: block;
+}
+
+.container__tab-blocks { 
+    display: flex;
+}
+
+.container__tab-block { 
+    display: flex;
+    flex-direction: row;
+}
+
+@media (max-width: 40em){
+    .container__tab-blocks { 
+        display: flex;
+        flex-direction: column;
+    }
+}

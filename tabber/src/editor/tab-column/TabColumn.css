@@ -45,10 +45,10 @@ p {
 }
 
 
-@media (max-width:50em) {
+@media (max-width:45em) {
     p {
         width:1.5em;
-        font-size: .5em; 
+        font-size: .6em; 
     }
 }
 
@@ -56,14 +56,36 @@ p {
 @media (max-width:40em) {
     p {
         width:1.48em;
-        font-size: .1em; 
+        font-size: .9em; 
     }
 }
 
 
-@media (max-width:30em) {
+@media (max-width:38em) {
+    p {
+        width:1.5em;
+        font-size: .8em; 
+    }
+}
+
+@media (max-width:33em) {
+    p {
+        width:1.5em;
+        font-size: .6em; 
+    }
+}
+
+@media (max-width:20em) {
     p {
         width:1.5em;
         font-size: .3em; 
+    }
+}
+
+
+@media (max-width:18em) {
+    p {
+        width:1.5em;
+        font-size: .1em; 
     }
 }

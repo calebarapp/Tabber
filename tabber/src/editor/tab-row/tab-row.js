@@ -1,5 +1,6 @@
 import React, {Component } from 'react';
 import TabColumn from '../tab-column/TabColumn';
+import './tab-row.css';
 // ================================================================
 // create method for editing notes.
 //=================================================================
@@ -10,7 +11,8 @@ class TabRow extends Component {
     }
     render() { 
         let textBox = null;
-        if(this.props.highlightedTextBox === this.props.rowId) { 
+        if(this.props.highlightedTextBox === this.props.rowId)
+        {
             let notesValue = this.props.tabRow.notes
             textBox = <textarea
             className = "text-box"
@@ -22,7 +24,7 @@ class TabRow extends Component {
         } else { 
             textBox = <p>{this.props.tabRow.notes}</p>
         }
-        return ( 
+        return (
             <div className = "tab-row__Container">
                     <div className = "tab-row">
                         <div className = "tab-column__container">
@@ -34,14 +36,28 @@ class TabRow extends Component {
                             <p>E|</p>
                         </div>
                         {/* creates a tab column for each tab column contained within tabRow prop */}
-                        {this.props.tabRow.tabs.map((tab) => { 
-                            return <TabColumn key = { tab.id } 
-                            activeId = { this.props.activeId } 
-                            tabClick = { this.props.tabClick } 
-                            tab = { tab } />
-                            })
-                        }
-                        <div className = "tab-column__container">
+                        <div className = "container__tab-blocks">
+                            <div className = "container__tab-block">
+                                {this.props.tabRow.tabs.slice(0,18).map((tab) => { 
+                                    return <TabColumn key = { tab.id } 
+                                    activeId = { this.props.activeId } 
+                                    tabClick = { this.props.tabClick } 
+                                    tab = { tab }
+                                    shiftClick = {this.props.shiftClick}
+                                    />
+                                    })
+                                }   
+                            </div>
+                            <div className = "container__tab-block">
+                                {this.props.tabRow.tabs.slice(18).map((tab) => { 
+                                    return <TabColumn key = { tab.id } 
+                                    activeId = { this.props.activeId } 
+                                    tabClick = { this.props.tabClick} 
+                                    tab = { tab } 
+                                    shiftClick = { this.props.shiftClick }
+                                    />
+                                    })}
+                                    <div className = "tab-column__container">
                             <p>|</p>
                             <p>|</p>
                             <p>|</p>
@@ -49,9 +65,12 @@ class TabRow extends Component {
                             <p>|</p>
                             <p>|</p>
                         </div>
+                            </div>
+                        </div>
+                        
                         <button onClick = {(e) => { this.props.deleteRow(this.props.rowId) }} 
-                        className = "settings" 
-                        type = "button">Delete</button>
+                        className = "fas fa-minus-circle settings" 
+                        type = "button"></button>
                     </div>
                     <div className = "text-box" onClick = {() => {
                             this.props.textClick(this.props.rowId);
@@ -59,7 +78,7 @@ class TabRow extends Component {
                         {textBox}
                     </div>
                 </div>
-         );
+        );
     }
 }
  

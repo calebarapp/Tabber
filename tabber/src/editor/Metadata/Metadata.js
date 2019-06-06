@@ -1,250 +1,155 @@
 import React, { Component } from 'react';
 import "./Metadata.css";
+import Tuning from "./Tuning/Tuning";
+
+//=======================================
+//must bind value of description to state and control it onChange for deesired effect.
+
+
 
 class Metadata extends Component {
     state = { 
         title: "Enter title...", 
-        titleInputActivated: false,
+        metaInputsActivated: false,
         description: "Enter description...",
-        descriptionInputActive: false, 
-        tuningInputActivated: false 
-    }
-    // toggles input for title field
-    onTitleClick = () => {
-        if(this.state.titleInputActivated === true) { 
-            console.log('off')
-            this.setState({titleInputActivated: false });
-        } else { 
-            console.log('on')
-            this.setState({titleInputActivated: true });
-        }
-    }
-    // toggles input for desciption field
-    onDescriptionClick = () => {
-        this.setState({descriptionInputActive: true});
+        titleDefault: ""
     }
 
-    onTuningClick = (string) => {
-        switch(string) { 
-            case 'e':
-                break;
-            case 'b':
-                break;
-            case 'g':
-                break;
-            case 'd':
-                break;
-            case 'a':
-                break;
-            case 'E':
-                break;
-            default:
-                break;
+    onDescriptionChange = (e) => {
+        this.setState({
+            description: e.target.value
+        })
+    }
+
+    // toggles input for title field
+    onTitleClick = () => {
+        let titleDefault = "";
+        let description = ""
+        if(this.state.title !== "Enter title..."){
+            titleDefault = this.state.title;
         }
+        if(this.state.description !== "Enter description..."){
+            description = this.state.description;
+        }
+        this.setState({
+            metaInputsActivated:!this.state.metaInputsActivated,
+            titleDefault: titleDefault, 
+            description: description
+        });
     }
 
     // update title data on title input blur
-    onTitleBlur = () => {
+    onSave = () => {
         let value = this.titleInputRef.value;
+        let description = this.getDescription();
         if(value === ''){
             this.setState({
                 title: "Enter title...",
-                titleInputActivated:false
+                description: description,
+                metaInputsActivated: false
             });
         } else {
             this.setState({
                 title:value,
-                titleInputActivated:false
+                description: description,
+                metaInputsActivated: false
             })
         }
+        console.log(this.TuningComponent.inputs)
+        this.props.updateTuning(this.TuningComponent.inputs.map(x => x.value));
+
+        this.descriptionInputRef.value = value;
     }
 
     // update description data on description input blur
-    onDescriptionBlur = () => {
+    getDescription = () => {
         let value = this.descriptionInputRef.value;
-        if(value === ''){
-            this.setState({
-                description:"Enter description...",
-                descriptionInputActive: false
-            })
+        if(value === ""){
+            return "Enter description...";
         } else { 
-            this.setState({
-                description:value,
-                descriptionInputActive: false
-            })
+            return value;
         }
     }
 
-    onTuningBlur(e, string) {
-        switch(string) { 
-            case 'e':
-                break;
-            case 'b':
-                break;
-            case 'g':
-                break;
-            case 'd':
-                break;
-            case 'a':
-                break;
-            case 'E':
-                break;
-            default:
-                break;
-        }
+    updateTuning = (tuning) =>{
     }
 
     render() {
-        let eNode = this.props.tuning[0];
-        let bNode = this.props.tuning[1];
-        let gNode = this.props.tuning[2];
-        let dNode = this.props.tuning[3];
-        let aNode = this.props.tuning[4];
-        let ENode = this.props.tuning[5];
-
-        // for toggling title input
-        let titleNode;
-        let titleButton;
-
-        //for toggling description input
-        let descriptionNode;
-        let descriptionButton;
+        let titleNode, 
+        editButton,
+        saveButton,
+        cancelButton,
+        descriptionNode;
 
         // if title is active 
-        if(this.state.titleInputActivated) { 
+        if(this.state.metaInputsActivated) { 
             // activates the input button
             titleNode = <input 
                 autoFocus = "true"
-                defaultValue = {this.state.title}
+                placeholder = {this.state.title}
+                defaultValue = {this.state.titleDefault}
                 ref = {(node) => this.titleInputRef = node}
                 />
-            // activates the save button if input is active
-            titleButton = <button 
-                type = "button" 
-                className = "save-button"
-                onClick = {()=>this.onTitleBlur()}
-                >Save</button>;
-
+                editButton = null;
+                cancelButton = null;
         } else { 
             titleNode = this.state.title;
-            titleButton = <i class="far fa-edit edit-button"
+            editButton = <i className="far fa-edit edit-button"
             onClick = {()=> this.onTitleClick()}
         ></i>;
         }
 
         // if description is active
-        if(this.state.descriptionInputActive) { 
+        if(this.state.metaInputsActivated) { 
             descriptionNode = <textarea 
+                onChange = {(e) => {this.onDescriptionChange(e)}}
                 autoFocus = "true"
-                defaultValue = {this.state.description}
+                placeholder = "Enter description..."
                 ref = {(node) => this.descriptionInputRef = node}
+                value = {this.state.description}
                 />
-            descriptionButton = <button 
-                type = "button" 
-                className = "save-button"
-                onClick = {()=>this.onDescriptionBlur()}
-                >Save</button>;
-        } else { 
-            descriptionNode = this.state.description;
-            descriptionButton = <i
-                class="far fa-edit edit-button"
-                onClick = {() => this.onDescriptionClick()}
-                ></i>;
+        } else {
+            descriptionNode = this.state.description
         }
-        //convert tuning to component, causing too much bloat
-        switch(this.state.tuningInputActivated) { 
-            case 'e':
-                eNode = <input 
-                autoFocus = "true"
-                onBlur = {(e) => this.onTuningBlur(e, 'e')}
-                defaultValue = {this.props.tuning[0]}
-                />
-                break;
-            case 'b':
-                bNode = <input 
-                autoFocus = "true"
-                onBlur = {(e) => this.onTuningBlur(e, 'b')}
-                defaultValue = {this.props.tuning[1]}
-                />
-                break;
-            case 'g':
-                gNode = <input 
-                autoFocus = "true"
-                onBlur = {(e) => this.onTuningBlur(e, 'g')}
-                defaultValue = {this.props.tuning[2]}    
-                />
-                break;
-            case 'd':
-                dNode = <input 
-                autoFocus = "true"
-                onBlur = {(e) => this.onTuningBlur(e, 'd')}
-                defaultValue = {this.props.tuning[3]}
-                />
-                break;
-            case 'a':
-                aNode = <input 
-                autoFocus = "true"
-                onBlur = {(e) => this.onTuningBlur(e, 'a')}
-                defaultValue = {this.props.tuning[4]}    
-                />
-                break;
-            case 'E':
-                ENode = <input 
-                autoFocus = "true"
-                onBlur = {(e) => this.onTuningBlur(e, 'E')}
-                defaultValue = {this.props.tuning[5]}    
-                />
-                break;
-            default:
-                break;
+       
+        // Control for save and cancel button.
+        if(this.state.metaInputsActivated) { 
+            saveButton  = <button 
+                type = "button"
+                className = "save-button" 
+                onClick = {()=>this.onSave()}
+                >Save</button>;
+            
+            cancelButton = <button 
+            type = "button" 
+            className = "cancel-button"
+            onClick = {()=>this.onSave()}
+            >Cancel</button>;
+        } else {
+            saveButton = null;
+            cancelButton = null;
         }
 
         return (
             <div className = "metadata">
                 <div className = "metadata__title">
                     <h2>{titleNode}</h2>
-                    {titleButton}
+                    {editButton}
                 </div>
-
                 <div 
                 className = "metadata__description">
                     {descriptionNode}
-                    {descriptionButton}
                 </div>
-                
                 <div className = "metadata__tuning">
-                    <div
-                    onClick = {() => this.onTuningClick('e')}
-                    >
-                        {eNode}
-                    </div>
-                    <div
-                    onClick = {() => this.onTuningClick('b')}
-                    >
-                        {bNode}
-                    </div>
-                    <div
-                    onClick = {() => this.onTuningClick('g')}
-                    >
-                        {gNode}
-                    </div>
-                    <div
-                    onClick = {() => this.onTuningClick('d')}
-                    >
-                        {dNode}
-                    </div>
-                    <div
-                    onClick = {() => this.onTuningClick('a')}
-                    >
-                        {aNode}
-                    </div>
-                    <div                    
-                    onClick = {() => this.onTuningClick('E')}
-                    >
-                        {ENode}
-                    </div>
-                    <i class="far fa-edit edit-button"></i>
+                    <p>Tuning:</p>
+                    <Tuning 
+                    ref = {(node) => this.TuningComponent = node} 
+                    TuningActivated = {this.state.metaInputsActivated}
+                    Tuning = {this.props.tuning}
+                    />
                 </div>
+                {cancelButton}
+                {saveButton}
             </div>
         );
     }

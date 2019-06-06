@@ -5,13 +5,14 @@ import './editor.css';
 import TabRow from './tab-row/tab-row';
 import ControlPanel from './control-panel/control-panel'
 import Metadata from './Metadata/Metadata';
+import EditUtil from './Util';
 
 // In editor, map list of tab rows, tab row will be its own seperate component with another array passed to it as prop.
 // challenge will be manipulating the state of the root component...
 class Editor extends Component {
     state = {
         tabs: [], 
-        activeId:'0-0', 
+        activeId:['0-0'], 
         selectedColumn: new TabColumnObj('0-0'),
         highlightedTextBox: null,
         ControlPanelInputs: {
@@ -22,7 +23,9 @@ class Editor extends Component {
             a:'',
             E:''
         }, 
-        tuning: ['e','b','g','d','a','E']
+        tuning: ['e','b','g','d','a','E'],
+        defaultTuning: ['e','b','g','d','a','E'], 
+        isShiftHeld: false
     }
 
     componentDidMount() { 
@@ -30,15 +33,6 @@ class Editor extends Component {
         this.highlightInput();
     }
 
-    //utility for tabClick() method, returns a new object with the values of the passed object.
-    _mergeObject = (obj) => {
-        // eslint-disable-next-line no-new-object
-        let result = new Object();
-        for(const x in obj) { 
-            result[x] = obj[x];
-        }
-        return result;
-    } 
     //generates a new tab bar, creates 35 new tabColumnObj then updates the state. 
     generateBar() {
         const stateArray = this.state.tabs
@@ -46,7 +40,7 @@ class Editor extends Component {
             notes: 'Insert notes...',
             tabs: []
         };
-        for (let x = 0; x < 35; x++) {
+        for (let x = 0; x < 36; x++) {
             newBar.tabs.push(new TabColumnObj(`${this.state.tabs.length}-${x}`));
         }
         const newStateArray = {tabs: stateArray.concat([newBar])};
@@ -54,45 +48,121 @@ class Editor extends Component {
         return(newStateArray);
     };
 
-    //sets state for the selectedColumn, activeID, and clears the Inputs on the control panel.
-    tabChange = (id, newTabState = null) => {
+    shiftClick = (id) => {
+        if(this.state.isShiftHeld) {
+            this.setState({
+                activeIdTwo: id
+            })
+        }
+    }
+
+    shiftState = (e, isPressed) => {
+        if(e.key  === "Shift") {
+            if(isPressed) 
+                this.setState({isShiftHeld: true});
+            else 
+                this.setState({isShiftHeld: false});
+        }
+    }
+
+    //clean this up.
+    // sets state for the selectedColumn, activeID, and clears the Inputs on the control panel.
+    tabChange = (id, newTabState = null, isShiftKey) => {
         // activate tab column editor
         let tabState;
         const indices = id.split('-');
-        if(newTabState == null) { 
+        if(newTabState == null) {
             tabState = this.state
             .tabs[indices[0]]
             .tabs[indices[1]];
-        } else { 
+        } else {
             tabState = newTabState.tabs[indices[0]]
             .tabs[indices[1]];
         }
-        const tabValues = this._mergeObject(tabState);
-        //filters out dashes to get true value for ControlPanel inputs.
-        for(let x in tabValues){
-            const newInputValue = tabValues[x].split('').filter(y => y!== '-').join('');
-            tabValues[x] = newInputValue;
-        }
-        // focus input 
+        //gets values for control panel inputs.
+        let tabValues = EditUtil.mergeObject(tabState);
+        tabValues = EditUtil.stripControlPanelValues(tabValues)
+        // focus input
         this.highlightInput();
-        this.setState({
-            selectedColumn:tabState,
-            activeId:id,
-            ControlPanelInputs:tabValues
-        })
+        if(isShiftKey){
+            this.setState({
+                selectedColumn:tabState,
+                activeId: EditUtil.buildRange([this.state.activeId[0], id]),
+                ControlPanelInputs:tabValues
+            })
+        } else {
+            this.setState({
+                selectedColumn:tabState,
+                activeId:[id],
+                ControlPanelInputs:tabValues
+            })
+        }
     }
 
+    // can we clean this up? Should be able to use compare Ids.
+    NavigateTabColumn = (isShiftKey,i) => {
+        const activeId = this.state.activeId;
+        if(this.state.tabs.length > 0)
+        {
+            let columnId = (this.state.activeId.length === 1) ? activeId[0] : activeId[activeId.length - 1];
+            columnId = columnId.split('-')
+                    .map(x => parseInt(x));
+            let newId;
+            // less than zero: last of previous row unless first row.
+            if(columnId[1] + i < 0){
+                if(columnId[0] > 0){
+                newId = `${columnId[0] - 1}-${35}`;
+                } else {
+                    // if no previous rows use old ID, it will be the first column of the sheet.
+                    newId = `${columnId[0]}-${columnId[1]}`
+                }
+            }  
+            // if last index of columnId, check if tabColumn is in last row. If it is, create new row. Set activeId to
+            // the first line in that row.
+            else if(columnId[1] === 35) {
+                // if movinf right
+                if(i === 1){
+                    if(columnId[0] + 1 === this.state.tabs.length){
+                        this.generateBar(); 
+                    }
+                    newId = `${columnId[0] + 1}-${0}`;
+                } 
+                //if moving left, newId should have same row 
+                else {
+                    newId = `${columnId[0]}-${columnId[1] + i}`;
+                }
+            } else { 
+                newId = `${columnId[0]}-${columnId[1] + i}`;
+            }
+            newId = EditUtil.buildListForNav(newId, isShiftKey, i, this.state.activeId);
+            let newIdSplit = newId[newId.length - 1].split('-');
+            let tabValues = this.state.tabs[newIdSplit[0]]
+                            .tabs[newIdSplit[1]];
+            tabValues = EditUtil.stripControlPanelValues(tabValues); 
+            this.setState({
+                activeId:newId, 
+                ControlPanelInputs:tabValues
+            });
+        }
+    }
+    
     // Sets the controlPanelInputs on the inputs Change so the value is reflected. 
     // Sorted in state so that it could be cleared when a new column is selected.
-    updateControlPanelsInputs = (updatedObject) => { 
+    updateControlPanelsInputs = (updatedObject) => {
         this.setState(updatedObject);
     }
+    
 
     // updates the tab data to reflect user input. Called from the control panel component.
     updateTabData = (newColumn) => {
         let newTabs = this.state.tabs;
-        const activeIdArr = this.state.activeId.split('-');
-        newTabs[activeIdArr[0]].tabs[activeIdArr[1]] = newColumn;
+        const activeIdArr = this.state.activeId[0].split('-');
+        if(this.state.activeId.length > 1) {
+            newTabs = EditUtil.fillSelection(newTabs, newColumn, this.state.activeId)
+            
+        } else {
+            newTabs[activeIdArr[0]].tabs[activeIdArr[1]] = newColumn;
+        }
         this.setState({tabs:newTabs});
     }
 
@@ -104,55 +174,14 @@ class Editor extends Component {
 
     // when a text box is selected this changes the state to focus on it.
     textBoxClick = (id) => { 
-        this.setState({highlightedTextBox:id});
+        this.setState({highlightedTextBox:[id]});
     }
 
     // When a text box is deselected, this updates the state with new notes value form the text input in tab-row component
     textBoxOnBlur = (id, value) => {
         const state = this.state.tabs;
         state[id]["notes"] = value;
-        this.setState({state, highlightedTextBox:null})
-    }
-    
-    // navigates through tab columns based on integer supplied paramater.
-    NavigateTabColumn = (i) => {
-        if(this.state.tabs.length)
-        {
-            let columnId = this.state.activeId;
-            columnId = columnId.split('-')
-                    .map(x => parseInt(x));
-            let newId;
-            let newTabsState;
-            // less than zero: last of previous row unless first row.
-            if(columnId[1] + i < 0){
-                if(columnId[0] > 0){
-                newId = `${columnId[0] - 1}-${34}`;
-                } else { 
-                    // if no previous rows use old ID, it will be the first column of the sheet.
-                    newId = `${columnId[0]}-${columnId[1]}`
-                }
-            }  
-            // if last index of columnId, check if tabColumn is in last row. If it is, create new row. Set activeId to
-            // the first line in that row.
-            else if(columnId[1] === 34) {
-                // if movinf right
-                if(i === 1){
-                    if(columnId[0] + 1 === this.state.tabs.length){
-                        //returns new state.
-                        newTabsState = this.generateBar(); 
-                    }
-                    newId = `${columnId[0]+1}-${0}`;
-                } 
-                //if moving left, newId should have same row 
-                else { 
-                    newId = `${columnId[0]}-${columnId[1] + i}`;
-                }
-            } else { 
-                newId = `${columnId[0]}-${columnId[1] + i}`
-            }
-            this.tabChange(newId, newTabsState);
-            this.setState({activeId:newId});
-        }
+        this.setState({state, highlightedTextBox: null});
     }
     
     deleteRow = (row) => {
@@ -173,14 +202,34 @@ class Editor extends Component {
                 tabs = [];
             }
         }
-        this.setState({tabs:tabs});
+        this.setState({
+            tabs:tabs,
+            activeId: [this.state.activeId[0]]
+        });
+        this.controlPanel.inputs[0].focus();
     }
+
+    updateTuning = (tuning) => {
+        //if tuning has empty values, replace with default values.
+        for(let x = 0; x < tuning.length; x++){
+            if(tuning[x] === ""){
+                tuning[x] = this.state.defaultTuning[x];
+            }
+        }
+        this.setState({
+            tuning:tuning, 
+            defaultTuning: tuning
+        })
+    }
+
 
     render() {
         return (
-            <div className = "editor">
+            <div className = "editor" 
+            //onKeyDown = {(e) => this.shiftState(e, true)} onKeyUp = {(e) => this.shiftState(e, false)}
+            >
                 <div className = "control-panel">
-                    <ControlPanel 
+                    <ControlPanel
                     selectedColumn = { {column: this.state.selectedColumn, activeId: this.state.activeId} }
                     updateTabData = { this.updateTabData.bind(this) }
                     inputs = { this.state.ControlPanelInputs}
@@ -193,13 +242,17 @@ class Editor extends Component {
                 <div>
                 <Metadata
                 tuning = {this.state.tuning}
+                updateTuning = {this.updateTuning.bind(this)}
+                
                 />
                 </div>
                 <div className="tabs">
                 {
                     this.state.tabs.map( (tabRow, index) => {
                     return (
-                    <TabRow 
+                    <TabRow
+                    key = { index }
+                    shiftClick = {this.shiftClick.bind(this)}
                     tabRow = { tabRow }
                     rowId = {index} 
                     activeId = {this.state.activeId} 
