@@ -43,24 +43,25 @@ class ControlPanel extends Component {
     onInputChange = (guitarString, event) => {
         //if more than one column is selected, populate each column with input.
         const column = this.props.selectedColumn.column;
+        column.id = this.props.selectedColumn.activeId[this.props.selectedColumn.activeId.length - 1];
         const value = event.target.value.toString();
         const inputs = this.props.inputs;
         if(this.state.tabRange.includes(value)) {
             if(value.split('').length === 2 || ['b','h', 'p', 'r'].includes(value)){
                 column[guitarString] = `${value}-`;
                 inputs[guitarString] = value; 
-                this.props.updateControlPanelsInputs(inputs);    
+                this.props.updateControlPanelsInputs(inputs);   
                 }
             else if(value.split('').length === 1){
                 column[guitarString] = `-${value}-`;
                 inputs[guitarString] = value;
                 this.props.updateControlPanelsInputs(inputs);  
+
             } else {
                 column[guitarString] = '---'
                 inputs[guitarString] = value ; 
-                this.props.updateControlPanelsInputs(inputs); 
+                this.props.updateControlPanelsInputs(inputs);
             };
-            column.id = this.props.selectedColumn.activeId[0];
             this.props.updateTabData(column);
         }
     }

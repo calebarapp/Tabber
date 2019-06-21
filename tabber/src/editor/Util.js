@@ -18,6 +18,7 @@ const stripControlPanelValues = (tabColumn) => {
         if(x !== 'id'){
             const newInputValue = tabColumn[x].split('-');
             ControlPanelInputs[x] = newInputValue.filter(x => x !== "");
+            ControlPanelInputs[x] = ControlPanelInputs[x].length === 0 ? "" : ControlPanelInputs[x];
         }
     }
     return ControlPanelInputs;
@@ -124,11 +125,14 @@ const buildListForNav = (newId, isShiftKey, i, activeId) => {
             newId = (isShiftKey) ? activeId.slice(0, -1) : [newId];
     } else {
         if(newId === '0-0'){
-            console.log(newId) 
-            if(activeId[activeId.length- 1] !== '0-0')
-                return (isShiftKey) ? [...activeId, '0-0'] : [newId];
-            else
-                return (isShiftKey) ? [...activeId] : [newId];
+            if(activeId[0] === '0-0'){
+                return [newId];
+            } else {
+                if(!activeId.includes('0-0')){
+                    return (isShiftKey) ? [...activeId, newId] : [newId];
+                }
+                return (isShiftKey) ? activeId : [newId];
+            } 
         }
         if(isFirstLesser > 0)
             newId = (isShiftKey) ? activeId.slice(0, -1) : [newId];
@@ -152,7 +156,7 @@ const buildListForNav = (newId, isShiftKey, i, activeId) => {
                     let col = new TabColumnObj();
                     col.id = id;
                     for(let y in col){
-                        if(y !== 'id'){
+                        if(y !== 'id') {
                             col[y] = newColumn[y]
                         }
                     }
@@ -162,11 +166,10 @@ const buildListForNav = (newId, isShiftKey, i, activeId) => {
                 }
             });
         }
-        console.log(newTabs)
         return newTabs;
     }
 
-const EditUtil = { 
+const EditUtil = {
     buildListForNav: buildListForNav, 
     buildRange :buildRange,
     compareIds: compareIds, 

@@ -5,7 +5,7 @@ class TabColumn extends Component {
     render() {
         let activeColumn = 'tab-column'; 
         if (this.props.activeId.includes(this.props.tab.id)){ 
-            activeColumn = 'tab-column tab-column--activated'
+            activeColumn = 'tab-column tab-column--activated';
         }
         return ( 
             <div className = {activeColumn} >
@@ -13,7 +13,6 @@ class TabColumn extends Component {
                 onClick = {(e) => {
                     let isShiftHeld = e.shiftKey;
                     this.props.tabClick(this.props.tab.id, null, isShiftHeld)
-                    //this.props.shiftClick(this.props.tab.id
                 }}>
                     <p>{this.props.tab.e}</p>
                     <p>{this.props.tab.b}</p>

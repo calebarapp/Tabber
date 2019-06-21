@@ -68,7 +68,7 @@ class Editor extends Component {
     //clean this up.
     // sets state for the selectedColumn, activeID, and clears the Inputs on the control panel.
     tabChange = (id, newTabState = null, isShiftKey) => {
-        // activate tab column editor
+        // activate tab column editor 
         let tabState;
         const indices = id.split('-');
         if(newTabState == null) {
@@ -81,7 +81,7 @@ class Editor extends Component {
         }
         //gets values for control panel inputs.
         let tabValues = EditUtil.mergeObject(tabState);
-        tabValues = EditUtil.stripControlPanelValues(tabValues)
+        tabValues = EditUtil.stripControlPanelValues(tabValues);
         // focus input
         this.highlightInput();
         if(isShiftKey){
@@ -102,6 +102,7 @@ class Editor extends Component {
     // can we clean this up? Should be able to use compare Ids.
     NavigateTabColumn = (isShiftKey,i) => {
         const activeId = this.state.activeId;
+        
         if(this.state.tabs.length > 0)
         {
             let columnId = (this.state.activeId.length === 1) ? activeId[0] : activeId[activeId.length - 1];
@@ -121,7 +122,7 @@ class Editor extends Component {
             // the first line in that row.
             else if(columnId[1] === 35) {
                 // if movinf right
-                if(i === 1){
+                if(i === 1) {
                     if(columnId[0] + 1 === this.state.tabs.length){
                         this.generateBar(); 
                     }
@@ -134,21 +135,27 @@ class Editor extends Component {
             } else { 
                 newId = `${columnId[0]}-${columnId[1] + i}`;
             }
-            newId = EditUtil.buildListForNav(newId, isShiftKey, i, this.state.activeId);
+            newId = EditUtil.buildListForNav(newId, isShiftKey, i, this.state.activeId);            
             let newIdSplit = newId[newId.length - 1].split('-');
             let tabValues = this.state.tabs[newIdSplit[0]]
                             .tabs[newIdSplit[1]];
-            tabValues = EditUtil.stripControlPanelValues(tabValues); 
+            tabValues = EditUtil.stripControlPanelValues(tabValues);
+
+            let selectedColumn = this.state.tabs[newIdSplit[0]].tabs[newIdSplit[1]];
+            selectedColumn["id"] = newId[newId.length - 1];
+            //Figure out wha selectedolumn is when shift selecting with mouse. Replicate that here.
             this.setState({
-                activeId:newId, 
+                activeId:newId,
+                selectedColumn,
                 ControlPanelInputs:tabValues
             });
         }
     }
-    
+
     // Sets the controlPanelInputs on the inputs Change so the value is reflected. 
     // Sorted in state so that it could be cleared when a new column is selected.
     updateControlPanelsInputs = (updatedObject) => {
+        console.log(updatedObject);
         this.setState(updatedObject);
     }
     
@@ -156,10 +163,10 @@ class Editor extends Component {
     // updates the tab data to reflect user input. Called from the control panel component.
     updateTabData = (newColumn) => {
         let newTabs = this.state.tabs;
+        console.log(this.state.tabs);
         const activeIdArr = this.state.activeId[0].split('-');
         if(this.state.activeId.length > 1) {
             newTabs = EditUtil.fillSelection(newTabs, newColumn, this.state.activeId)
-            
         } else {
             newTabs[activeIdArr[0]].tabs[activeIdArr[1]] = newColumn;
         }
