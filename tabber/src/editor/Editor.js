@@ -181,7 +181,7 @@ class Editor extends Component {
 
     // when a text box is selected this changes the state to focus on it.
     textBoxClick = (id) => { 
-        this.setState({highlightedTextBox:[id]});
+        this.setState({highlightedTextBox:id});
     }
 
     // When a text box is deselected, this updates the state with new notes value form the text input in tab-row component
@@ -246,31 +246,40 @@ class Editor extends Component {
                     ref = { (node) => { this.controlPanel = node }}
                     />
                 </div>
-                <div>
-                <Metadata
-                tuning = {this.state.tuning}
-                updateTuning = {this.updateTuning.bind(this)}
-                
-                />
-                </div>
-                <div className="tabs">
-                {
-                    this.state.tabs.map( (tabRow, index) => {
-                    return (
-                    <TabRow
-                    key = { index }
-                    shiftClick = {this.shiftClick.bind(this)}
-                    tabRow = { tabRow }
-                    rowId = {index} 
-                    activeId = {this.state.activeId} 
-                    tabClick = { this.tabChange.bind(this) } 
-                    textClick = { this.textBoxClick.bind(this) }
-                    textBlur = { this.textBoxOnBlur.bind(this) }
-                    highlightedTextBox = { this.state.highlightedTextBox }
-                    deleteRow = { this.deleteRow.bind(this) }
-                    />
-                    )}
-                )}
+                <div className = "tab-display__container">
+                    
+                    <div className = "tab-display__gutter"></div>
+
+                    <div className = "tab-display"> 
+                        <div>
+                        <Metadata
+                        tuning = {this.state.tuning}
+                        updateTuning = {this.updateTuning.bind(this)}
+                        />
+                        </div>
+                        <div className="tab-display__tabs">
+                        {
+                            this.state.tabs.map( (tabRow, index) => {
+                            return (
+                            <TabRow
+                            key = { index }
+                            shiftClick = {this.shiftClick.bind(this)}
+                            tabRow = { tabRow }
+                            rowId = {index} 
+                            activeId = {this.state.activeId} 
+                            tabClick = { this.tabChange.bind(this) } 
+                            textClick = { this.textBoxClick.bind(this) }
+                            textBlur = { this.textBoxOnBlur.bind(this) }
+                            highlightedTextBox = { this.state.highlightedTextBox }
+                            deleteRow = { this.deleteRow.bind(this) }
+                            />
+                            )}
+                        )}
+                        </div>
+                    </div>
+
+                    <div className = "tab-display__gutter"></div>
+
                 </div>
             </div>
         );

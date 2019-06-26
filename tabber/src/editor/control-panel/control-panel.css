@@ -1,11 +1,12 @@
 .container { 
     position:absolute;
-    display: sticky;
+    display: block;
     left: 0;
+    top: 0;
     background-color: rgba(50,50,50,1);
     width: 6em;
     height: 100vh;
-    box-shadow: 0px 5px 10px rgba(40,40,40,.8); 
+    box-shadow: 0px 5px 10px rgba(40,40,40,.2); 
 }
 
 .tabs-input { 
@@ -54,7 +55,7 @@ button:focus {
     outline: none;
 }
 
-@media (max-width:45em) {
+@media (max-width:40em) {
     .container { 
         display: none;
     }

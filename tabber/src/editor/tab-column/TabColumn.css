@@ -10,11 +10,14 @@
     border-radius: 3px;
 }
 .tab-column:hover { 
-    background-color: rgba(255,255,255,.4)}
+    background-color: rgb(91,192,222);
+    color:white;
+}
 
 .tab-column--activated{ 
-    background-color: rgba(255,255,255,.3);
+    background-color: rgb(91,192,222);
     box-shadow: 1px 1px 5px 5px rgba(0,0,0,.01);
+    color:white;
 }
 
 p { 
@@ -33,45 +36,39 @@ p {
 @media (max-width:70em) {
     p {
         width:1.44em;
-        font-size: .9em; 
+        font-size: .8em; 
     }
 }
 
 @media (max-width:62em) {
     p {
-        width:1.44em;
-        font-size: .7em; 
-    }
-}
-
-
-@media (max-width:45em) {
-    p {
         width:1.5em;
         font-size: .6em; 
     }
 }
 
 
-@media (max-width:40em) {
+@media (max-width:50em) {
     p {
-        width:1.48em;
+        width:1.5em;
+        font-size: .4em;
+
+    }
+}
+
+@media (max-width:50em) {
+    p {
+        width:1.5em;
+        font-size: .4em;
+
+    }
+}
+
+
+@media (max-width:44em) {
+    p {
+        width:1.4em;
         font-size: .9em; 
-    }
-}
-
-
-@media (max-width:38em) {
-    p {
-        width:1.5em;
-        font-size: .8em; 
-    }
-}
-
-@media (max-width:33em) {
-    p {
-        width:1.5em;
-        font-size: .6em; 
     }
 }
 
@@ -86,6 +83,6 @@ p {
 @media (max-width:18em) {
     p {
         width:1.5em;
-        font-size: .1em; 
+        font-size: .2em; 
     }
 }

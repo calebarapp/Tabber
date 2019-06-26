@@ -1,0 +1,41 @@
+.menu-container {
+    width: 50px;
+    height: 35px;
+    position: fixed;
+    top: 15px;
+    right:10px;
+    cursor:pointer;
+}
+
+.line-1 {
+    height: 2px;
+    width: 30px;
+    margin: 4px;
+    background-color: rgb(180, 175, 175);
+    border-radius: 3px;
+}
+
+.line-2 {
+
+    height: 2px;
+    width: 30px;
+    margin: 4px;    
+    background-color: rgb(180, 175, 175);
+    border-radius: 3px;
+}
+
+.line-3 {
+    height: 2px;
+    width: 30px;
+    margin: 4px;
+    background-color: rgb(180, 175, 175);
+    border-radius: 3px;
+}
+
+.line-4 {
+    height: 2px;
+    width: 30px;
+    margin: 4px;
+    background-color: rgb(180, 175, 175);
+    border-radius: 3px;
+}

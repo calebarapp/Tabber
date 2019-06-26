@@ -19,14 +19,5 @@ Function:
             - highlighting multiple should paste OVER selection.
             - pasting single should paste OVER selection. 
             - inserting single should paste after selection. 
-    - Inputs should update each highlighted column if multiple are slected.
-
-    Next: 
-    line 22.
-        - extract current code into a function.
-         create another function for dealing with more than one selected column.
-         current function will just control branching for selecting either of these methods. 
-        - Issues: 
-            - Last index of active Id gets set to first when input is filled in multiple select??
 
  
