@@ -39,7 +39,7 @@ class TabRow extends Component {
                             {/* creates a tab column for each tab column contained within tabRow prop */}
                             <div className = "container__tab-blocks">
                                 <div className = "container__tab-block">
-                                    {this.props.tabRow.tabs.slice(0,18).map((tab) => { 
+                                    {this.props.tabRow.tabs.slice(0,23).map((tab) => { 
                                         return <TabColumn key = { tab.id } 
                                         activeId = { this.props.activeId } 
                                         tabClick = { this.props.tabClick } 
@@ -50,7 +50,7 @@ class TabRow extends Component {
                                     }   
                                 </div>
                                 <div className = "container__tab-block">
-                                    {this.props.tabRow.tabs.slice(18).map((tab) => { 
+                                    {this.props.tabRow.tabs.slice(23).map((tab) => { 
                                         return <TabColumn key = { tab.id } 
                                         activeId = { this.props.activeId } 
                                         tabClick = { this.props.tabClick} 

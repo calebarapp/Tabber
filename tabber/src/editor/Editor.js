@@ -40,11 +40,13 @@ class Editor extends Component {
             notes: 'Insert notes...',
             tabs: []
         };
-        for (let x = 0; x < 36; x++) {
+        for (let x = 0; x < 46; x++) {
             newBar.tabs.push(new TabColumnObj(`${this.state.tabs.length}-${x}`));
         }
-        const newStateArray = {tabs: stateArray.concat([newBar])};
-        this.setState(newStateArray);
+        console.log(newBar);
+        const newStateArray = [...stateArray, newBar];
+        console.log(newStateArray)
+        this.setState({tabs: newStateArray});
         return(newStateArray);
     };
 
@@ -102,7 +104,8 @@ class Editor extends Component {
     // can we clean this up? Should be able to use compare Ids.
     NavigateTabColumn = (isShiftKey,i) => {
         const activeId = this.state.activeId;
-        
+        let tabs = this.state.tabs;
+
         if(this.state.tabs.length > 0)
         {
             let columnId = (this.state.activeId.length === 1) ? activeId[0] : activeId[activeId.length - 1];
@@ -112,7 +115,7 @@ class Editor extends Component {
             // less than zero: last of previous row unless first row.
             if(columnId[1] + i < 0){
                 if(columnId[0] > 0){
-                newId = `${columnId[0] - 1}-${35}`;
+                newId = `${columnId[0] - 1}-${45}`;
                 } else {
                     // if no previous rows use old ID, it will be the first column of the sheet.
                     newId = `${columnId[0]}-${columnId[1]}`
@@ -120,11 +123,11 @@ class Editor extends Component {
             }  
             // if last index of columnId, check if tabColumn is in last row. If it is, create new row. Set activeId to
             // the first line in that row.
-            else if(columnId[1] === 35) {
-                // if movinf right
+            else if(columnId[1] === 45) {
+                // if moving right
                 if(i === 1) {
                     if(columnId[0] + 1 === this.state.tabs.length){
-                        this.generateBar(); 
+                        tabs = this.generateBar();
                     }
                     newId = `${columnId[0] + 1}-${0}`;
                 } 
@@ -135,13 +138,14 @@ class Editor extends Component {
             } else { 
                 newId = `${columnId[0]}-${columnId[1] + i}`;
             }
-            newId = EditUtil.buildListForNav(newId, isShiftKey, i, this.state.activeId);            
+            newId = EditUtil.buildListForNav(newId, isShiftKey, i, this.state.activeId);      
             let newIdSplit = newId[newId.length - 1].split('-');
-            let tabValues = this.state.tabs[newIdSplit[0]]
+            // Probably an issue with async...generatebar not reflected in state. Can generate bar return value that would be tabs and function can manipulate that? 
+            console.log(tabs);
+            let tabValues = tabs[newIdSplit[0]]
                             .tabs[newIdSplit[1]];
             tabValues = EditUtil.stripControlPanelValues(tabValues);
-
-            let selectedColumn = this.state.tabs[newIdSplit[0]].tabs[newIdSplit[1]];
+            let selectedColumn = tabs[newIdSplit[0]].tabs[newIdSplit[1]];
             selectedColumn["id"] = newId[newId.length - 1];
             //Figure out wha selectedolumn is when shift selecting with mouse. Replicate that here.
             this.setState({
@@ -155,7 +159,6 @@ class Editor extends Component {
     // Sets the controlPanelInputs on the inputs Change so the value is reflected. 
     // Sorted in state so that it could be cleared when a new column is selected.
     updateControlPanelsInputs = (updatedObject) => {
-        console.log(updatedObject);
         this.setState(updatedObject);
     }
     

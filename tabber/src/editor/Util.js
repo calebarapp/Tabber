@@ -32,7 +32,7 @@ const rangeUp = (ids, firstId, secondId) => {
     for( let x = firstId[1]; true; x++ ) {
         if(id === ids[1])
             return columnRange;
-        if(x === 36){
+        if(x === 46){
             if(secondId[0] > firstId[0]){
                 firstId[0] = firstId[0] + 1;
                 x = 0;
@@ -58,7 +58,7 @@ const rangeDown = (ids, firstId, secondId) => {
         if(x === -1){
             if(secondId[0] < firstId[0]) {
                 firstId[0] = firstId[0] - 1;
-                x = 35;
+                x = 45;
                 id = `${firstId[0]}-${x}`
             }
             else {

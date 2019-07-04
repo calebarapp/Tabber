@@ -78,7 +78,7 @@
 }
 
 
-@media (max-width: 44em){
+@media (max-width: 60em){
 
     .container__tab-blocks { 
         display: flex;
