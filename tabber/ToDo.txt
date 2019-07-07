@@ -20,4 +20,43 @@ Function:
             - pasting single should paste OVER selection. 
             - inserting single should paste after selection. 
 
+
+
+=========================================================================================
+Model:
+	- dbUtil
+		- MongoConnection
+			- Class for mongoDB connection
+			- MongoManager
+				- Class for interacting with database
+	- TabSheet
+		- class defining a page of tabs
+		- TabRow
+			- Class defining a tab row. Series of flags with context information about row type that react will use to render the correct Tab row (Tab, txt block, chord row)
+	- UserProfile
+		- Class for managing user profile
+	- HomePage
+        - Recents
+            - Class that pulls most recently opened tabs
+        - Favorites
+            - Select tabs
+        - Tabs
+            - Full list of tabs
+Controller:
+    - TabSheetController
+        - SaveTabSheet?
+        - GetTabSheet
+        - UpdateTabSheet
+        - DeleteTabSheet
+    - ProfileController
+        - GetProfile
+        - UpdateProfile
+            - Overide class depending on what is updated? 
+        - GetSettingsProps
+        - UpdateSettings
+
+    - HomePageController
+        - GetRecents
+        - GetFavorites
+        - GetAllTabs
  
