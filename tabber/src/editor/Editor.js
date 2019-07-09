@@ -247,6 +247,7 @@ class Editor extends Component {
                     NavigateTabColumn = { this.NavigateTabColumn.bind(this) }
                     generateBar = { this.generateBar.bind(this) }
                     ref = { (node) => { this.controlPanel = node }}
+                    tuning = { this.state.tuning }
                     />
                 </div>
                 <div className = "tab-display__container">

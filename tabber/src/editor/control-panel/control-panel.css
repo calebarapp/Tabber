@@ -9,18 +9,33 @@
     box-shadow: 0px 5px 10px rgba(40,40,40,.2); 
 }
 
-.tabs-input { 
-    margin-top: 1em;
+.tabs-input {
+    margin: 1em 0 .5em 0;
 }
 
-.input { 
+
+.tabs-input__input-containter {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 60px;
+    height: 25px;
+    margin: 0em 0em 0 1.7em;
+}
+
+.tabs-input__input-containter p {
+    color:rgba(200,200,200, 1);
+    font-size: .8em;
+}
+
+
+.input {
     width: 3em;
+    margin: .2em;
     display: block;
     border:none;
     border-bottom: 2px solid rgba(200,200,200,0);
-    margin:.2em auto;
     box-shadow: none;
-    border-radius: 3px;
     background-color: rgba(80,80,80,1);
     box-shadow: 0px 2px 2px 2px rgba(0,0,0,0.1) inset;
     /*font*/
@@ -33,26 +48,88 @@
     outline-color: rgba(180,180,180,0.2);
 }
 
-.add-row {
-    display: block;
-    text-align: center; 
-    margin: 1em auto;
-    background-color: rgba(80,80,80,1);
-    font-size: .8em;
-    color:rgba(200,200,200, 1);
-    border:none;
-    border-radius: 3px;
-    padding: .4em .6em;
-    font-weight: 600;
-    cursor: pointer;
+button:focus { 
+    outline: none;
 }
 
-.add-row:hover { 
+/*===============================================================*/
+/* Buttons */
+/*===============================================================*/
+
+
+.button {
+    display: inline-block;
+    text-align: center; 
+    background-color: rgba(50,50,50,.2);
+    font-size: .8em;
+    color:rgba(200,200,200, 1);
+    border:0;
+    padding: .4em .8em;
+    cursor: pointer;
+    width: 100%;
+}
+
+.button:hover {
     background-color: rgba(100,100,100,1);
 }
 
-button:focus { 
-    outline: none;
+.dropdown-button {
+    margin-left: .5em;
+}
+
+
+.rowDropdown__container
+{
+    max-height: 0;
+    overflow: hidden;
+    width: 100%;
+    overflow-y: hidden;
+    position: absolute;
+    transition: .2s;
+}
+
+.rowDropdown__container--triggered
+{
+    max-height: 100px;
+}
+
+.rowDropdown {
+    background-color: rgba(80,80,80,1);
+    left: 0;
+    border: 1px solid rgba(255,255,255, 0.2);
+    color:rgba(200,200,200, 1);
+    font-size: .8em;
+    text-align: center;
+    border-radius: 0 0 5px 5px;
+    transform: translateY(-65px);
+    transition: .2s;
+}
+.rowDropdown--triggered {
+    transform: translateY(0);
+} 
+
+.rowDropdown li {
+    padding : .3em 0;
+   cursor: pointer;
+}
+
+/*need to differentiate between each list item...*/
+.rowDropdown li:hover {
+    background-color: rgba(100,100,100,1);
+}
+
+.button__container {
+    border-bottom: 1px solid rgba(255,255,255, 0.2);
+    border-top: 1px solid rgba(255,255,255, 0.2); 
+}
+
+
+.add-row--triggered {
+    background-color: rgba(80,80,80,1);
+}
+
+.add-row--triggered:hover {
+    background-color: rgba(80,80,80,1);
 }
 
 @media (max-width:40em) {
