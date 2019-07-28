@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './TabColumn.css';
 
+
 class TabColumn extends Component {
     render() {
         let activeColumn = 'tab-column'; 
@@ -14,12 +15,12 @@ class TabColumn extends Component {
                     let isShiftHeld = e.shiftKey;
                     this.props.tabClick(this.props.tab.id, null, isShiftHeld)
                 }}>
-                    <p>{this.props.tab.e}</p>
-                    <p>{this.props.tab.b}</p>
-                    <p>{this.props.tab.g}</p>
-                    <p>{this.props.tab.d}</p>
-                    <p>{this.props.tab.a}</p>
-                    <p>{this.props.tab.E}</p>
+                    <div>{this.props.tab.e.split('').map(x => <p>{x}</p>)}</div>
+                    <div>{this.props.tab.b.split('').map(x => <p>{x}</p>)}</div>
+                    <div>{this.props.tab.g.split('').map(x => <p>{x}</p>)}</div>
+                    <div>{this.props.tab.d.split('').map(x => <p>{x}</p>)}</div>
+                    <div>{this.props.tab.a.split('').map(x => <p>{x}</p>)}</div>
+                    <div>{this.props.tab.E.split('').map(x => <p>{x}</p>)}</div>
                 </div>
             </div>
         );

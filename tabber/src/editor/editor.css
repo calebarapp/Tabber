@@ -23,16 +23,71 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin-left:80px;
+
 }
 
-.tab-display__tabs {
-    margin: 0 auto;
+
+
+.tab-display div {
+    /* margin-left:30px; */
+    width: 100%
 }
 
-@media (max-width: 40em)
-{
-    .editor
-    {
-        padding-left: 0;
+.control-panel__container--mobile {
+    display: none;
+}
+.control-panel__container {
+    display: block;
+}
+
+/*=============================================================================================*/
+@media only screen and (min-device-width : 320px) and (max-device-width : 480px) {
+    /* Styles */
+       
     }
-}
+    
+    /* Smartphones (landscape) ----------- */
+    @media only screen and (min-width : 321px) {
+    /* Styles */
+        .editor
+        {
+            padding-left: 0;
+        }
+
+        .control-panel__container--mobile {
+            display: none;
+        }
+        .control-panel__container {
+            display: none;
+        }
+        .tab-display {
+            margin:0;
+        }
+        .tab-display__tabs {
+            margin-left: 5px;
+        }
+    }
+    
+    /* Smartphones (portrait) ----------- */
+    @media only screen and (max-width : 320px) {
+    /* Styles */
+    .editor
+        {
+            padding-left: 0;
+        }
+
+        .control-panel__container--mobile {
+            display: none;
+        }
+        .control-panel__container {
+            display: none;
+        }
+        .tab-display {
+            margin:0;
+        }
+        .tab-display__tabs {
+            margin-left: 5px;
+        }
+    }
+    

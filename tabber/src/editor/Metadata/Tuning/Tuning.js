@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import '../../media-breaks.css';
+
 
 class Tuning extends Component {
     state = {  }

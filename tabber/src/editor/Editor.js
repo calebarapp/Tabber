@@ -3,7 +3,8 @@ import { TabColumnObj } from './tab-column/tabColumnObject'
 import './tab-column/TabColumn.css';
 import './editor.css';
 import TabRow from './tab-row/tab-row';
-import ControlPanel from './control-panel/control-panel'
+import ControlPanel from './control-panel/control-panel';
+import MobileControlPanel from './control-panel__mobile/control-panel';
 import Metadata from './Metadata/Metadata';
 import EditUtil from './Util';
 
@@ -43,9 +44,7 @@ class Editor extends Component {
         for (let x = 0; x < 46; x++) {
             newBar.tabs.push(new TabColumnObj(`${this.state.tabs.length}-${x}`));
         }
-        console.log(newBar);
         const newStateArray = [...stateArray, newBar];
-        console.log(newStateArray)
         this.setState({tabs: newStateArray});
         return(newStateArray);
     };
@@ -57,7 +56,7 @@ class Editor extends Component {
             })
         }
     }
-
+    //Is this even used
     shiftState = (e, isPressed) => {
         if(e.key  === "Shift") {
             if(isPressed) 
@@ -166,7 +165,6 @@ class Editor extends Component {
     // updates the tab data to reflect user input. Called from the control panel component.
     updateTabData = (newColumn) => {
         let newTabs = this.state.tabs;
-        console.log(this.state.tabs);
         const activeIdArr = this.state.activeId[0].split('-');
         if(this.state.activeId.length > 1) {
             newTabs = EditUtil.fillSelection(newTabs, newColumn, this.state.activeId)
@@ -240,6 +238,16 @@ class Editor extends Component {
             >
                 <div className = "control-panel">
                     <ControlPanel
+                    selectedColumn = { {column: this.state.selectedColumn, activeId: this.state.activeId} }
+                    updateTabData = { this.updateTabData.bind(this) }
+                    inputs = { this.state.ControlPanelInputs}
+                    updateControlPanelsInputs = { this.updateControlPanelsInputs.bind(this) }
+                    NavigateTabColumn = { this.NavigateTabColumn.bind(this) }
+                    generateBar = { this.generateBar.bind(this) }
+                    ref = { (node) => { this.controlPanel = node }}
+                    tuning = { this.state.tuning }
+                    />
+                    <MobileControlPanel
                     selectedColumn = { {column: this.state.selectedColumn, activeId: this.state.activeId} }
                     updateTabData = { this.updateTabData.bind(this) }
                     inputs = { this.state.ControlPanelInputs}

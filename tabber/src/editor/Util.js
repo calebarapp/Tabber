@@ -24,6 +24,8 @@ const stripControlPanelValues = (tabColumn) => {
     return ControlPanelInputs;
 }
 
+
+//Builds range of id when multiple columns are selected (for selecting multiple columns right or below current selection). 
 const rangeUp = (ids, firstId, secondId) => {
     let columnRange = [];
     let id;
@@ -47,6 +49,7 @@ const rangeUp = (ids, firstId, secondId) => {
     }
 }
 
+//Builds range of id when multiple columns are selected (for selecting multiple columns right or below current selection). 
 const rangeDown = (ids, firstId, secondId) => {
     let columnRange = [];
     let id;
@@ -104,12 +107,10 @@ const buildRange = (ids) => {
     const direction = compareIds(ids[0], ids[1]);
     console.log(firstId, secondId);
     let columnRange = [];
-    // can this be built without the spread with an empty array? 
     if(direction > 0)
         columnRange = [...columnRange,...EditUtil.rangeUp(ids, firstId, secondId)];
     else
         columnRange  = [...columnRange,...EditUtil.rangeDown(ids, firstId, secondId)];
-    console.log(columnRange);
     return columnRange;
 }
 
@@ -145,7 +146,7 @@ const buildListForNav = (newId, isShiftKey, i, activeId) => {
 }
 
     //Fill seclection should take a list of Ids and a new newColumn. It will Go through each column in the Id 
-    // list and replce it with the new value.
+    // list and replace it with the new value.
     const fillSelection = (newTabs, newColumn, activeId) => {
         for(let x = 0; x < activeId.length; x++){
             const id = activeId[x];

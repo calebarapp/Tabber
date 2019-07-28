@@ -6,6 +6,8 @@ Style:
             - button to traverse rows. 
             - Killswitch type button that you can hold while you traverse to highlight multiple columns.
             - copy, paste, insert, and cut.
+    - Fix Tuning side bar
+    - Fix title width(title and description do not match. WHy?)
 Markup: 
     - Control Panel: 
         - copy, paste, cut, and insert buttons.
@@ -18,8 +20,15 @@ Function:
         - User should be able to paste over highlighted selection.
             - highlighting multiple should paste OVER selection.
             - pasting single should paste OVER selection. 
-            - inserting single should paste after selection. 
-
+            - inserting single should paste after selection.
+    - Tuning should update all tuning instances.
+Project: 
+    - Set up configuration file: 
+        - Things like:
+            - default text
+            - color themes
+            - Style parameters
+            - Connection strings
 
 
 =========================================================================================

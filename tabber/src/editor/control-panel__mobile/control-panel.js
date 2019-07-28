@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './control-panel.css';
 import '../media-breaks.css';
 
+
 class ControlPanel extends Component {
     state = { 
         focus:0,
@@ -41,7 +42,7 @@ class ControlPanel extends Component {
         this.setState({focus:focus})
     }
 
-    //========================================
+    
     onInputChange = (guitarString, event) => {
         //if more than one column is selected, populate each column with input.
         const column = this.props.selectedColumn.column;
@@ -115,7 +116,7 @@ class ControlPanel extends Component {
 
         }
         return ( 
-            <div className = "control-panel__container" onKeyUp ={(event) => this.onArrow(event) }> 
+            <div className = "control-panel__container--mobile" onKeyUp ={(event) => this.onArrow(event) }> 
                  <div className = "tabs-input">
                     <div className = "tabs-input__input-containter">
                         <p>{this.props.tuning[0]}</p>

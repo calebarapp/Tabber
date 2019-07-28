@@ -8,24 +8,28 @@
     cursor: pointer;
     text-align: center;
     border-radius: 3px;
+    /* max-width: 1.1em; */
 }
 .tab-column:hover { 
     background-color: rgb(91,192,222);
     color:white;
 }
-
 .tab-column--activated{ 
     background-color: rgb(91,192,222);
     box-shadow: 1px 1px 5px 5px rgba(0,0,0,.01);
     color:white;
 }
-
-p { 
-    height: 1.5em;
-    /*width: 1.25em;*/
-    font-size: 1em;
+p {
+    font-size: 1.5em;
+    font-weight: 300;
     margin: 0;
     color: black;
+}
+.tab-column__container div {
+    display: flex; 
+    justify-content: space-around;
+    height: 1em;
+    width: 1.4em;
 }
 
 .text-box { 
@@ -33,58 +37,308 @@ p {
     width: 99%;
 }
 
-@media (max-width:80em) {
+/*===========================================================================================================================================================*/
+
+@media (max-width: 1400px) {
+    /* Styles */
+        p {
+            font-size: 1em;
+        }
+        .tab-column__container div {
+            width: 1.3em;
+            padding-right: 0px;
+        }
+    }
+
+
+@media (max-width: 1300px) {
+    /* Styles */
+        p {
+            font-size: 1em;
+        }
+        .tab-column__container div {
+            width: 1.3em;
+            padding-right: 0px;
+        }
+    }
+
+@media (max-width: 1200px) {
+/* Styles */
     p {
-        font-size: .9em; 
+        font-size: 1em;
+    }
+    .tab-column__container div {
+        width: 1.2em;
+        padding-right: 0px;
     }
 }
 
-@media (max-width:75em) {
+@media (max-width: 1100px) {
+    /* Styles */
     p {
-        font-size: .8em; 
+        font-size: .9em;
+    }
+    .tab-column__container div {
+        width: 1.1em;
+        padding-right: 0px;
     }
 }
 
-@media (max-width:70em) {
+@media (max-width: 1000px) {
+/* Styles */
+    p {
+        font-size: .85em;
+    }
+    .tab-column__container div {
+        width: 1em;
+        padding-right: 0px;
+    }
+}
+
+@media (max-width: 880px) {
+    p {
+        font-size: .8em;
+        font-weight: 300;
+    }
+    .tab-column__container div {
+        width: .95em;
+        padding-right: 0px;
+    }
+}
+
+@media (max-width: 850px) {
+    p {
+        font-size: .8em;
+        font-weight: 300;
+    }
+    .tab-column__container div {
+        width: .92em;
+        padding-right: 0px;
+    }
+}
+
+@media (max-width: 850px) {
+    p {
+        font-size: .8em;
+        font-weight: 300;
+    }
+    .tab-column__container div {
+        width: .92em;
+        padding-right: 0px;
+    }
+}  
+
+@media (max-width: 800px) {
+    p {
+        font-size: .8em;
+        font-weight: 300;
+    }
+    .tab-column__container div {
+        width: .75em;
+        padding-right: 0px;
+    }
+}
+
+
+
+@media (max-width: 750px) {
     p {
         font-size: .7em;
+        font-weight: 300;
+    }
+    .tab-column__container div {
+        width: .8em;
+        padding-right: 0px;
     }
 }
 
 
-@media (max-width:60em) {
+
+@media (max-width: 690px) {
+/* Styles */
     p {
-        font-size: 1.2em; 
+        font-size: .65em;
+        font-weight: 300;
+    }
+    .tab-column__container div {
+        width: .75em;
+        padding-right: 0px;
     }
 }
 
-@media (max-width:55em) {
+@media (max-width: 650px) {
+/* Styles */
     p {
-        font-size: 1.1em; 
+        font-size: .6em;
+        font-weight: 300;
+    }
+    .tab-column__container div {
+        width: .7em;
+        padding-right: 0px;
     }
 }
 
-
-@media (max-width:50em) {
+@media (max-width: 620px) {
+/* Styles */
     p {
-        font-size: .9em; 
+        font-size: 1em;
+        font-weight: 300;
+    }
+    .tab-column__container div {
+        width: 1.2em;
+        padding-right: 0px;
     }
 }
 
-@media (max-width:43em) {
+@media (max-width: 610px) {
+/* Styles */
     p {
-        font-size: .8em; 
+        font-size: 1em;
+        font-weight: 300;
+    }
+    .tab-column__container div {
+        width: 1.2em;
+        padding-right: 0px;
     }
 }
 
-@media (max-width:40em) {
+
+@media (max-width: 560px) {
+/* Styles */
     p {
-        font-size: .9em; 
+        font-size: 1em;
+        font-weight: 300;
+    }
+    .tab-column__container div {
+        width: 1.2em;
+        padding-right: 0px;
     }
 }
 
-@media (max-width:37em) {
+@media (max-width: 480px) {
+/* Styles */
     p {
-        font-size: .85em; 
+        font-size: .85em;
+        font-weight: 300;
+    }
+    .tab-column__container div {
+        width: 1em;
+        padding-right: 0px;
     }
 }
+
+
+@media (max-width: 420px) {
+/* Styles */
+    p {
+        font-size: .8em;
+        font-weight: 300;
+    }
+    .tab-column__container div {
+        width: .95em;
+        padding-right: 0px;
+    }
+}
+
+@media (max-width: 390px) {
+/* Styles */
+    p {
+        font-size: .7em;
+        font-weight: 300;
+    }
+    .tab-column__container div {
+        width: .88em;
+        padding-right: 0px;
+    }
+}
+
+@media (max-width: 370px) {
+/* Styles */
+    p {
+        font-size: .6em;
+        font-weight: 300;
+    }
+    .tab-column__container div {
+        width: .75em;
+        padding-right: 0px;
+    }
+}
+
+
+@media (max-width: 365px) {
+/* Styles */
+    p {
+        font-size: .6em;
+        font-weight: 300;
+    }
+    .tab-column__container div {
+        width: .85em;
+        padding-right: 0px;
+    }
+}
+    
+   
+@media (max-width: 350px) {
+/* Styles */
+    p {
+        font-size: .6em;
+        font-weight: 300;
+    }
+    .tab-column__container div {
+        width: .83em;
+        padding-right: 0px;
+    }
+}
+
+
+@media (max-width: 335px) {
+/* Styles */
+    p {
+        font-size: .6em;
+        font-weight: 300;
+    }
+    .tab-column__container div {
+        width: .75em;
+        padding-right: 0px;
+    }
+}
+
+    
+
+@media (max-width: 325px) {
+/* Styles */
+    p {
+        font-size: .6em;
+        font-weight: 300;
+    }
+    .tab-column__container div {
+        width: .75em;
+        padding-right: 0px;
+    }
+}
+
+   
+@media (max-width: 300px) {
+/* Styles */
+    p {
+        font-size: .6em;
+        font-weight: 300;
+    }
+    .tab-column__container div {
+        width: .7em;
+        padding-right: 0px;
+    }
+}
+
+@media (max-width: 280px) {
+    /* Styles */
+        p {
+            font-size: .55em;
+            font-weight: 300;
+        }
+        .tab-column__container div {
+            width: .65em;
+            padding-right: 0px;
+        }
+    }
+    

@@ -1,7 +1,7 @@
-.control-panel__container { 
+.control-panel__container--mobile {
     position:absolute;
     left: 0;
-    top: 48px;
+    top: 40px;
     background-color: rgba(50,50,50,1);
     width: 6em;
     height: 100vh;
