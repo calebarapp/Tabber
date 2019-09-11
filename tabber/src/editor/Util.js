@@ -6,14 +6,14 @@ import { TabColumnObj } from "./tab-column/tabColumnObject";
 const mergeObject = (obj) => {
     // eslint-disable-next-line no-new-object
     let result = new Object();
-    for(const x in obj) { 
+    for(const x in obj) {
         result[x] = obj[x];
     }
     return result;
 }
 
 const stripControlPanelValues = (tabColumn) => {
-    let ControlPanelInputs = {}; 
+    let ControlPanelInputs = {};
     for(let x in tabColumn){
         if(x !== 'id'){
             const newInputValue = tabColumn[x].split('-');
@@ -25,7 +25,7 @@ const stripControlPanelValues = (tabColumn) => {
 }
 
 
-//Builds range of id when multiple columns are selected (for selecting multiple columns right or below current selection). 
+//Builds range of id when multiple columns are selected (for selecting multiple columns right or below current selection).
 const rangeUp = (ids, firstId, secondId) => {
     let columnRange = [];
     let id;
@@ -40,7 +40,7 @@ const rangeUp = (ids, firstId, secondId) => {
                 x = 0;
                 id = `${firstId[0]}-${x}`;
             }
-            else 
+            else
                 id = `${firstId[0]}-${x}`;
     } else {
             id = `${firstId[0]}-${x}`
@@ -49,7 +49,7 @@ const rangeUp = (ids, firstId, secondId) => {
     }
 }
 
-//Builds range of id when multiple columns are selected (for selecting multiple columns right or below current selection). 
+//Builds range of id when multiple columns are selected (for selecting multiple columns right or below current selection).
 const rangeDown = (ids, firstId, secondId) => {
     let columnRange = [];
     let id;
@@ -74,7 +74,7 @@ const rangeDown = (ids, firstId, secondId) => {
     }
 }
 
-//compare two ids . true if first is greater.  
+//compare two ids . true if first is greater. Ids are a array of row and column.
 const compareIds = (first, second) => {
     const firstId = first.split('-');
     const secondId = second.split('-');
@@ -86,14 +86,14 @@ const compareIds = (first, second) => {
     //if row lesser
     else if(firstId[0] > secondId[0]) {
         res = -1;
-    } 
+    }
     //same row
     else {
         if(parseInt(firstId[1]) < parseInt(secondId[1])){
             res = 1;
         } else if(parseInt(firstId[1]) === parseInt(secondId[1])) {
             res = 0;
-        } 
+        }
         else {
             res = -1;
         }
@@ -122,7 +122,7 @@ const buildListForNav = (newId, isShiftKey, i, activeId) => {
             newId = (isShiftKey) ? [...activeId, newId] : [newId];
         else if(isFirstLesser === 0)
             newId = [newId]
-        else    
+        else
             newId = (isShiftKey) ? activeId.slice(0, -1) : [newId];
     } else {
         if(newId === '0-0'){
@@ -133,7 +133,7 @@ const buildListForNav = (newId, isShiftKey, i, activeId) => {
                     return (isShiftKey) ? [...activeId, newId] : [newId];
                 }
                 return (isShiftKey) ? activeId : [newId];
-            } 
+            }
         }
         if(isFirstLesser > 0)
             newId = (isShiftKey) ? activeId.slice(0, -1) : [newId];
@@ -145,7 +145,7 @@ const buildListForNav = (newId, isShiftKey, i, activeId) => {
     return newId;
 }
 
-    //Fill seclection should take a list of Ids and a new newColumn. It will Go through each column in the Id 
+    //Fill seclection should take a list of Ids and a new newColumn. It will Go through each column in the Id
     // list and replace it with the new value.
     const fillSelection = (newTabs, newColumn, activeId) => {
         for(let x = 0; x < activeId.length; x++){
@@ -171,11 +171,11 @@ const buildListForNav = (newId, isShiftKey, i, activeId) => {
     }
 
 const EditUtil = {
-    buildListForNav: buildListForNav, 
+    buildListForNav: buildListForNav,
     buildRange :buildRange,
-    compareIds: compareIds, 
-    rangeUp: rangeUp, 
-    rangeDown: rangeDown, 
+    compareIds: compareIds,
+    rangeUp: rangeUp,
+    rangeDown: rangeDown,
     mergeObject:mergeObject,
     stripControlPanelValues:stripControlPanelValues,
     fillSelection: fillSelection

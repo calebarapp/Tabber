@@ -10,7 +10,7 @@ class TabRow extends Component {
     BoxOnBlur(e) {
         this.props.textBlur(this.props.rowId, e.target.value);
     }
-    render() { 
+    render() {
         let textBox = null;
         if(this.props.highlightedTextBox === this.props.rowId)
         {
@@ -18,38 +18,38 @@ class TabRow extends Component {
             textBox = <textarea
             className = "text-box"
             type = "text"
-            defaultValue = {notesValue} 
+            defaultValue = {notesValue}
             autoFocus = "true"
             onBlur = {(e) => this.BoxOnBlur(e)}
             />
-        } else { 
+        } else {
             textBox = <p>{this.props.tabRow.notes}</p>
         }
         return (
             <div className = "tab-row__main-container">
                     <div className = "tab-row__sub-container">
                         <div className = "tab-row">
-                            
+
                             {/* creates a tab column for each tab column contained within tabRow prop */}
                             <div className = "container__tab-blocks">
-                            
+
                                 <div className = "container__tab-block">
-                                    {this.props.tabRow.tabs.slice(0,23).map((tab) => { 
-                                        return <TabColumn key = { tab.id } 
-                                        activeId = { this.props.activeId } 
-                                        tabClick = { this.props.tabClick } 
+                                    {this.props.tabRow.tabs.slice(0,23).map((tab) => {
+                                        return <TabColumn key = { tab.id }
+                                        activeId = { this.props.activeId }
+                                        tabClick = { this.props.tabClick }
                                         tab = { tab }
                                         shiftClick = {this.props.shiftClick}
                                         />
                                         })
-                                    }   
+                                    }
                                 </div>
                                 <div className = "container__tab-block">
                                     {this.props.tabRow.tabs.slice(23).map((tab) => { 
-                                        return <TabColumn key = { tab.id } 
-                                        activeId = { this.props.activeId } 
-                                        tabClick = { this.props.tabClick} 
-                                        tab = { tab } 
+                                        return <TabColumn key = { tab.id }
+                                        activeId = { this.props.activeId }
+                                        tabClick = { this.props.tabClick}
+                                        tab = { tab }
                                         shiftClick = { this.props.shiftClick }
                                         />
                                         })}
@@ -65,13 +65,13 @@ class TabRow extends Component {
                             </div>
                         </div>
 
-                        <button onClick = {(e) => { this.props.deleteRow(this.props.rowId) }} 
-                        className = "fas fa-minus-circle settings" 
+                        <button onClick = {(e) => { this.props.deleteRow(this.props.rowId) }}
+                        className = "fas fa-minus-circle settings"
                         type = "button"></button>
                     </div>
                 </div>
         );
     }
 }
- 
+
 export default TabRow;

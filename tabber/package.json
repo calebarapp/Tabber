@@ -5,10 +5,10 @@
   "dependencies": {
     "react": "^16.8.2",
     "react-dom": "^16.8.2",
-    "react-scripts": "2.1.5"
+    "react-scripts": "^3.1.1"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "HOST=localhost REACT_APP_HOST=localhost react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"

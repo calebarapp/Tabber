@@ -1,67 +1,44 @@
 .control-panel__container--mobile {
     position:absolute;
     left: 0;
-    top: 40px;
-    background-color: rgba(50,50,50,1);
-    width: 6em;
-    height: 100vh;
-    box-shadow: 0px 5px 10px rgba(40,40,40,.2); 
+    bottom: 0;
+    background-color: rgba(20,20,20,1);
+    width: 100%;
+    height: 14em;
+    box-shadow: 0px 5px 10px rgba(40,40,40,.2);
+    margin: 0;
+    z-index: 10;
 }
 
+/*-----------------------------------------------------------------------------*/
+/*Tuning buttons*/
 .tabs-input {
-    margin: 1em 0 .5em 0;
-}
-
-
-.tabs-input__input-containter {
     display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    width: 60px;
-    height: 25px;
-    margin: 0em 0em 0 1.7em;
+    width: 100%;
+    margin: 0;
 }
 
-.tabs-input__input-containter p {
-    color:rgba(200,200,200, 1);
-    font-size: .8em;
+.tuning-button {
+    width: 100%;
+    text-align: center;
+    color: rgb(200,200,200);
+    padding: .5em;
+    cursor: pointer;
 }
 
-
-.input {
-    width: 3em;
-    margin: .2em;
-    display: block;
-    border:none;
-    border-bottom: 2px solid rgba(200,200,200,0);
-    box-shadow: none;
-    background-color: rgba(80,80,80,1);
-    box-shadow: 0px 2px 2px 2px rgba(0,0,0,0.1) inset;
-    /*font*/
-    color:rgba(200,200,200, 1);
-    font-weight: 600;
-    font-size: .8em;
+.tuning-button:hover {
+    background-color: rgba(100,100,100,1);
 }
-
-.input:focus { 
-    outline-color: rgba(180,180,180,0.2);
-}
-
-button:focus { 
-    outline: none;
-}
-
-/*===============================================================*/
+/*-----------------------------------------------------------------------------*/
+/*----------------------------------------------------------------*/
 /* Buttons */
-/*===============================================================*/
-
 
 .button {
     display: inline-block;
-    text-align: center; 
-    background-color: rgba(50,50,50,.2);
+    text-align: center;
     font-size: .8em;
     color:rgba(200,200,200, 1);
+    background-color: rgba(20,20,20,1);
     border:0;
     padding: .4em .8em;
     cursor: pointer;
@@ -72,56 +49,11 @@ button:focus {
     background-color: rgba(100,100,100,1);
 }
 
-.dropdown-button {
-    margin-left: .5em;
-}
-
-
-.rowDropdown__container
-{
-    max-height: 0;
-    overflow: hidden;
-    width: 100%;
-    overflow-y: hidden;
-    position: absolute;
-    transition: .2s;
-}
-
-.rowDropdown__container--triggered
-{
-    max-height: 100px;
-}
-
-.rowDropdown {
-    background-color: rgba(80,80,80,1);
-    left: 0;
-    border: 1px solid rgba(255,255,255, 0.2);
-    color:rgba(200,200,200, 1);
-    font-size: .8em;
-    text-align: center;
-    border-radius: 0 0 5px 5px;
-    transform: translateY(-65px);
-    transition: .2s;
-}
-.rowDropdown--triggered {
-    transform: translateY(0);
-} 
-
-.rowDropdown li {
-    padding : .3em 0;
-   cursor: pointer;
-}
-
-/*need to differentiate between each list item...*/
-.rowDropdown li:hover {
-    background-color: rgba(100,100,100,1);
-}
-
 .button__container {
-    border-bottom: 1px solid rgba(255,255,255, 0.2);
-    border-top: 1px solid rgba(255,255,255, 0.2); 
+    display: flex;
+    border: none;
+    background-color: rgba(20,20,20,1);
 }
-
 
 .add-row--triggered {
     background-color: rgba(80,80,80,1);
@@ -130,4 +62,76 @@ button:focus {
 .add-row--triggered:hover {
     background-color: rgba(80,80,80,1);
 }
+/*----------------------------------------------------------------------------*/
+/*Text*/
 
+.text {
+    width: 100%;
+}
+
+.text-row {
+    width: 100%;
+    display: flex;
+}
+
+.text-row button {
+    width: 100%;
+    border:none;
+    padding: .4em;
+    text-align: center;
+    color:rgba(200,200,200, 1);
+    background-color: rgba(20,20,20,1);
+    cursor: pointer;
+}
+
+.text-row button:hover {
+    background-color: rgba(100,100,100,1);
+}
+
+hr {
+    width: 96%;
+    border-bottom: none;
+}
+/*----------------------------------------------------------------------------*/
+/*Arrow row*/
+
+.arrow-row {
+    display:flex;
+    width:100%;
+    color: rgb(200,200,200);
+    justify-content: space-between;
+}
+
+.arrow-row p {
+    color: rgb(200,200,200);
+    width: 100%;
+    text-align: center;
+    padding: .4em;
+    cursor: pointer;
+}
+
+.arrow-row p:hover {
+        background-color: rgba(100,100,100,1);
+}
+
+.arrow-row i {
+    font-size: 2em;
+    margin: 0 1em;
+    cursor: pointer;
+}
+
+.arrow-row button {
+    background:none;
+    border:none;
+    border: 1px solid rgba(255,255,255, 0.2);
+    color: white;
+    width: 10%
+}
+/*-------------------------------------------------------------------------*/
+/*Unique components*/
+.shift {
+    font-size: 1.2em;
+    border-radius: 3px;
+    border: 1px solid rgba(255,255,255, 0.2);
+    width: 100px;
+}

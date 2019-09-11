@@ -4,13 +4,13 @@ import '../media-breaks.css';
 
 
 class ControlPanel extends Component {
-    state = { 
+    state = {
         focus:0,
         tabRange:["0","1","2","3","4","5","6","7","8","9","10",
         "11","12","13","14","15","16","17","18","19","20","21","22","23","24", "p", "h", "/", "b","r", ""],
         rowDropdownBool:false
     }
-    
+
     // changes focus when you click on textinput
     selectInput = (x) => {
         this.setState({focused:x});
@@ -22,19 +22,19 @@ class ControlPanel extends Component {
         e.target.value = temp_value
     }
 
-    // utillity for changing text input 
-    changeInput = (i) => { 
+    // utillity for changing text input
+    changeInput = (i) => {
         let focus = this.state.focus;
-        if(i > 0){ 
+        if(i > 0){
             if(focus < 5) {
                 focus++
-            } else if (focus === 5) { 
+            } else if (focus === 5) {
                 focus = 0;
             }
-        } else { 
-            if(focus === 0) { 
+        } else {
+            if(focus === 0) {
                 focus = 5;
-            } else if (focus > 0 ) { 
+            } else if (focus > 0 ) {
                 focus--;
             }
         }
@@ -42,7 +42,7 @@ class ControlPanel extends Component {
         this.setState({focus:focus})
     }
 
-    
+
     onInputChange = (guitarString, event) => {
         //if more than one column is selected, populate each column with input.
         const column = this.props.selectedColumn.column;
@@ -52,17 +52,17 @@ class ControlPanel extends Component {
         if(this.state.tabRange.includes(value)) {
             if(value.split('').length === 2 || ['b','h', 'p', 'r'].includes(value)){
                 column[guitarString] = `${value}-`;
-                inputs[guitarString] = value; 
-                this.props.updateControlPanelsInputs(inputs);   
+                inputs[guitarString] = value;
+                this.props.updateControlPanelsInputs(inputs);
                 }
             else if(value.split('').length === 1){
                 column[guitarString] = `-${value}-`;
                 inputs[guitarString] = value;
-                this.props.updateControlPanelsInputs(inputs);  
+                this.props.updateControlPanelsInputs(inputs);
 
             } else {
                 column[guitarString] = '---'
-                inputs[guitarString] = value ; 
+                inputs[guitarString] = value ;
                 this.props.updateControlPanelsInputs(inputs);
             };
             this.props.updateTabData(column);
@@ -78,7 +78,7 @@ class ControlPanel extends Component {
     }
 
     //arrow input changes selected text input
-    onArrow = (e) => { 
+    onArrow = (e) => {
         switch(e.key){
             case "ArrowDown":
                 this.changeInput(1);
@@ -86,13 +86,13 @@ class ControlPanel extends Component {
             case "ArrowRight":
                 if(e.shiftKey)
                     this.props.NavigateTabColumn(true, 1);
-                else 
+                else
                     this.props.NavigateTabColumn(false, 1);
             break;
             case "ArrowLeft":
                 if(e.shiftKey)
                     this.props.NavigateTabColumn(true, -1);
-                else 
+                else
                     this.props.NavigateTabColumn(false, -1);
                 break;
             case "ArrowUp":
@@ -105,116 +105,57 @@ class ControlPanel extends Component {
 
     render() {
         this.inputs = [];
-        let rowDropdownClass = "rowDropdown";
-        let addRowClass = "button add-row";
-        let rowDropdownContainerClass = "rowDropdown__container"
-        if(this.state.rowDropdownBool)
-        {  
-            rowDropdownContainerClass = "rowDropdown__container rowDropdown__container--triggered";
-            rowDropdownClass = "rowDropdown rowDropdown--triggered";
-            addRowClass = "button add-row add-row--triggered";
 
-        }
-        return ( 
-            <div className = "control-panel__container--mobile" onKeyUp ={(event) => this.onArrow(event) }> 
+        return (
+            <div className = "control-panel__container--mobile" onKeyUp ={(event) => this.onArrow(event) }>
                  <div className = "tabs-input">
-                    <div className = "tabs-input__input-containter">
-                        <p>{this.props.tuning[0]}</p>
-                        <input 
-                        onChange = {(event) => this.onInputChange('e', event) }
-                        ref = { (input) => { if(input) return this.inputs.push(input)} }
-                        className = "input"
-                        type = "text"
-                        onFocus={(event) => { this.selectInput(5); this.MoveCaretToEnd(event)} }
-                        id = "box0"
-                        value = { this.props.inputs['e'] }
-                        />
-                    </div>
-                    
-                    <div className = "tabs-input__input-containter">
-                        <p>{this.props.tuning[1]}</p> 
-                        <input 
-                        onChange = {(event) => this.onInputChange('b' ,event) }
-                        ref = { (input) => { if(input) return this.inputs.push(input)} }
-                        className = "input"
-                        type = "text"
-                        onFocus={(event) => { this.selectInput(5); this.MoveCaretToEnd(event)} }
-                        id = "box1"
-                        value = { this.props.inputs['b'] }
-                        />
-                    </div>
-
-                    <div className = "tabs-input__input-containter">
-                        <p>{this.props.tuning[2]}</p>
-                        <input className = "input"
-                        onChange = {(event) => this.onInputChange('g' ,event) }
-                        ref = { (input) => { if(input) return this.inputs.push(input)} }
-                        type = "text"
-                        onFocus={(event) => { this.selectInput(5); this.MoveCaretToEnd(event)} }
-                        id = "box2"
-                        value = { this.props.inputs['g'] }
-                        />
-                    </div>
-
-                    <div className = "tabs-input__input-containter">
-                        <p>{this.props.tuning[3]}</p>
-                        <input className = "input"
-                        onChange = {(event) => this.onInputChange('d' ,event) }
-                        ref = { (input) => { if(input) return this.inputs.push(input)} }
-                        type = "text"
-                        onFocus={(event) => { this.selectInput(5); this.MoveCaretToEnd(event)} }
-                        id = "box3"
-                        value = { this.props.inputs['d'] }
-                        />
-                    </div>
-
-                    <div className = "tabs-input__input-containter">
-                        <p>{this.props.tuning[4]}</p>
-                        <input  className = "input"
-                        onChange = {(event) => this.onInputChange('a' ,event) }
-                        ref = { (input) => { if(input) return this.inputs.push(input)} }
-                        type = "text"
-                        onFocus={(event) => { this.selectInput(5); this.MoveCaretToEnd(event)} }
-                        id = "box4"
-                        value = { this.props.inputs['a'] }
-                        />
-                    </div>
-
-                    <div className = "tabs-input__input-containter">
-                        <p>{this.props.tuning[5]}</p>
-                        <input  className = "input"
-                        onChange = {(event) => this.onInputChange('E' ,event) }
-                        ref = { (input) => { if(input) return this.inputs.push(input)} }
-                        type = "text"
-                        onFocus={(event) => { this.selectInput(5); this.MoveCaretToEnd(event)} }
-                        id = "box5"
-                        value = { this.props.inputs['E'] }
-                        />
-                    </div>
-
+                 {/*Will eventually need to itereate over a list of tab values.*/}
+                    <div className = 'tuning-button'>E</div>
+                    <div className = 'tuning-button'>A</div>
+                    <div className = 'tuning-button'>D</div>
+                    <div className = 'tuning-button'>G</div>
+                    <div className = 'tuning-button'>B</div>
+                    <div className = 'tuning-button'>E</div>
                 </div>
-                    <button type = "button" className = {addRowClass} onClick={() => this.rowClick()}>
-                        Add Row
-                        <i class="fas fa-chevron-down dropdown-button"></i>
-                    </button>
-                    <div className = {rowDropdownContainerClass}>
-                        <ul className = {rowDropdownClass}>
-                            <li>Full Tab</li>
-                            <li>Half Tab</li>
-                            <li>Text</li>
-                            <li>Chord</li>
-                        </ul>
-                    </div>
 
                 <div className = 'button__container'>
+                    <button type = "button" className = "button" onClick={() => this.props.generateBar()}>Add row</button>
                     <button type = "button" className = "button" onClick={() => this.props.generateBar()}>Copy</button>
                     <button type = "button" className = "button" onClick={() => this.props.generateBar()}>Paste</button>
                     <button type = "button" className = "button" onClick={() => this.props.generateBar()}>Insert</button>
                 </div>
-                
+                <hr/>
+                <div className = "text">
+                    <div className = "text-row">
+                        <button>1</button>
+                        <button>2</button>
+                        <button>3</button>
+                        <button>4</button>
+                        <button>5</button>
+                    </div>
+                    <div className = "text-row">
+                        <button>6</button>
+                        <button>7</button>
+                        <button>8</button>
+                        <button>9</button>
+                        <button>0</button>
+                    </div>
+                    <div className = "text-row">
+                        <button>Tap</button>
+                        <button>Transition</button>{/*hold for more options*/}
+                        <button>Harmonic</button>
+                        <button>Special</button>
+                    </div>
+                    <hr/>
+                    <div className = "arrow-row">
+                        <i class="fas fa-long-arrow-alt-left"></i>
+                        <p className = "shift">Shift</p>
+                        <i class="fas fa-long-arrow-alt-right"></i>
+                    </div>
+                </div>
             </div>
          );
     }
 }
- 
+
 export default ControlPanel;

@@ -8,11 +8,11 @@ import Tuning from "./Tuning/Tuning";
 
 
 class Metadata extends Component {
-    state = { 
-        title: "Enter title...", 
+    state = {
+        title: "Enter title...",
         metaInputsActivated: false,
         description: "Enter description...",
-        titleDefault: "", 
+        titleDefault: "",
     }
 
     onDescriptionChange = (e) => {
@@ -33,7 +33,7 @@ class Metadata extends Component {
         }
         this.setState({
             metaInputsActivated:!this.state.metaInputsActivated,
-            titleDefault: titleDefault, 
+            titleDefault: titleDefault,
             description: description
         });
     }
@@ -65,7 +65,7 @@ class Metadata extends Component {
         let value = this.descriptionInputRef.value;
         if(value === ""){
             return "Enter description...";
-        } else { 
+        } else {
             return value;
         }
     }
@@ -74,16 +74,16 @@ class Metadata extends Component {
     }
 
     render() {
-        let titleNode, 
+        let titleNode,
         editButton,
         saveButton,
         cancelButton,
         descriptionNode;
 
-        // if title is active 
-        if(true) { 
+        // if title is active
+        if(true) {
             // activates the input button
-            titleNode = <input 
+            titleNode = <input
                 autoFocus = "true"
                 placeholder = {this.state.title}
                 defaultValue = {this.state.titleDefault}
@@ -91,7 +91,7 @@ class Metadata extends Component {
                 />
                 editButton = null;
                 cancelButton = null;
-        } else { 
+        } else {
             titleNode = this.state.title;
             editButton = <i className="far fa-edit edit-button"
             onClick = {()=> this.onTitleClick()}
@@ -99,8 +99,8 @@ class Metadata extends Component {
         }
 
         // if description is active
-        if(true) { 
-            descriptionNode = <textarea 
+        if(true) {
+            descriptionNode = <textarea
                 onChange = {(e) => {this.onDescriptionChange(e)}}
                 autoFocus = "true"
                 placeholder = {this.state.description}
@@ -112,17 +112,17 @@ class Metadata extends Component {
         } else {
             descriptionNode = this.state.description
         }
-       
+
         // Control for save and cancel button.
-        if(true) { 
-            saveButton  = <button 
+        if(true) {
+            saveButton  = <button
                 type = "button"
-                className = "save-button" 
+                className = "save-button"
                 onClick = {()=>this.onSave()}
                 >Save</button>;
-            
-            cancelButton = <button 
-            type = "button" 
+
+            cancelButton = <button
+            type = "button"
             className = "cancel-button"
             onClick = {()=>this.onSave()}
             >Cancel</button>;
@@ -137,17 +137,17 @@ class Metadata extends Component {
                     {titleNode}
                     {editButton}
                 </div>
-                <div 
+                <div
                 className = "metadata__description">
                     {descriptionNode}
                 </div>
-                <div className = "metadata__tuning">
-                    <Tuning 
-                    ref = {(node) => this.TuningComponent = node} 
+                {/*}<div className = "metadata__tuning">
+                    <Tuning
+                    ref = {(node) => this.TuningComponent = node}
                     TuningActivated = {true}
                     Tuning = {this.props.tuning}
                     />
-                </div>
+                </div>*/}
                 {/* {cancelButton} */}
                 {/* {saveButton} */}
             </div>

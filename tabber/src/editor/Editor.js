@@ -12,29 +12,29 @@ import EditUtil from './Util';
 // challenge will be manipulating the state of the root component...
 class Editor extends Component {
     state = {
-        tabs: [], 
-        activeId:['0-0'], 
+        tabs: [],
+        activeId:['0-0'],
         selectedColumn: new TabColumnObj('0-0'),
         highlightedTextBox: null,
         ControlPanelInputs: {
             e:'',
             b:'',
             g:'',
-            d:'', 
+            d:'',
             a:'',
             E:''
-        }, 
+        },
         tuning: ['e','b','g','d','a','E'],
-        defaultTuning: ['e','b','g','d','a','E'], 
+        defaultTuning: ['e','b','g','d','a','E'],
         isShiftHeld: false
     }
 
-    componentDidMount() { 
+    componentDidMount() {
         this.generateBar();
-        this.highlightInput();
+        //this.highlightInput();
     }
 
-    //generates a new tab bar, creates 35 new tabColumnObj then updates the state. 
+    //generates a new tab bar, creates 35 new tabColumnObj then updates the state.
     generateBar() {
         const stateArray = this.state.tabs
         let newBar = {
@@ -46,6 +46,7 @@ class Editor extends Component {
         }
         const newStateArray = [...stateArray, newBar];
         this.setState({tabs: newStateArray});
+        console.log(newStateArray);
         return(newStateArray);
     };
 
@@ -59,9 +60,9 @@ class Editor extends Component {
     //Is this even used
     shiftState = (e, isPressed) => {
         if(e.key  === "Shift") {
-            if(isPressed) 
+            if(isPressed)
                 this.setState({isShiftHeld: true});
-            else 
+            else
                 this.setState({isShiftHeld: false});
         }
     }
@@ -69,7 +70,7 @@ class Editor extends Component {
     //clean this up.
     // sets state for the selectedColumn, activeID, and clears the Inputs on the control panel.
     tabChange = (id, newTabState = null, isShiftKey) => {
-        // activate tab column editor 
+        // activate tab column editor
         let tabState;
         const indices = id.split('-');
         if(newTabState == null) {
@@ -119,7 +120,7 @@ class Editor extends Component {
                     // if no previous rows use old ID, it will be the first column of the sheet.
                     newId = `${columnId[0]}-${columnId[1]}`
                 }
-            }  
+            }
             // if last index of columnId, check if tabColumn is in last row. If it is, create new row. Set activeId to
             // the first line in that row.
             else if(columnId[1] === 45) {
@@ -129,17 +130,17 @@ class Editor extends Component {
                         tabs = this.generateBar();
                     }
                     newId = `${columnId[0] + 1}-${0}`;
-                } 
-                //if moving left, newId should have same row 
+                }
+                //if moving left, newId should have same row
                 else {
                     newId = `${columnId[0]}-${columnId[1] + i}`;
                 }
-            } else { 
+            } else {
                 newId = `${columnId[0]}-${columnId[1] + i}`;
             }
-            newId = EditUtil.buildListForNav(newId, isShiftKey, i, this.state.activeId);      
+            newId = EditUtil.buildListForNav(newId, isShiftKey, i, this.state.activeId);
             let newIdSplit = newId[newId.length - 1].split('-');
-            // Probably an issue with async...generatebar not reflected in state. Can generate bar return value that would be tabs and function can manipulate that? 
+            // Probably an issue with async...generatebar not reflected in state. Can generate bar return value that would be tabs and function can manipulate that?
             console.log(tabs);
             let tabValues = tabs[newIdSplit[0]]
                             .tabs[newIdSplit[1]];
@@ -155,12 +156,12 @@ class Editor extends Component {
         }
     }
 
-    // Sets the controlPanelInputs on the inputs Change so the value is reflected. 
+    // Sets the controlPanelInputs on the inputs Change so the value is reflected.
     // Sorted in state so that it could be cleared when a new column is selected.
     updateControlPanelsInputs = (updatedObject) => {
         this.setState(updatedObject);
     }
-    
+
 
     // updates the tab data to reflect user input. Called from the control panel component.
     updateTabData = (newColumn) => {
@@ -175,13 +176,13 @@ class Editor extends Component {
     }
 
     // highlights a string input when a tab column is selected
-    highlightInput = () => { 
-        this.controlPanel
-        .inputs[this.controlPanel.state.focus].focus();
-    }
+    //highlightInput = () => {
+    //    this.controlPanel
+    //    .inputs[this.controlPanel.state.focus].focus();
+    //}
 
     // when a text box is selected this changes the state to focus on it.
-    textBoxClick = (id) => { 
+    textBoxClick = (id) => {
         this.setState({highlightedTextBox:id});
     }
 
@@ -191,7 +192,7 @@ class Editor extends Component {
         state[id]["notes"] = value;
         this.setState({state, highlightedTextBox: null});
     }
-    
+
     deleteRow = (row) => {
         let tabs = this.state.tabs;
         let tabsBeforeDeletedRow;
@@ -200,13 +201,13 @@ class Editor extends Component {
         if(row > 0 && tabs.length > 1){
             tabsBeforeDeletedRow = tabs.slice(0, row);
             tabsAfterDeletedRow = tabs.slice(row + 1);
-            tabs = tabsBeforeDeletedRow.concat(tabsAfterDeletedRow);    
-        } 
+            tabs = tabsBeforeDeletedRow.concat(tabsAfterDeletedRow);
+        }
         // if deleteing begining
-        else if( row === 0) { 
+        else if( row === 0) {
             if(tabs.length > 1){
                 tabs = tabs.slice(1);
-            } else { 
+            } else {
                 tabs = [];
             }
         }
@@ -225,7 +226,7 @@ class Editor extends Component {
             }
         }
         this.setState({
-            tuning:tuning, 
+            tuning:tuning,
             defaultTuning: tuning
         })
     }
@@ -233,7 +234,7 @@ class Editor extends Component {
 
     render() {
         return (
-            <div className = "editor" 
+            <div className = "editor"
             //onKeyDown = {(e) => this.shiftState(e, true)} onKeyUp = {(e) => this.shiftState(e, false)}
             >
                 <div className = "control-panel">
@@ -259,10 +260,10 @@ class Editor extends Component {
                     />
                 </div>
                 <div className = "tab-display__container">
-                    
+
                     <div className = "tab-display__gutter"></div>
 
-                    <div className = "tab-display"> 
+                    <div className = "tab-display">
                         <div>
                         <Metadata
                         tuning = {this.state.tuning}
@@ -277,9 +278,9 @@ class Editor extends Component {
                             key = { index }
                             shiftClick = {this.shiftClick.bind(this)}
                             tabRow = { tabRow }
-                            rowId = {index} 
-                            activeId = {this.state.activeId} 
-                            tabClick = { this.tabChange.bind(this) } 
+                            rowId = {index}
+                            activeId = {this.state.activeId}
+                            tabClick = { this.tabChange.bind(this) }
                             textClick = { this.textBoxClick.bind(this) }
                             textBlur = { this.textBoxOnBlur.bind(this) }
                             highlightedTextBox = { this.state.highlightedTextBox }
