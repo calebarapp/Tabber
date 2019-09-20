@@ -5,10 +5,26 @@ import './tab-row.css';
 // ================================================================
 // create method for editing notes.
 
+
+
+
+
+
 class TabRow extends Component {
     BoxOnBlur(e) {
         this.props.textBlur(this.props.rowId, e.target.value);
     }
+
+    handleMouseDown = (e) => {
+        var sender = e && e.target || window.event.srcElement;
+            e.returnValue = false;
+    }
+
+    disabler = (e) => {
+        if(e.preventDefault){ e.preventDefault(); }
+        return false;
+    }
+
     render() {
         let textBox = null;
         if(this.props.highlightedTextBox === this.props.rowId)
@@ -25,9 +41,9 @@ class TabRow extends Component {
             textBox = <p>{this.props.tabRow.notes}</p>
         }
         return (
-            <div className = "tab-row__main-container">
+            <div className = "tab-row__main-container" onMouseDown = {(x) => this.handleMouseDown(x)}>
                     <div className = "tab-row__sub-container">
-                        <div className = "tab-row">
+                        <div className = "tab-row" onMouseDown = {this.disabler}>
                             {/* creates a tab column for each tab column contained within tabRow prop */}
                             <div className = "container__tab-blocks">
 

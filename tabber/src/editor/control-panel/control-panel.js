@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
 import './control-panel.css';
 import '../media-breaks.css';
+import config from '../../config.js';
 
 class ControlPanel extends Component {
     state = {
         focus:0,
-        tabRange:["0","1","2","3","4","5","6","7","8","9","10",
-        "11","12","13","14","15","16","17","18","19","20","21","22","23","24", "p", "h", "/", "b","r", ""],
         rowDropdownBool:false
     }
 
@@ -23,16 +22,17 @@ class ControlPanel extends Component {
 
     // utillity for changing text input
     changeInput = (i) => {
+        let strings = config.settings.StringCount - 1;
         let focus = this.state.focus;
         if(i > 0){
-            if(focus < 5) {
+            if(focus < strings) {
                 focus++
-            } else if (focus === 5) {
+            } else if (focus === strings) {
                 focus = 0;
             }
         } else {
             if(focus === 0) {
-                focus = 5;
+                focus = strings;
             } else if (focus > 0 ) {
                 focus--;
             }
@@ -48,8 +48,8 @@ class ControlPanel extends Component {
         column.id = this.props.selectedColumn.activeId[this.props.selectedColumn.activeId.length - 1];
         const value = event.target.value.toString();
         const inputs = this.props.inputs;
-        if(this.state.tabRange.includes(value)) {
-            if(value.split('').length === 2 || ['b','h', 'p', 'r'].includes(value)){
+        if(config.settings.TabRange.includes(value)) {
+            if(value.split('').length === 2 || config.settings.AcceptedNonIntInputVal.includes(value)){//this needs to be stored elsewhere!!
                 column[guitarString] = `${value}-`;
                 inputs[guitarString] = value;
                 this.props.updateControlPanelsInputs(inputs);
@@ -193,23 +193,25 @@ class ControlPanel extends Component {
 
                 </div>
 
-                    <div className = 'button__container'>
-                    <button type = "button" className = {addRowClass} onClick={() => this.rowClick()}>
+                <div className = 'button__container'>
+                    <button type = "button" className = {addRowClass} onClick={() => this.props.generateBar()}>
+                    {/*onClick={() => this.rowClick()}*/}
+
                         Add Row
-                        <i class="fas fa-chevron-down dropdown-button"></i>
+                        {/*<i class="fas fa-chevron-down dropdown-button"></i>*/}
                     </button>
-                    <div className = {rowDropdownContainerClass}>
-                        <ul className = {rowDropdownClass}>
+                    <div className = {rowDropdownContainerClass} >
+                        {/*<ul className = {rowDropdownClass}>
                             <li>Full Tab</li>
                             <li>Half Tab</li>
                             <li>Text</li>
                             <li>Chord</li>
-                        </ul>
+                        </ul>     Use for drop down when more row varieties are available */}
                     </div>
 
-                        <button type = "button" className = "button" onClick={() => this.props.generateBar()}>Copy</button>
-                        <button type = "button" className = "button" onClick={() => this.props.generateBar()}>Paste</button>
-                        <button type = "button" className = "button" onClick={() => this.props.generateBar()}>Insert</button>
+                        <button type = "button" className = "button">Copy</button>
+                        <button type = "button" className = "button">Paste</button>
+                        <button type = "button" className = "button">Insert</button>
                     </div>
             </div>
          );

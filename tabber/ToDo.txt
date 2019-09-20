@@ -1,35 +1,29 @@
-Style: 
-    - Make mobile friendly view. 
-        - Have secondary control panel on bottom of the screen for mobile version. 
+Style:
+    - Make mobile friendly view.
+        - Have secondary control panel on bottom of the screen for mobile version.
             - have multiple select for each string input.
-            - have butttons for traversing columns left and right. 
-            - button to traverse rows. 
+            - have butttons for traversing columns left and right.
+            - button to traverse rows.
             - Killswitch type button that you can hold while you traverse to highlight multiple columns.
             - copy, paste, insert, and cut.
     - Fix Tuning side bar
     - Fix title width(title and description do not match. WHy?)
-Markup: 
-    - Control Panel: 
+Markup:
+    - Control Panel:
         - copy, paste, cut, and insert buttons.
         - shift left and right buttons.
             - shifting right will push columns
             - shifting left will only work if columns to the left is empty.
-Function: 
-    - User should be able to copy, paste and cut selecitng from one or multiple columns.
+Function:
+    - User should be able to copy, paste and cut selection from one or multiple columns.
         - User should be able to copy highlighted selection.
         - User should be able to paste over highlighted selection.
             - highlighting multiple should paste OVER selection.
-            - pasting single should paste OVER selection. 
+            - pasting single should paste OVER selection.
             - inserting single should paste after selection.
     - Tuning should update all tuning instances.
-Project: 
-    - Set up configuration file: 
-        - Things like:
-            - default text
-            - color themes
-            - Style parameters
-            - Connection strings
-
+Project:
+    
 
 =========================================================================================
 Model:
@@ -60,7 +54,7 @@ Controller:
     - ProfileController
         - GetProfile
         - UpdateProfile
-            - Overide class depending on what is updated? 
+            - Overide class depending on what is updated?
         - GetSettingsProps
         - UpdateSettings
 
@@ -68,4 +62,3 @@ Controller:
         - GetRecents
         - GetFavorites
         - GetAllTabs
- 

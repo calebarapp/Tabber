@@ -88,7 +88,7 @@ class Editor extends Component {
         let tabValues = EditUtil.mergeObject(tabState);
         tabValues = EditUtil.stripControlPanelValues(tabValues);
         // focus input
-        this.highlightInput();
+        //this.highlightInput();
         if(isShiftKey){
             this.setState({
                 selectedColumn:tabState,
