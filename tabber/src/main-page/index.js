@@ -8,9 +8,9 @@ class App extends Component {
 
   render() {
     return (
-      <div>
-      <script src="https://use.fontawesome.com/72038cledb.js"></script>
-        <MenuHamburger/>
+      <div className = "app-body">
+          <script src="https://use.fontawesome.com/72038cledb.js"></script>
+          <MenuHamburger/>
           <Editor />
       </div>
     );

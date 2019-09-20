@@ -7,6 +7,7 @@ import ControlPanel from './control-panel/control-panel';
 import MobileControlPanel from './control-panel__mobile/control-panel';
 import Metadata from './Metadata/Metadata';
 import EditUtil from './Util';
+import TopBar from './TopBar/TopBar'
 
 // In editor, map list of tab rows, tab row will be its own seperate component with another array passed to it as prop.
 // challenge will be manipulating the state of the root component...
@@ -26,7 +27,9 @@ class Editor extends Component {
         },
         tuning: ['e','b','g','d','a','E'],
         defaultTuning: ['e','b','g','d','a','E'],
-        isShiftHeld: false
+        isShiftHeld: false,
+        Title: "Demo Title",
+        Author: "Demo Author"
     }
 
     componentDidMount() {
@@ -41,7 +44,7 @@ class Editor extends Component {
             notes: 'Insert notes...',
             tabs: []
         };
-        for (let x = 0; x < 46; x++) {
+        for (let x = 0; x < 45; x++) {
             newBar.tabs.push(new TabColumnObj(`${this.state.tabs.length}-${x}`));
         }
         const newStateArray = [...stateArray, newBar];
@@ -238,31 +241,36 @@ class Editor extends Component {
             //onKeyDown = {(e) => this.shiftState(e, true)} onKeyUp = {(e) => this.shiftState(e, false)}
             >
                 <div className = "control-panel">
-                    <ControlPanel
-                    selectedColumn = { {column: this.state.selectedColumn, activeId: this.state.activeId} }
-                    updateTabData = { this.updateTabData.bind(this) }
-                    inputs = { this.state.ControlPanelInputs}
-                    updateControlPanelsInputs = { this.updateControlPanelsInputs.bind(this) }
-                    NavigateTabColumn = { this.NavigateTabColumn.bind(this) }
-                    generateBar = { this.generateBar.bind(this) }
-                    ref = { (node) => { this.controlPanel = node }}
-                    tuning = { this.state.tuning }
+                    <TopBar
+                        Title = {this.state.Title}
+                        Author = {this.state.Author}
                     />
+
+                    <ControlPanel
+                        selectedColumn = { {column: this.state.selectedColumn, activeId: this.state.activeId} }
+                        updateTabData = { this.updateTabData.bind(this) }
+                        inputs = { this.state.ControlPanelInputs}
+                        updateControlPanelsInputs = { this.updateControlPanelsInputs.bind(this) }
+                        NavigateTabColumn = { this.NavigateTabColumn.bind(this) }
+                        generateBar = { this.generateBar.bind(this) }
+                        ref = { (node) => { this.controlPanel = node }}
+                        tuning = { this.state.tuning }
+                    />
+
                     <MobileControlPanel
-                    selectedColumn = { {column: this.state.selectedColumn, activeId: this.state.activeId} }
-                    updateTabData = { this.updateTabData.bind(this) }
-                    inputs = { this.state.ControlPanelInputs}
-                    updateControlPanelsInputs = { this.updateControlPanelsInputs.bind(this) }
-                    NavigateTabColumn = { this.NavigateTabColumn.bind(this) }
-                    generateBar = { this.generateBar.bind(this) }
-                    ref = { (node) => { this.controlPanel = node }}
-                    tuning = { this.state.tuning }
+                        selectedColumn = { {column: this.state.selectedColumn, activeId: this.state.activeId} }
+                        updateTabData = { this.updateTabData.bind(this) }
+                        inputs = { this.state.ControlPanelInputs}
+                        updateControlPanelsInputs = { this.updateControlPanelsInputs.bind(this) }
+                        NavigateTabColumn = { this.NavigateTabColumn.bind(this) }
+                        generateBar = { this.generateBar.bind(this) }
+                        ref = { (node) => { this.controlPanel = node }}
+                        tuning = { this.state.tuning }
                     />
                 </div>
+
                 <div className = "tab-display__container">
-
                     <div className = "tab-display__gutter"></div>
-
                     <div className = "tab-display">
                         <div>
                         <Metadata
@@ -275,16 +283,16 @@ class Editor extends Component {
                             this.state.tabs.map( (tabRow, index) => {
                             return (
                             <TabRow
-                            key = { index }
-                            shiftClick = {this.shiftClick.bind(this)}
-                            tabRow = { tabRow }
-                            rowId = {index}
-                            activeId = {this.state.activeId}
-                            tabClick = { this.tabChange.bind(this) }
-                            textClick = { this.textBoxClick.bind(this) }
-                            textBlur = { this.textBoxOnBlur.bind(this) }
-                            highlightedTextBox = { this.state.highlightedTextBox }
-                            deleteRow = { this.deleteRow.bind(this) }
+                                key = { index }
+                                shiftClick = {this.shiftClick.bind(this)}
+                                tabRow = { tabRow }
+                                rowId = {index}
+                                activeId = {this.state.activeId}
+                                tabClick = { this.tabChange.bind(this) }
+                                textClick = { this.textBoxClick.bind(this) }
+                                textBlur = { this.textBoxOnBlur.bind(this) }
+                                highlightedTextBox = { this.state.highlightedTextBox }
+                                deleteRow = { this.deleteRow.bind(this) }
                             />
                             )}
                         )}

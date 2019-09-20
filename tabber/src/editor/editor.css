@@ -2,32 +2,33 @@
     background-color: white;
     justify-content: center;
     height: 100vh;
-    width: 100%;
     overflow-y: scroll;
     padding-bottom: 3em;
 }
 
 .tab-display__container
 {
-    width: 100%;
+    width: 100vw;
     display: flex;
+    height: 62vh;
+    overflow-y: scroll;
+    overflow-x: hidden;
 }
 
 .tab-display__gutter {
     width: 5%;
+    background-color: white;
 }
 
 .tab-display {
     width: 90%;
-    padding-top: 3em;
+    padding-top: 1em;
     display: flex;
     flex-direction: column;
     align-items: center;
     margin-left:80px;
 
 }
-
-
 
 .tab-display div {
     /* margin-left:30px; */

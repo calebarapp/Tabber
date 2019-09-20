@@ -4,7 +4,6 @@ import './tab-row.css';
 
 // ================================================================
 // create method for editing notes.
-//=================================================================
 
 class TabRow extends Component {
     BoxOnBlur(e) {
@@ -29,12 +28,11 @@ class TabRow extends Component {
             <div className = "tab-row__main-container">
                     <div className = "tab-row__sub-container">
                         <div className = "tab-row">
-
                             {/* creates a tab column for each tab column contained within tabRow prop */}
                             <div className = "container__tab-blocks">
 
                                 <div className = "container__tab-block">
-                                    {this.props.tabRow.tabs.slice(0,23).map((tab) => {
+                                    {this.props.tabRow.tabs.slice(0,22).map((tab) => {
                                         return <TabColumn key = { tab.id }
                                         activeId = { this.props.activeId }
                                         tabClick = { this.props.tabClick }
@@ -45,7 +43,7 @@ class TabRow extends Component {
                                     }
                                 </div>
                                 <div className = "container__tab-block">
-                                    {this.props.tabRow.tabs.slice(23).map((tab) => { 
+                                    {this.props.tabRow.tabs.slice(22).map((tab) => {
                                         return <TabColumn key = { tab.id }
                                         activeId = { this.props.activeId }
                                         tabClick = { this.props.tabClick}
@@ -53,14 +51,6 @@ class TabRow extends Component {
                                         shiftClick = { this.props.shiftClick }
                                         />
                                         })}
-                                    <div className = "tab-row__tuning">
-                                        <p></p>
-                                        <p></p>
-                                        <p></p>
-                                        <p></p>
-                                        <p></p>
-                                        <p></p>
-                                    </div>
                                 </div>
                             </div>
                         </div>

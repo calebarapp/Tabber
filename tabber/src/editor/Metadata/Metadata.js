@@ -133,14 +133,18 @@ class Metadata extends Component {
 
         return (
             <div className = "metadata">
+                {/*
                 <div className = "metadata__title">
                     {titleNode}
                     {editButton}
                 </div>
+                */}
+                {/*
                 <div
                 className = "metadata__description">
                     {descriptionNode}
                 </div>
+                */}
                 {/*}<div className = "metadata__tuning">
                     <Tuning
                     ref = {(node) => this.TuningComponent = node}
