@@ -10,7 +10,6 @@ class App extends Component {
     return (
       <div className = "app-body">
           <script src="https://use.fontawesome.com/72038cledb.js"></script>
-          <MenuHamburger/>
           <Editor />
       </div>
     );

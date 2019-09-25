@@ -5,11 +5,6 @@ import './tab-row.css';
 // ================================================================
 // create method for editing notes.
 
-
-
-
-
-
 class TabRow extends Component {
     BoxOnBlur(e) {
         this.props.textBlur(this.props.rowId, e.target.value);

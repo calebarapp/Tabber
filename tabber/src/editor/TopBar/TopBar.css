@@ -1,8 +1,15 @@
 .topbar-container {
     background-color: rgb(30,30,30);
-    height: 55px;
+    position: absolute;
+    height: 60px;
     top: 0;
     width: 100%;
+    z-index:99;
+    box-shadow: 1px -1px 5px 5px rgba(0,0,0,0.3);
+}
+
+.topbar__text-container {
+    margin-left: 8em;
 }
 
 .title {

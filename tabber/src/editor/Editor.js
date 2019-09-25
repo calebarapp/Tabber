@@ -8,6 +8,7 @@ import MobileControlPanel from './control-panel__mobile/control-panel';
 import Metadata from './Metadata/Metadata';
 import EditUtil from './Util';
 import TopBar from './TopBar/TopBar'
+import config from '../config.js';
 
 // In editor, map list of tab rows, tab row will be its own seperate component with another array passed to it as prop.
 // challenge will be manipulating the state of the root component...
@@ -28,7 +29,7 @@ class Editor extends Component {
         tuning: ['e','b','g','d','a','E'],
         defaultTuning: ['e','b','g','d','a','E'],
         isShiftHeld: false,
-        Title: "Demo Title",
+        Title: "Title of the Song",
         Author: "Demo Author"
     }
 
@@ -44,7 +45,8 @@ class Editor extends Component {
             notes: 'Insert notes...',
             tabs: []
         };
-        for (let x = 0; x < 45; x++) {
+        console.log(config.settings.ColumnInRow);
+        for (let x = 0; x < config.settings.ColumnInRow; x++) {
             newBar.tabs.push(new TabColumnObj(`${this.state.tabs.length}-${x}`));
         }
         const newStateArray = [...stateArray, newBar];
@@ -104,13 +106,15 @@ class Editor extends Component {
         }
     }
 
-    // can we clean this up? Should be able to use compare Ids.
+    // This should be cleaned up
+    // needs to generate bar before it attempts to `navigate` to the next row.
     NavigateTabColumn = (isShiftKey,i) => {
         const activeId = this.state.activeId;
         let tabs = this.state.tabs;
 
         if(this.state.tabs.length > 0)
         {
+            let lastTabIndex = config.settings.ColumnInRow - 1;
             let columnId = (this.state.activeId.length === 1) ? activeId[0] : activeId[activeId.length - 1];
             columnId = columnId.split('-')
                     .map(x => parseInt(x));
@@ -118,7 +122,7 @@ class Editor extends Component {
             // less than zero: last of previous row unless first row.
             if(columnId[1] + i < 0){
                 if(columnId[0] > 0){
-                newId = `${columnId[0] - 1}-${45}`;
+                newId = `${columnId[0] - 1}-${lastTabIndex}`;
                 } else {
                     // if no previous rows use old ID, it will be the first column of the sheet.
                     newId = `${columnId[0]}-${columnId[1]}`
@@ -126,7 +130,7 @@ class Editor extends Component {
             }
             // if last index of columnId, check if tabColumn is in last row. If it is, create new row. Set activeId to
             // the first line in that row.
-            else if(columnId[1] === 45) {
+            else if(columnId[1] === lastTabIndex) {
                 // if moving right
                 if(i === 1) {
                     if(columnId[0] + 1 === this.state.tabs.length){
@@ -145,8 +149,10 @@ class Editor extends Component {
             let newIdSplit = newId[newId.length - 1].split('-');
             // Probably an issue with async...generatebar not reflected in state. Can generate bar return value that would be tabs and function can manipulate that?
             console.log(tabs);
+            console.log(newIdSplit);
             let tabValues = tabs[newIdSplit[0]]
                             .tabs[newIdSplit[1]];
+            console.log(tabValues);
             tabValues = EditUtil.stripControlPanelValues(tabValues);
             let selectedColumn = tabs[newIdSplit[0]].tabs[newIdSplit[1]];
             selectedColumn["id"] = newId[newId.length - 1];

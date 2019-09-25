@@ -46,13 +46,11 @@
     height: 1em;
     width: 1em;
     font-size: 1em;
-
 }
+
 .tab-row__tuning p {
     font-size: 1em;
 }
-
-
 
 .text-box .text-box {
     border: none;
@@ -108,7 +106,6 @@
 
 @media (max-width: 820px) {
     /* Styles */
-
     .tab-row__tuning p {
         font-size: 1em;
     }

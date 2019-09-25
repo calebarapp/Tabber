@@ -6,11 +6,13 @@ class TabColumn extends Component {
         return (
             <div>
                 <div className = "topbar-container">
-                    <div className = "title">
-                        {this.props.Title}
-                    </div>
-                    <div className = "author">
-                        {this.props.Author}
+                    <div className = "topbar__text-container">
+                        <div className = "title">
+                            {this.props.Title}
+                        </div>
+                        <div className = "author">
+                            {this.props.Author}
+                        </div>
                     </div>
                 </div>
             </div>

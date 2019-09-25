@@ -1,13 +1,5 @@
 Style:
-    - Make mobile friendly view.
-        - Have secondary control panel on bottom of the screen for mobile version.
-            - have multiple select for each string input.
-            - have butttons for traversing columns left and right.
-            - button to traverse rows.
-            - Killswitch type button that you can hold while you traverse to highlight multiple columns.
-            - copy, paste, insert, and cut.
-    - Fix Tuning side bar
-    - Fix title width(title and description do not match. WHy?)
+    - tab window should be bottom of screen in desktop mode.
 Markup:
     - Control Panel:
         - copy, paste, cut, and insert buttons.
@@ -23,7 +15,7 @@ Function:
             - inserting single should paste after selection.
     - Tuning should update all tuning instances.
 Project:
-    
+
 
 =========================================================================================
 Model:

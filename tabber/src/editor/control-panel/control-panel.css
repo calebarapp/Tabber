@@ -1,19 +1,14 @@
 .control-panel__container {
     position:absolute;
     left: 0;
-    top: 55px;
-    background-color: rgba(50,50,50,1);
+    top: 0;
+    background-color: rgba(220,220,220,1);
     width: 6em;
     height: 100%;
+    padding-top: 5.5em;
     box-shadow: 0px 5px 10px rgba(40,40,40,.2);
+    z-index:1;
 }
-
-.tabs-input {
-    margin: 1em 0 .5em 0;
-    display: flex;
-    flex-direction: column;
-}
-
 
 .tabs-input__input-containter {
     display: flex;
@@ -24,11 +19,17 @@
     margin: .1em 0em 0 1.7em;
 }
 
-.tabs-input__input-containter p {
-    color:rgba(200,200,200, 1);
-    font-size: .8em;
+.tabs-input {
+    display: flex;
+    flex-direction: column;
+    width:100%;
 }
 
+.tabs-input__input-containter p {
+    color:rgba(30,30,30, 1);
+    font-size: .8em;
+    margin-top: .4em;
+}
 
 .input {
     width: 3em;
@@ -37,10 +38,10 @@
     border:none;
     border-bottom: 2px solid rgba(200,200,200,0);
     box-shadow: none;
-    background-color: rgba(80,80,80,1);
-    box-shadow: 0px 2px 2px 2px rgba(0,0,0,0.1) inset;
+    background-color: white;
+    box-shadow: 0px 2px 2px 2px rgba(50,50,50,0.1) inset;
     /*font*/
-    color:rgba(200,200,200, 1);
+    color:rgba(50,50,50, 1);
     font-weight: 600;
     font-size: .8em;
 }
@@ -52,7 +53,6 @@
 button:focus {
     outline: none;
 }
-
 /*===============================================================*/
 /* Buttons */
 /*===============================================================*/
@@ -60,23 +60,24 @@ button:focus {
 .button__container button {
     display: inline-block;
     text-align: center;
-    background-color: rgba(50,50,50);
+    background-color: rgba(220,220,220, 1);
     font-size: .8em;
-    color:rgba(200,200,200, 1);
+    color:rgb(30,30,30);
     border:0;
     padding: .4em .8em;
     cursor: pointer;
     width: 100%;
 }
 
-.button:hover {
-    background-color: rgba(100,100,100,1);
+.button__container button:hover {
+    background-color: white;
 }
+
+
 
 .dropdown-button {
     margin-left: .5em;
 }
-
 
 .rowDropdown__container
 {
@@ -126,7 +127,6 @@ button:focus {
     margin-top: .5em;
 
 }
-
 
 .add-row--triggered {
     background-color: rgba(80,80,80,1);

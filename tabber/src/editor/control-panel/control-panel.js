@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
-import './control-panel.css';
+  import React, { Component } from 'react';
 import '../media-breaks.css';
+import './control-panel.css';
 import config from '../../config.js';
 
 class ControlPanel extends Component {
@@ -13,6 +13,7 @@ class ControlPanel extends Component {
     selectInput = (x) => {
         this.setState({focused:x});
     }
+
     // when input changes, this runs to move caret to end of default
     MoveCaretToEnd = (e) =>  {
         var temp_value = e.target.value
