@@ -15,26 +15,23 @@
     overflow-x: hidden;
 }
 
-.tab-display__gutter {
-    width: 10%;
-    background-color: white;
-}
 
 .tab-display {
-    width: 80%;
+    width: 700px;
     padding-top: 1em;
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-left:0px;
+    margin:0 auto;
 }
 
 .tab-display div {
     /* margin-left:30px; */
-    width: 100%
+    width: 100%;
 }
 
-@media only screen and (min-device-width : 540px) and (max-device-width : 2000px) {
+
+@media only screen and (min-width : 540px) and (max-width : 2000px) {
     .control-panel__container--mobile {
         display: none;
     }
@@ -45,9 +42,9 @@
 
 /*=============================================================================================*/
 /* Smartphones (landscape) ----------- */
-@media only screen and (min-width : 321px) and (max-device-width : 540px) {
+@media only screen and (min-width : 321px) and (max-width : 540px) {
 /* Styles */
-    .editor
+.editor
     {
         padding-left: 0;
     }

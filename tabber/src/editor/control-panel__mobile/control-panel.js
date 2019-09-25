@@ -108,7 +108,7 @@ class ControlPanel extends Component {
 
         return (
             <div className = "control-panel__container--mobile" onKeyUp ={(event) => this.onArrow(event) }>
-                 <div className = "tabs-input">
+                 <div className = "mobile-tabs-input">
                  {/*Will eventually need to itereate over a list of tab values.*/}
                     <div className = 'tuning-button'>E</div>
                     <div className = 'tuning-button'>A</div>
@@ -118,7 +118,7 @@ class ControlPanel extends Component {
                     <div className = 'tuning-button'>E</div>
                 </div>
 
-                <div className = 'button__container'>
+                <div className = 'mobile-button__container'>
                     <button type = "button" className = "button" onClick={() => this.props.generateBar()}>Add row</button>
                     <button type = "button" className = "button" onClick={() => this.props.generateBar()}>Copy</button>
                     <button type = "button" className = "button" onClick={() => this.props.generateBar()}>Paste</button>
