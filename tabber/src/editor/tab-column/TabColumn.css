@@ -1,8 +1,8 @@
-.tab-column__container { 
+.tab-column__container {
     display: flex;
     flex-direction:column;
 }
-.tab-column { 
+.tab-column {
     width: auto;
     float:left;
     cursor: pointer;
@@ -10,11 +10,11 @@
     border-radius: 3px;
     /* max-width: 1.1em; */
 }
-.tab-column:hover { 
+.tab-column:hover {
     background-color: rgb(91,192,222);
     color:white;
 }
-.tab-column--activated{ 
+.tab-column--activated{
     background-color: rgb(91,192,222);
     box-shadow: 1px 1px 5px 5px rgba(0,0,0,.01);
     color:white;
@@ -26,13 +26,13 @@ p {
     color: black;
 }
 .tab-column__container div {
-    display: flex; 
+    display: flex;
     justify-content: space-around;
     height: 1em;
     width: 1.4em;
 }
 
-.text-box { 
+.text-box {
     cursor: pointer;
     width: 99%;
 }
@@ -126,7 +126,7 @@ p {
         width: .92em;
         padding-right: 0px;
     }
-}  
+}
 
 @media (max-width: 800px) {
     p {
@@ -276,8 +276,8 @@ p {
         padding-right: 0px;
     }
 }
-    
-   
+
+
 @media (max-width: 350px) {
 /* Styles */
     p {
@@ -303,7 +303,7 @@ p {
     }
 }
 
-    
+
 
 @media (max-width: 325px) {
 /* Styles */
@@ -317,7 +317,7 @@ p {
     }
 }
 
-   
+
 @media (max-width: 300px) {
 /* Styles */
     p {
@@ -341,4 +341,3 @@ p {
             padding-right: 0px;
         }
     }
-    

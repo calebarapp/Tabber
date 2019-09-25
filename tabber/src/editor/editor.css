@@ -16,18 +16,17 @@
 }
 
 .tab-display__gutter {
-    width: 5%;
+    width: 10%;
     background-color: white;
 }
 
 .tab-display {
-    width: 90%;
+    width: 80%;
     padding-top: 1em;
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-left:80px;
-
+    margin-left:0px;
 }
 
 .tab-display div {

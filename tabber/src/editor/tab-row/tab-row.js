@@ -1,7 +1,7 @@
 import React, {Component } from 'react';
 import TabColumn from '../tab-column/TabColumn';
 import './tab-row.css';
-
+import config from '../../config.js';
 // ================================================================
 // create method for editing notes.
 
@@ -22,6 +22,7 @@ class TabRow extends Component {
 
     render() {
         let textBox = null;
+        let pivot = (config.settings.ColumnInRow / 2) - 1;
         if(this.props.highlightedTextBox === this.props.rowId)
         {
             let notesValue = this.props.tabRow.notes
@@ -43,7 +44,7 @@ class TabRow extends Component {
                             <div className = "container__tab-blocks">
 
                                 <div className = "container__tab-block">
-                                    {this.props.tabRow.tabs.slice(0,22).map((tab) => {
+                                    {this.props.tabRow.tabs.slice(0,pivot).map((tab) => {
                                         return <TabColumn key = { tab.id }
                                         activeId = { this.props.activeId }
                                         tabClick = { this.props.tabClick }
@@ -54,7 +55,7 @@ class TabRow extends Component {
                                     }
                                 </div>
                                 <div className = "container__tab-block">
-                                    {this.props.tabRow.tabs.slice(22).map((tab) => {
+                                    {this.props.tabRow.tabs.slice(pivot).map((tab) => {
                                         return <TabColumn key = { tab.id }
                                         activeId = { this.props.activeId }
                                         tabClick = { this.props.tabClick}
