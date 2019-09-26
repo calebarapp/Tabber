@@ -45,7 +45,7 @@
     justify-content: space-around;
     align-items: flex-start;
     height: 1em;
-    width: 1em;
+    width: 1.4em;
     font-size: 1em;
 }
 
@@ -92,7 +92,8 @@
     }
 }
 
-@media (max-width: 600px)
-.tab-row__main-container {
-    margin: 0;
+@media (max-width: 540px) {
+    .tab-row__main-container {
+        margin: 0;
+    }
 }
