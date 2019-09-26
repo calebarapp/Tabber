@@ -17,7 +17,7 @@
 
 
 .tab-display {
-
+    width: 700px;
     padding-top: 1em;
     display: flex;
     flex-direction: column;
@@ -29,10 +29,7 @@
     /* margin-left:30px; */
     width: 100%;
 }
-.tab-display__container
-{
 
-}
 
 @media only screen and (min-width : 540px) and (max-width : 2000px) {
     .control-panel__container--mobile {
