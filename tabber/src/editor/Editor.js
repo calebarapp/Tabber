@@ -276,14 +276,7 @@ class Editor extends Component {
                 </div>
 
                 <div className = "tab-display__container">
-                    <div className = "tab-display__gutter"></div>
                     <div className = "tab-display">
-                        <div>
-                        <Metadata
-                        tuning = {this.state.tuning}
-                        updateTuning = {this.updateTuning.bind(this)}
-                        />
-                        </div>
                         <div className="tab-display__tabs">
                         {
                             this.state.tabs.map( (tabRow, index) => {
@@ -304,9 +297,6 @@ class Editor extends Component {
                         )}
                         </div>
                     </div>
-
-                    <div className = "tab-display__gutter"></div>
-
                 </div>
             </div>
         );
