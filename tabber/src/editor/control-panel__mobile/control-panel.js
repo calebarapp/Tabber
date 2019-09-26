@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import './control-panel.css';
-import '../media-breaks.css';
-
 
 class ControlPanel extends Component {
     state = {

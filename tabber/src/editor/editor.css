@@ -1,23 +1,23 @@
 .editor {
     background-color: white;
     justify-content: center;
-    height: 100vh;
+    height: 100%;
     overflow-y: scroll;
     padding: 4em 0;
 }
 
 .tab-display__container
 {
-    width: 100vw;
+    width: 100%;
     display: flex;
-    height: 62vh;
+    height: 100vh;
     overflow-y: scroll;
     overflow-x: hidden;
 }
 
 
 .tab-display {
-    width: 700px;
+
     padding-top: 1em;
     display: flex;
     flex-direction: column;
@@ -29,7 +29,10 @@
     /* margin-left:30px; */
     width: 100%;
 }
+.tab-display__container
+{
 
+}
 
 @media only screen and (min-width : 540px) and (max-width : 2000px) {
     .control-panel__container--mobile {
@@ -41,6 +44,24 @@
 }
 
 /*=============================================================================================*/
+/*  tab-display */
+/* @media (max-width: 900px) {
+    .tab-display {
+        width: 420px;
+    }
+}
+@media (max-width: 500px) {
+    .tab-display {
+        width: 400px;
+    }
+}
+
+@media (max-width: 470px) {
+    .tab-display {
+        width: 350px;
+    }
+} */
+
 /* Smartphones (landscape) ----------- */
 @media only screen and (min-width : 321px) and (max-width : 540px) {
 /* Styles */
@@ -57,9 +78,7 @@
     .tab-display {
         margin:0;
     }
-    .tab-display__tabs {
-        margin-left: 5px;
-    }
+
 }
 
 /* Smartphones (portrait) ----------- */
@@ -79,6 +98,6 @@
         margin:0;
     }
     .tab-display__tabs {
-        margin-left: 5px;
+        margin-left: 0px;
     }
 }

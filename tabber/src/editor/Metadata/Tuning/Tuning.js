@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import '../../media-breaks.css';
 
 
 class Tuning extends Component {
@@ -19,7 +18,7 @@ class Tuning extends Component {
             event.target.defaultValue = "";
             event.target.value = "";
             val = "";
-        } 
+        }
         else {
             event.target.value = event.target.defaultValue;
             val = event.target.value;
@@ -33,9 +32,9 @@ class Tuning extends Component {
         //let tuningButton;
         if(this.props.TuningActivated){
             tuningNode = <div className ="tuning__inputs">
-                <input 
+                <input
                     defaultValue = {this.props.Tuning[0]}
-                    autoFocus = {true} 
+                    autoFocus = {true}
                     ref = {(node)=>{this.inputs[0] = node}}
                     onChange = {(e)=>{this.onChange(e, 0)}}
                 />
@@ -80,12 +79,12 @@ class Tuning extends Component {
                 -{this.props.Tuning[5]}
             </div>
         }
-        return ( 
-            <div className = "tuning">  
+        return (
+            <div className = "tuning">
                 {tuningNode}
             </div>
          );
     }
 }
- 
+
 export default Tuning;

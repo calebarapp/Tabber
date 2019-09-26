@@ -1,5 +1,4 @@
-  import React, { Component } from 'react';
-import '../media-breaks.css';
+import React, { Component } from 'react';
 import './control-panel.css';
 import config from '../../config.js';
 
