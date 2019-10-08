@@ -36,3 +36,17 @@ p {
     cursor: pointer;
     width: 99%;
 }
+
+@media (max-width: 400px) {
+    p {
+        font-size:.6em;
+        width:.6em;
+    }
+}
+
+@media (max-width: 350px) {
+    p {
+        font-size:.4em;
+        width:.4em;
+    }
+}

@@ -6,8 +6,6 @@
     padding: 4em 0;
 }
 
-
-
 .tab-display__container
 {
     display: flex;
@@ -38,6 +36,12 @@
 @media (max-width: 900px) {
     .tab-display {
             width: 400px;
+    }
+}
+
+@media (max-width: 420px) {
+    .tab-display {
+            width: 90%;
     }
 }
 
