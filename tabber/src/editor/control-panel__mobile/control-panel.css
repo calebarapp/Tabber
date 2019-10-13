@@ -4,7 +4,7 @@
     bottom: 0;
     background-color: rgba(20,20,20,1);
     width: 100%;
-    height: 38vh;
+    height: 41vh;
     box-shadow: 0px 5px 10px rgba(40,40,40,.2);
     margin: 0;
     z-index: 10;
@@ -24,7 +24,7 @@
 
     text-align: center;
     color: rgb(200,200,200);
-    padding: .5em;
+    padding: .3em;
     cursor: pointer;
 }
 
@@ -41,7 +41,7 @@
     color:rgba(200,200,200, 1);
     background-color: rgba(20,20,20,1);
     border:0;
-    padding: .4em .8em;
+    padding: .3em .8em;
     cursor: pointer;
     width: 100%;
 }
@@ -132,8 +132,8 @@ hr {
 /*-------------------------------------------------------------------------*/
 /*Unique components*/
 .shift {
-    font-size: 1.2em;
+    font-size: 1em;
     border-radius: 3px;
     border: 1px solid rgba(255,255,255, 0.2);
-    width: 100px;
+    width: 100px;;
 }

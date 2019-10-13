@@ -240,6 +240,16 @@ class Editor extends Component {
         })
     }
 
+    _getValueOfTab = (string) => {
+        let id = this.state.activeId[0].split('-');
+        let value = this.state
+                    .tabs[id[0]]
+                    .tabs[id[1]][string]
+                    .split('')
+                    .filter((x) => x != '-')
+                    .join('');
+        return value;
+    }
 
     render() {
         return (
@@ -272,6 +282,7 @@ class Editor extends Component {
                         generateBar = { this.generateBar.bind(this) }
                         ref = { (node) => { this.controlPanel = node }}
                         tuning = { this.state.tuning }
+                        getValueOfTab = {this._getValueOfTab.bind(this)}
                     />
                 </div>
 

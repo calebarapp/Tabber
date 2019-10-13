@@ -14,6 +14,7 @@ Function:
             - pasting single should paste OVER selection.
             - inserting single should paste after selection.
     - Tuning should update all tuning instances.
+    - Should tuning be indexed?
 Project:
 
 

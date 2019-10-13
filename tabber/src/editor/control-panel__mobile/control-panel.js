@@ -1,14 +1,15 @@
 import React, { Component } from 'react';
 import './control-panel.css';
+import config from '../../config.js';
 
 class ControlPanel extends Component {
     state = {
         focus:0,
         tabRange:["0","1","2","3","4","5","6","7","8","9","10",
         "11","12","13","14","15","16","17","18","19","20","21","22","23","24", "p", "h", "/", "b","r", ""],
-        rowDropdownBool:false
+        rowDropdownBool:false,
+        activeString: "e"
     }
-
     // changes focus when you click on textinput
     selectInput = (x) => {
         this.setState({focused:x});
@@ -20,7 +21,7 @@ class ControlPanel extends Component {
         e.target.value = temp_value
     }
 
-    // utillity for changing text input
+    // utillity for changing text input -- this needs to be configurable for more or less than 6 strings.
     changeInput = (i) => {
         let focus = this.state.focus;
         if(i > 0){
@@ -39,7 +40,6 @@ class ControlPanel extends Component {
         this.inputs[focus].focus();
         this.setState({focus:focus})
     }
-
 
     onInputChange = (guitarString, event) => {
         //if more than one column is selected, populate each column with input.
@@ -68,7 +68,6 @@ class ControlPanel extends Component {
     }
 
     //this.props.generateBar()
-
 
     rowClick = () => {
         //trigger dropdown
@@ -101,6 +100,78 @@ class ControlPanel extends Component {
         }
     }
 
+    numClick = (e) => {
+        let value = e.target.innerHTML;
+        let string = this.state.activeString;
+        value = this.props.getValueOfTab(string) + value;
+        console.log(value);
+        this.updateTab(string, value);
+    }
+
+    backPress = () => {
+        let string = this.state.activeString;
+        let value = this.props.getValueOfTab(string).slice(0,-1);
+        this.updateTab(string, value);
+    }
+
+    _validateNonInt = (value) =>
+    {
+        return config.settings.AcceptedNonIntInputVal.includes(value);
+    }
+
+    _valiateTabRange = (value) => {
+        let string = this.state.activeString;
+        return config.settings.TabRange.includes(value)
+    }
+    //------------------------------------------------------
+
+    updateTab = (guitarString, value) => {
+        //if more than one column is selected, populate each column with input.
+        const column = this.props.selectedColumn.column;
+        column.id = this.props.selectedColumn.activeId[this.props.selectedColumn.activeId.length - 1];
+        const inputs = this.props.inputs;
+        //if new value is valid, update tab.
+        if(this._valiateTabRange(value)) {
+            if(value.split('').length === 2 || this._validateNonInt(value)){//this needs to be stored elsewhere!!
+                column[guitarString] = `${value}-`;
+                inputs[guitarString] = value;
+                this.props.updateControlPanelsInputs(inputs);
+                }
+            else if(value.split('').length === 1){
+                column[guitarString] = `-${value}-`;
+                inputs[guitarString] = value;
+                this.props.updateControlPanelsInputs(inputs);
+
+            } else {
+                column[guitarString] = '---'
+                inputs[guitarString] = value ;
+                this.props.updateControlPanelsInputs(inputs);
+            };
+            this.props.updateTabData(column);
+        }
+    }
+
+
+
+    //1 = right, -1 = left
+    navigationEvent = (dir) => {
+        if(dir > 0)
+        {
+
+        } else
+        {
+
+        }
+    }
+
+    shiftPress = (e, isMouseDown) => {
+        if(isMouseDown){
+
+        } else {
+
+        }
+    }
+
     render() {
         this.inputs = [];
 
@@ -125,18 +196,18 @@ class ControlPanel extends Component {
                 <hr/>
                 <div className = "text">
                     <div className = "text-row">
-                        <button>1</button>
-                        <button>2</button>
-                        <button>3</button>
-                        <button>4</button>
-                        <button>5</button>
+                        <button onClick = {(e) => {this.numClick(e)}} >1</button>
+                        <button onClick = {(e) => {this.numClick(e)}} >2</button>
+                        <button onClick = {(e) => {this.numClick(e)}} >3</button>
+                        <button onClick = {(e) => {this.numClick(e)}} >4</button>
+                        <button onClick = {(e) => {this.numClick(e)}} >5</button>
                     </div>
                     <div className = "text-row">
-                        <button>6</button>
-                        <button>7</button>
-                        <button>8</button>
-                        <button>9</button>
-                        <button>0</button>
+                        <button onClick = {(e) => {this.numClick(e)}} >6</button>
+                        <button onClick = {(e) => {this.numClick(e)}} >7</button>
+                        <button onClick = {(e) => {this.numClick(e)}} >8</button>
+                        <button onClick = {(e) => {this.numClick(e)}} >9</button>
+                        <button onClick = {(e) => {this.numClick(e)}} >0</button>
                     </div>
                     <div className = "text-row">
                         <button>Tap</button>
@@ -145,11 +216,23 @@ class ControlPanel extends Component {
                         <button>Special</button>
                     </div>
                     <hr/>
+
                     <div className = "arrow-row">
-                        <i class="fas fa-long-arrow-alt-left"></i>
-                        <p className = "shift">Shift</p>
-                        <i class="fas fa-long-arrow-alt-right"></i>
+                        <i class="fas fa-long-arrow-alt-left" onClick = {() => this.navigationEvent(-1)}></i>
+
+                        <p className = "arrow-row__button" onMouseDown = {() => this.backPress()}>
+                            Back
+                        </p>
+
+                        <p className = "arrow-row__button"
+                        onMouseDown = {(e) => this.shiftPress(e, true)}
+                        onMouseUp = {(e) => this.shiftPress(e, false)}>
+                            Shift
+                        </p>
+
+                        <i class="fas fa-long-arrow-alt-right" onClick = {() => this.navigationEvent(1)}></i>
                     </div>
+
                 </div>
             </div>
          );
