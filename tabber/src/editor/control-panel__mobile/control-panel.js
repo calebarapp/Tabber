@@ -189,9 +189,9 @@ class ControlPanel extends Component {
 
                 <div className = 'mobile-button__container'>
                     <button type = "button" className = "button" onClick={() => this.props.generateBar()}>Add row</button>
-                    <button type = "button" className = "button" onClick={() => this.props.generateBar()}>Copy</button>
-                    <button type = "button" className = "button" onClick={() => this.props.generateBar()}>Paste</button>
-                    <button type = "button" className = "button" onClick={() => this.props.generateBar()}>Insert</button>
+                    <button type = "button" className = "button disabled" onClick={() => this.props.generateBar()}>Copy</button>
+                    <button type = "button" className = "button  disabled" onClick={() => this.props.generateBar()}>Paste</button>
+                    <button type = "button" className = "button disabled" onClick={() => this.props.generateBar()}>Insert</button>
                 </div>
                 <hr/>
                 <div className = "text">
@@ -210,10 +210,10 @@ class ControlPanel extends Component {
                         <button onClick = {(e) => {this.numClick(e)}} >0</button>
                     </div>
                     <div className = "text-row">
-                        <button>Tap</button>
-                        <button>Transition</button>{/*hold for more options*/}
-                        <button>Harmonic</button>
-                        <button>Special</button>
+                        <button className = "disabled">Tap</button>
+                        <button className = "disabled">Transition</button>{/*hold for more options*/}
+                        <button className = "disabled">Harmonic</button>
+                        <button className = "disabled">Special</button>
                     </div>
                     <hr/>
 
