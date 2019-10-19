@@ -14,28 +14,36 @@ import config from '../config.js';
 // challenge will be manipulating the state of the root component...
 class Editor extends Component {
     state = {
-        tabs: [],
-        activeId:['0-0'],
-        selectedColumn: new TabColumnObj('0-0'),
+        tabs:               [],
+        activeId:           ['0-0'],
+        selectedColumn:     new TabColumnObj('0-0'),
         highlightedTextBox: null,
         ControlPanelInputs: {
-            e:'',
-            b:'',
-            g:'',
-            d:'',
-            a:'',
-            E:''
-        },
-        tuning: ['e','b','g','d','a','E'],
-        defaultTuning: ['e','b','g','d','a','E'],
-        isShiftHeld: false,
-        Title: "Title of the Song",
-        Author: "Demo Author"
+                            e:'',
+                            b:'',
+                            g:'',
+                            d:'',
+                            a:'',
+                            E:''
+                            },
+        tuning:             ['e','b','g','d','a','E'],
+        defaultTuning:      ['e','b','g','d','a','E'],
+        isShiftHeld:        false,
+        Title:              "Title of the Song",
+        Author:             "Demo Author",
+        selectedString:     0,
+        clipBoard:          []
     }
 
     componentDidMount() {
         this.generateBar();
+        let defaultTuning = Config.DefaultTuning;
+        this.setState({defaultTuning:defaultTuning})
         //this.highlightInput();
+    }
+
+    updateSelectedString = (index) => {
+        this.setState({selectString: index});
     }
 
     //generates a new tab bar, creates 35 new tabColumnObj then updates the state.
@@ -45,15 +53,34 @@ class Editor extends Component {
             notes: 'Insert notes...',
             tabs: []
         };
-        console.log(config.settings.ColumnInRow);
         for (let x = 0; x < config.settings.ColumnInRow; x++) {
             newBar.tabs.push(new TabColumnObj(`${this.state.tabs.length}-${x}`));
         }
         const newStateArray = [...stateArray, newBar];
         this.setState({tabs: newStateArray});
-        console.log(newStateArray);
         return(newStateArray);
     };
+
+    getRange = (startIndex, endIndex, tabRange) => {
+        return tabRange.slice(startIndex, endIndex);
+    }
+
+    copySelection = () =>. {
+        let tabRange =      this.state.tabRange;
+        let startIndex =    this.state.activeId[0];
+        let endIndex =      this.state.activeId[this.state.activeId.length - 1];
+
+        if(startIndex === endIndex) {
+            let row = this.state.activeId[0];
+            let column = this.state.activeId[0];
+            clipBoard = [this.state.tabRange[row][column]]
+        }
+        else {
+            clipboard   =   getRange(startIndex, endIndex, tabRange);
+        }
+        console.log(clipBoard);
+        this.setState({clipBoard:clipboards});
+    }
 
     shiftClick = (id) => {
         if(this.state.isShiftHeld) {
@@ -148,11 +175,9 @@ class Editor extends Component {
             newId = EditUtil.buildListForNav(newId, isShiftKey, i, this.state.activeId);
             let newIdSplit = newId[newId.length - 1].split('-');
             // Probably an issue with async...generatebar not reflected in state. Can generate bar return value that would be tabs and function can manipulate that?
-            console.log(tabs);
-            console.log(newIdSplit);
+
             let tabValues = tabs[newIdSplit[0]]
                             .tabs[newIdSplit[1]];
-            console.log(tabValues);
             tabValues = EditUtil.stripControlPanelValues(tabValues);
             let selectedColumn = tabs[newIdSplit[0]].tabs[newIdSplit[1]];
             selectedColumn["id"] = newId[newId.length - 1];
@@ -277,12 +302,13 @@ class Editor extends Component {
                         selectedColumn = { {column: this.state.selectedColumn, activeId: this.state.activeId} }
                         updateTabData = { this.updateTabData.bind(this) }
                         inputs = { this.state.ControlPanelInputs}
-                        updateControlPanelsInputs = { this.updateControlPanelsInputs.bind(this) }
                         NavigateTabColumn = { this.NavigateTabColumn.bind(this) }
                         generateBar = { this.generateBar.bind(this) }
                         ref = { (node) => { this.controlPanel = node }}
                         tuning = { this.state.tuning }
                         getValueOfTab = {this._getValueOfTab.bind(this)}
+                        updateControlPanelsInputs = {this.updateControlPanelsInputs.bind(this)}
+                        selectedString = {this.updateSelectedString.bind(this)}
                     />
                 </div>
 

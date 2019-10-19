@@ -4,11 +4,10 @@ import config from '../../config.js';
 
 class ControlPanel extends Component {
     state = {
-        focus:0,
-        tabRange:["0","1","2","3","4","5","6","7","8","9","10",
-        "11","12","13","14","15","16","17","18","19","20","21","22","23","24", "p", "h", "/", "b","r", ""],
+        focus:0, 
         rowDropdownBool:false,
-        activeString: "e"
+        activeString: "e",
+        shiftKey: false
     }
     // changes focus when you click on textinput
     selectInput = (x) => {
@@ -39,39 +38,6 @@ class ControlPanel extends Component {
         }
         this.inputs[focus].focus();
         this.setState({focus:focus})
-    }
-
-    onInputChange = (guitarString, event) => {
-        //if more than one column is selected, populate each column with input.
-        const column = this.props.selectedColumn.column;
-        column.id = this.props.selectedColumn.activeId[this.props.selectedColumn.activeId.length - 1];
-        const value = event.target.value.toString();
-        const inputs = this.props.inputs;
-        if(this.state.tabRange.includes(value)) {
-            if(value.split('').length === 2 || ['b','h', 'p', 'r'].includes(value)){
-                column[guitarString] = `${value}-`;
-                inputs[guitarString] = value;
-                this.props.updateControlPanelsInputs(inputs);
-                }
-            else if(value.split('').length === 1){
-                column[guitarString] = `-${value}-`;
-                inputs[guitarString] = value;
-                this.props.updateControlPanelsInputs(inputs);
-
-            } else {
-                column[guitarString] = '---'
-                inputs[guitarString] = value ;
-                this.props.updateControlPanelsInputs(inputs);
-            };
-            this.props.updateTabData(column);
-        }
-    }
-
-    //this.props.generateBar()
-
-    rowClick = () => {
-        //trigger dropdown
-        this.setState({rowDropdownBool: !this.state.rowDropdownBool});
     }
 
     //arrow input changes selected text input
@@ -151,40 +117,44 @@ class ControlPanel extends Component {
         }
     }
 
-
+    selectString = (index) => {
+        this.props.updateSelectedString(index);
+    }
 
     //1 = right, -1 = left
-    navigationEvent = (dir) => {
-        if(dir > 0)
-        {
-
-        } else
-        {
-
-        }
+    navigationEvent = (e,dir) => {
+        this.props.NavigateTabColumn(e.shiftKey, dir);
     }
 
     shiftPress = (e, isMouseDown) => {
+        let shiftKey;
         if(isMouseDown){
-
+            shiftKey = true;
         } else {
-
+            shiftKey = false;
         }
+        this.setState({shiftKey:shiftKey});
+    }
+
+    checkSelectedString = (index) => {
+        return index === this.props.selectString;
     }
 
     render() {
         this.inputs = [];
 
         return (
-            <div className = "control-panel__container--mobile" onKeyUp ={(event) => this.onArrow(event) }>
+            <div className = "control-panel__container--mobile"
+            onKeyUp ={(e) => this.onArrow(e) }
+            >
                  <div className = "mobile-tabs-input">
                  {/*Will eventually need to itereate over a list of tab values.*/}
-                    <div className = 'tuning-button'>E</div>
-                    <div className = 'tuning-button'>A</div>
-                    <div className = 'tuning-button'>D</div>
-                    <div className = 'tuning-button'>G</div>
-                    <div className = 'tuning-button'>B</div>
-                    <div className = 'tuning-button'>E</div>
+                    <div className = {this.checkSelectedString(5)} onClick = {()=> this.selectString(5)}>E</div>
+                    <div className = 'tuning-button' onClick = {()=> this.selectString(4)}>a</div>
+                    <div className = 'tuning-button' onClick = {()=> this.selectString(3)}>b</div>
+                    <div className = 'tuning-button' onClick = {()=> this.selectString(2)}>g</div>
+                    <div className = 'tuning-button' onClick = {()=> this.selectString(1)}>d</div>
+                    <div className = 'tuning-button' onClick = {()=> this.selectString(0)}>e</div>
                 </div>
 
                 <div className = 'mobile-button__container'>
@@ -218,19 +188,19 @@ class ControlPanel extends Component {
                     <hr/>
 
                     <div className = "arrow-row">
-                        <i class="fas fa-long-arrow-alt-left" onClick = {() => this.navigationEvent(-1)}></i>
+                        <i class="fas fa-long-arrow-alt-left" onClick = {(e) => this.navigationEvent(e,-1)}></i>
 
                         <p className = "arrow-row__button" onMouseDown = {() => this.backPress()}>
                             Back
                         </p>
 
                         <p className = "arrow-row__button"
-                        onMouseDown = {(e) => this.shiftPress(e, true)}
-                        onMouseUp = {(e) => this.shiftPress(e, false)}>
+                        onMouseDown = {(e) => this.shiftPress(true)}
+                        onMouseUp = {(e) => this.shiftPress(false)}>
                             Shift
                         </p>
 
-                        <i class="fas fa-long-arrow-alt-right" onClick = {() => this.navigationEvent(1)}></i>
+                        <i class="fas fa-long-arrow-alt-right" onClick = {(e) => this.navigationEvent(e,1)}></i>
                     </div>
 
                 </div>

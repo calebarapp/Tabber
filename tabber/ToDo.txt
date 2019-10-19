@@ -1,5 +1,6 @@
 Style:
     - tab window should be bottom of screen in desktop mode.
+    - button font size shrinks too much
 Markup:
     - Control Panel:
         - copy, paste, cut, and insert buttons.
