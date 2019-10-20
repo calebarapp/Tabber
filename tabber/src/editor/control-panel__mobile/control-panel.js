@@ -4,7 +4,7 @@ import config from '../../config.js';
 
 class ControlPanel extends Component {
     state = {
-        focus:0, 
+        focus:0,
         rowDropdownBool:false,
         activeString: "e",
         shiftKey: false
@@ -98,16 +98,14 @@ class ControlPanel extends Component {
         const inputs = this.props.inputs;
         //if new value is valid, update tab.
         if(this._valiateTabRange(value)) {
-            if(value.split('').length === 2 || this._validateNonInt(value)){//this needs to be stored elsewhere!!
+            if(value.split('').length === 2 || this._validateNonInt(value)) { //this needs to be stored elsewhere!!
                 column[guitarString] = `${value}-`;
                 inputs[guitarString] = value;
                 this.props.updateControlPanelsInputs(inputs);
-                }
-            else if(value.split('').length === 1){
+            } else if(value.split('').length === 1){
                 column[guitarString] = `-${value}-`;
                 inputs[guitarString] = value;
                 this.props.updateControlPanelsInputs(inputs);
-
             } else {
                 column[guitarString] = '---'
                 inputs[guitarString] = value ;
@@ -159,9 +157,9 @@ class ControlPanel extends Component {
 
                 <div className = 'mobile-button__container'>
                     <button type = "button" className = "button" onClick={() => this.props.generateBar()}>Add row</button>
-                    <button type = "button" className = "button disabled" onClick={() => this.props.generateBar()}>Copy</button>
-                    <button type = "button" className = "button  disabled" onClick={() => this.props.generateBar()}>Paste</button>
-                    <button type = "button" className = "button disabled" onClick={() => this.props.generateBar()}>Insert</button>
+                    <button type = "button" className = "button disabled" onClick={() => this.props.copySelection()}>Copy</button>
+                    <button type = "button" className = "button  disabled" onClick = {() => this.props.pasteClipboard()}>Paste</button>
+                    <button type = "button" className = "button disabled">Insert</button>
                 </div>
                 <hr/>
                 <div className = "text">

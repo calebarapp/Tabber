@@ -1,4 +1,7 @@
 import { TabColumnObj } from "./tab-column/tabColumnObject";
+import config from '../config.js';
+
+
 
 // Class for editor helper functions.
 
@@ -12,6 +15,7 @@ const mergeObject = (obj) => {
     return result;
 }
 
+// removes dashes from tab
 const stripControlPanelValues = (tabColumn) => {
     let ControlPanelInputs = {};
     for(let x in tabColumn){
@@ -147,7 +151,7 @@ const buildListForNav = (newId, isShiftKey, i, activeId) => {
 
     //Fill seclection should take a list of Ids and a new newColumn. It will Go through each column in the Id
     // list and replace it with the new value.
-    const fillSelection = (newTabs, newColumn, activeId) => {
+    const fillSelectionWithValue = (newTabs, newColumn, activeId) => {
         for(let x = 0; x < activeId.length; x++){
             const id = activeId[x];
             const idSplit = id.split('-');
@@ -170,6 +174,24 @@ const buildListForNav = (newId, isShiftKey, i, activeId) => {
         return newTabs;
     }
 
+    const nextId = (id) => {
+        let startRow = id.split('-')[0];
+        let startCol = id.split('-')[1];
+
+    }
+
+    //=======================================================================
+    //search tab structure and replace a column
+    const pasteRangeFromPoint = (clipboard, startIndex) => {
+        let startRow = startIndex.split('-')[0];
+        let startCol = startIndex.split('-')[1];
+
+        for(let x = 0; x < clipboard.length; x++) {
+
+        }
+    }
+
+
 const EditUtil = {
     buildListForNav: buildListForNav,
     buildRange :buildRange,
@@ -178,7 +200,8 @@ const EditUtil = {
     rangeDown: rangeDown,
     mergeObject:mergeObject,
     stripControlPanelValues:stripControlPanelValues,
-    fillSelection: fillSelection
+    fillSelectionWithValue: fillSelectionWithValue,
+    updateTabAtId: updateTabAtId
 }
 
 export default EditUtil;

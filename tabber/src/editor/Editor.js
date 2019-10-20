@@ -29,15 +29,15 @@ class Editor extends Component {
         tuning:             ['e','b','g','d','a','E'],
         defaultTuning:      ['e','b','g','d','a','E'],
         isShiftHeld:        false,
-        Title:              "Title of the Song",
+        Title:               "Title of the Song",
         Author:             "Demo Author",
         selectedString:     0,
-        clipBoard:          []
+        clipboard:          []
     }
 
     componentDidMount() {
         this.generateBar();
-        let defaultTuning = Config.DefaultTuning;
+        let defaultTuning = config.DefaultTuning;
         this.setState({defaultTuning:defaultTuning})
         //this.highlightInput();
     }
@@ -65,21 +65,36 @@ class Editor extends Component {
         return tabRange.slice(startIndex, endIndex);
     }
 
-    copySelection = () =>. {
-        let tabRange =      this.state.tabRange;
-        let startIndex =    this.state.activeId[0];
-        let endIndex =      this.state.activeId[this.state.activeId.length - 1];
+    _checkIdEquality = (x,y) => {
+        console.log(x,y);
+        return x === y;
+    }
+
+    pasteClipboard = () => {
+        let tabs        = this.state.tabs;
+        let startIndex  = this.state.activeId[0];
+        let clipboard   = this.state.clipboard;
+        let tabsNew     = EditUtil.pasteRangeFromPoint(clipboard, startIndex);
+        console.log(newTabs);
+        this.setState({tabs: newTabs});
+    }
+
+    copySelection = () => {
+        let tabRange    = this.state.tabs;
+        let startIndex  = this.state.activeId[0];
+        let endIndex    = this.state.activeId[this.state.activeId.length - 1];
+        console.log(tabRange, startIndex, endIndex);
+        let clipboard;
 
         if(startIndex === endIndex) {
-            let row = this.state.activeId[0];
-            let column = this.state.activeId[0];
-            clipBoard = [this.state.tabRange[row][column]]
+            let row     = this.state.activeId[0].split('-')[0];
+            let column  = this.state.activeId[0].split('-')[1];
+            clipboard   = [tabRange[row].tabs[column]]
         }
         else {
-            clipboard   =   getRange(startIndex, endIndex, tabRange);
+            clipboard   = this.getRange(startIndex, endIndex, tabRange);
         }
-        console.log(clipBoard);
-        this.setState({clipBoard:clipboards});
+        this.setState({clipboard:clipboard});
     }
 
     shiftClick = (id) => {
@@ -202,7 +217,7 @@ class Editor extends Component {
         let newTabs = this.state.tabs;
         const activeIdArr = this.state.activeId[0].split('-');
         if(this.state.activeId.length > 1) {
-            newTabs = EditUtil.fillSelection(newTabs, newColumn, this.state.activeId)
+            newTabs = EditUtil.fillSelectionWithValue(newTabs, newColumn, this.state.activeId)
         } else {
             newTabs[activeIdArr[0]].tabs[activeIdArr[1]] = newColumn;
         }
@@ -309,6 +324,8 @@ class Editor extends Component {
                         getValueOfTab = {this._getValueOfTab.bind(this)}
                         updateControlPanelsInputs = {this.updateControlPanelsInputs.bind(this)}
                         selectedString = {this.updateSelectedString.bind(this)}
+                        copySelection = { this.copySelection.bind(this) }
+                        pasteClipboard = { this.pasteClipboard.bind(this ) }
                     />
                 </div>
 
