@@ -1,5 +1,4 @@
-import { TabColumnObj } from "./tab-column/tabColumnObject";
-import config from '../config.js';
+import { TabColumnObj } from "../editor/tab-column/tabColumnObject";
 
 // Class for editor helper functions.
 
@@ -13,7 +12,6 @@ const mergeObject = (obj) => {
     return result;
 }
 
-// removes dashes from tab
 const stripControlPanelValues = (tabColumn) => {
     let ControlPanelInputs = {};
     for(let x in tabColumn){
@@ -25,6 +23,9 @@ const stripControlPanelValues = (tabColumn) => {
     }
     return ControlPanelInputs;
 }
+
+const checkIdEquality = (x,y) => x === y
+
 
 //Builds range of id when multiple columns are selected (for selecting multiple columns right or below current selection).
 const rangeUp = (ids, firstId, secondId) => {
@@ -59,7 +60,7 @@ const rangeDown = (ids, firstId, secondId) => {
     for( let x = firstId[1]; true; x-- ) {
         if(id === ids[1])
             return columnRange;
-        if(x === -1) {
+        if(x === -1){
             if(secondId[0] < firstId[0]) {
                 firstId[0] = firstId[0] - 1;
                 x = 45;
@@ -101,7 +102,7 @@ const compareIds = (first, second) => {
     }
     return res;
 }
-//ids are a 2 item array like ['0-0','0-5']
+
 const buildRange = (ids) => {
     const firstId = ids[0].split('-');
     const secondId = ids[1].split('-');
@@ -145,58 +146,30 @@ const buildListForNav = (newId, isShiftKey, i, activeId) => {
     return newId;
 }
 
-    //Fill seclection should take a list of Ids and a new newColumn. It will Go through each column in the Id
-    // list and replace it with the new value.
-    const fillSelectionWithValue = (newTabs, newColumn, activeId) => {
-        for(let x = 0; x < activeId.length; x++){
-            const id = activeId[x];
-            const idSplit = id.split('-');
-            // eslint-disable-next-line no-loop-func
-            newTabs[idSplit[0]].tabs = newTabs[idSplit[0]].tabs.map(curCol => {
-                if(curCol.id === id){
-                    let col = new TabColumnObj();
-                    col.id = id;
-                    for(let y in col){
-                        if(y !== 'id') {
-                            col[y] = newColumn[y]
-                        }
+//Fill seclection should take a list of Ids and a new newColumn. It will Go through each column in the Id
+// list and replace it with the new value.
+const fillSelection = (newTabs, newColumn, activeId) => {
+    for(let x = 0; x < activeId.length; x++){
+        const id = activeId[x];
+        const idSplit = id.split('-');
+        // eslint-disable-next-line no-loop-func
+        newTabs[idSplit[0]].tabs = newTabs[idSplit[0]].tabs.map(curCol => {
+            if(curCol.id === id){
+                let col = new TabColumnObj();
+                col.id = id;
+                for(let y in col){
+                    if(y !== 'id') {
+                        col[y] = newColumn[y]
                     }
-                    return col;
-                } else {
-                    return curCol;
                 }
-            });
-        }
-        return newTabs;
+                return col;
+            } else {
+                return curCol;
+            }
+        });
     }
-
-    const nextId = (id) => {
-        let row    = id.split('-')[0];
-        let col    = id.split('-')[1];
-        let endCol = config.Settings.ColumnInRow;
-        if(row + 1 > startRow) {
-            col++;
-        } else {
-            row++
-        }
-        return `${row}-${col}`;
-    }
-
-    //=======================================================================
-    //paste a range from starting point, overwriting existing data
-    const pasteRangeFromPoint = (clipboard, startIndex, tabs) => {
-        let id = startIndex;
-        for(let x = 0; x < clipboard.length; x++) {
-            let row     = id.split('-')[0];
-            let col     = id.split('-')[1];
-            let tabCol  = tabs[row].tabs[col];
-            tabCol      = clipboard[x];
-            tabCol.id   = `${row}-${col}`;
-            id          = this.nextId(tabCol.id);
-    }
-    return tabs;
+    return newTabs;
 }
-
 const EditUtil = {
     buildListForNav: buildListForNav,
     buildRange :buildRange,
@@ -205,7 +178,8 @@ const EditUtil = {
     rangeDown: rangeDown,
     mergeObject:mergeObject,
     stripControlPanelValues:stripControlPanelValues,
-    fillSelectionWithValue: fillSelectionWithValue
+    fillSelection: fillSelection,
+    checkIdEquality: checkIdEquality
 }
 
 export default EditUtil;

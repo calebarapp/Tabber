@@ -6,7 +6,7 @@ import TabRow from './tab-row/tab-row';
 import ControlPanel from './control-panel/control-panel';
 import MobileControlPanel from './control-panel__mobile/control-panel';
 import Metadata from './Metadata/Metadata';
-import EditUtil from './Util';
+import EditUtil from '../Utility/EditorUtil';
 import TopBar from './TopBar/TopBar'
 import config from '../config.js';
 
@@ -62,25 +62,24 @@ class Editor extends Component {
     };
 
     getRange = (startIndex, endIndex, tabRange) => {
-        return tabRange.slice(startIndex, endIndex);
+        let idRange = EditUtil.buildRange([startIndex, endIndex]);
+        console.log(idRange);
+        return idRange;
     }
-
-    _checkIdEquality = (x,y) => x === y
 
     pasteClipboard = () => {
         let tabs        = this.state.tabs;
         let startIndex  = this.state.activeId[0];
         let clipboard   = this.state.clipboard;
         let tabsNew     = EditUtil.pasteRangeFromPoint(clipboard, startIndex, tabs);
-        this.setState({tabs: newTabs});
+        this.setState({tabs: tabsNew});
     }
 
     copySelection = ()  => {
+        let clipboard;
         let tabRange    = this.state.tabs;
         let startIndex  = this.state.activeId[0];
         let endIndex    = this.state.activeId[this.state.activeId.length - 1];
-        console.log(tabRange, startIndex, endIndex);
-        let clipboard;
 
         if(startIndex === endIndex) {
             let row     = this.state.activeId[0].split('-')[0];
@@ -91,6 +90,7 @@ class Editor extends Component {
             clipboard   = this.getRange(startIndex, endIndex, tabRange);
         }
         this.setState({clipboard:clipboard});
+        console.log(clipboard);
     }
 
     shiftClick = (id) => {
@@ -110,7 +110,7 @@ class Editor extends Component {
         }
     }
 
-    //clean this up.
+    //clean this up!!! Unit test.
     // sets state for the selectedColumn, activeID, and clears the Inputs on the control panel.
     tabChange = (id, newTabState = null, isShiftKey) => {
         // activate tab column editor
@@ -287,34 +287,36 @@ class Editor extends Component {
             >
                 <div className = "control-panel">
                     <TopBar
-                        Title = {this.state.Title}
-                        Author = {this.state.Author}
+                        Title   = {this.state.Title}
+                        Author  = {this.state.Author}
                     />
 
                     <ControlPanel
-                        selectedColumn = { {column: this.state.selectedColumn, activeId: this.state.activeId} }
-                        updateTabData = { this.updateTabData.bind(this) }
-                        inputs = { this.state.ControlPanelInputs}
-                        updateControlPanelsInputs = { this.updateControlPanelsInputs.bind(this) }
-                        NavigateTabColumn = { this.NavigateTabColumn.bind(this) }
-                        generateBar = { this.generateBar.bind(this) }
+                        selectedColumn              = { {column: this.state.selectedColumn, activeId: this.state.activeId} }
+                        updateTabData               = { this.updateTabData.bind(this) }
+                        inputs                      = { this.state.ControlPanelInputs}
+                        copySelection               = { this.copySelection.bind(this) }
+                        pasteClipboard              = { this.pasteClipboard.bind(this ) }
+                        updateControlPanelsInputs   = { this.updateControlPanelsInputs.bind(this) }
+                        NavigateTabColumn           = { this.NavigateTabColumn.bind(this) }
+                        generateBar                 = { this.generateBar.bind(this) }
+                        tuning                      = { this.state.tuning }
                         ref = { (node) => { this.controlPanel = node }}
-                        tuning = { this.state.tuning }
                     />
 
                     <MobileControlPanel
-                        selectedColumn = { {column: this.state.selectedColumn, activeId: this.state.activeId} }
-                        updateTabData = { this.updateTabData.bind(this) }
-                        inputs = { this.state.ControlPanelInputs}
-                        NavigateTabColumn = { this.NavigateTabColumn.bind(this) }
-                        generateBar = { this.generateBar.bind(this) }
+                        selectedColumn              = { {column: this.state.selectedColumn, activeId: this.state.activeId} }
+                        updateTabData               = { this.updateTabData.bind(this) }
+                        inputs                      = { this.state.ControlPanelInputs}
+                        NavigateTabColumn           = { this.NavigateTabColumn.bind(this) }
+                        generateBar                 = { this.generateBar.bind(this) }
+                        tuning                      = { this.state.tuning }
+                        getValueOfTab               = {this._getValueOfTab.bind(this)}
+                        updateControlPanelsInputs   = {this.updateControlPanelsInputs.bind(this)}
+                        selectedString              = {this.updateSelectedString.bind(this)}
+                        copySelection               = { this.copySelection.bind(this) }
+                        pasteClipboard              = { this.pasteClipboard.bind(this ) }
                         ref = { (node) => { this.controlPanel = node }}
-                        tuning = { this.state.tuning }
-                        getValueOfTab = {this._getValueOfTab.bind(this)}
-                        updateControlPanelsInputs = {this.updateControlPanelsInputs.bind(this)}
-                        selectedString = {this.updateSelectedString.bind(this)}
-                        copySelection = { this.copySelection.bind(this) }
-                        pasteClipboard = { this.pasteClipboard.bind(this ) }
                     />
                 </div>
 
@@ -325,16 +327,16 @@ class Editor extends Component {
                             this.state.tabs.map( (tabRow, index) => {
                             return (
                             <TabRow
-                                key = { index }
-                                shiftClick = {this.shiftClick.bind(this)}
-                                tabRow = { tabRow }
-                                rowId = {index}
-                                activeId = {this.state.activeId}
-                                tabClick = { this.tabChange.bind(this) }
-                                textClick = { this.textBoxClick.bind(this) }
-                                textBlur = { this.textBoxOnBlur.bind(this) }
-                                highlightedTextBox = { this.state.highlightedTextBox }
-                                deleteRow = { this.deleteRow.bind(this) }
+                                key                 = {index}
+                                shiftClick          = {this.shiftClick.bind(this)}
+                                tabRow              = {tabRow}
+                                rowId               = {index}
+                                activeId            = {this.state.activeId}
+                                tabClick            = { this.tabChange.bind(this) }
+                                textClick           = { this.textBoxClick.bind(this) }
+                                textBlur            = { this.textBoxOnBlur.bind(this) }
+                                highlightedTextBox  = { this.state.highlightedTextBox }
+                                deleteRow           = { this.deleteRow.bind(this) }
                             />
                             )}
                         )}
