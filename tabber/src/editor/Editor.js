@@ -65,21 +65,17 @@ class Editor extends Component {
         return tabRange.slice(startIndex, endIndex);
     }
 
-    _checkIdEquality = (x,y) => {
-        console.log(x,y);
-        return x === y;
-    }
+    _checkIdEquality = (x,y) => x === y
 
     pasteClipboard = () => {
         let tabs        = this.state.tabs;
         let startIndex  = this.state.activeId[0];
         let clipboard   = this.state.clipboard;
         let tabsNew     = EditUtil.pasteRangeFromPoint(clipboard, startIndex, tabs);
-        console.log(newTabs);
         this.setState({tabs: newTabs});
     }
 
-    copySelection = () => {
+    copySelection = ()  => {
         let tabRange    = this.state.tabs;
         let startIndex  = this.state.activeId[0];
         let endIndex    = this.state.activeId[this.state.activeId.length - 1];
@@ -190,7 +186,6 @@ class Editor extends Component {
             newId = EditUtil.buildListForNav(newId, isShiftKey, i, this.state.activeId);
             let newIdSplit = newId[newId.length - 1].split('-');
             // Probably an issue with async...generatebar not reflected in state. Can generate bar return value that would be tabs and function can manipulate that?
-
             let tabValues = tabs[newIdSplit[0]]
                             .tabs[newIdSplit[1]];
             tabValues = EditUtil.stripControlPanelValues(tabValues);
@@ -223,12 +218,6 @@ class Editor extends Component {
         }
         this.setState({tabs:newTabs});
     }
-
-    // highlights a string input when a tab column is selected
-    //highlightInput = () => {
-    //    this.controlPanel
-    //    .inputs[this.controlPanel.state.focus].focus();
-    //}
 
     // when a text box is selected this changes the state to focus on it.
     textBoxClick = (id) => {

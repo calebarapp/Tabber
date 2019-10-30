@@ -1,8 +1,6 @@
 import { TabColumnObj } from "./tab-column/tabColumnObject";
 import config from '../config.js';
 
-
-
 // Class for editor helper functions.
 
 //tabClick() method, returns a new object with the values of the passed object.
@@ -27,7 +25,6 @@ const stripControlPanelValues = (tabColumn) => {
     }
     return ControlPanelInputs;
 }
-
 
 //Builds range of id when multiple columns are selected (for selecting multiple columns right or below current selection).
 const rangeUp = (ids, firstId, secondId) => {
@@ -62,7 +59,7 @@ const rangeDown = (ids, firstId, secondId) => {
     for( let x = firstId[1]; true; x-- ) {
         if(id === ids[1])
             return columnRange;
-        if(x === -1){
+        if(x === -1) {
             if(secondId[0] < firstId[0]) {
                 firstId[0] = firstId[0] - 1;
                 x = 45;
@@ -109,7 +106,6 @@ const buildRange = (ids) => {
     const firstId = ids[0].split('-');
     const secondId = ids[1].split('-');
     const direction = compareIds(ids[0], ids[1]);
-    console.log(firstId, secondId);
     let columnRange = [];
     if(direction > 0)
         columnRange = [...columnRange,...EditUtil.rangeUp(ids, firstId, secondId)];
