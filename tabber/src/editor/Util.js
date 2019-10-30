@@ -104,7 +104,7 @@ const compareIds = (first, second) => {
     }
     return res;
 }
-
+//ids are a 2 item array like ['0-0','0-5']
 const buildRange = (ids) => {
     const firstId = ids[0].split('-');
     const secondId = ids[1].split('-');
@@ -175,22 +175,31 @@ const buildListForNav = (newId, isShiftKey, i, activeId) => {
     }
 
     const nextId = (id) => {
-        let startRow = id.split('-')[0];
-        let startCol = id.split('-')[1];
-
+        let row    = id.split('-')[0];
+        let col    = id.split('-')[1];
+        let endCol = config.Settings.ColumnInRow;
+        if(row + 1 > startRow) {
+            col++;
+        } else {
+            row++
+        }
+        return `${row}-${col}`;
     }
 
     //=======================================================================
-    //search tab structure and replace a column
-    const pasteRangeFromPoint = (clipboard, startIndex) => {
-        let startRow = startIndex.split('-')[0];
-        let startCol = startIndex.split('-')[1];
-
+    //paste a range from starting point, overwriting existing data
+    const pasteRangeFromPoint = (clipboard, startIndex, tabs) => {
+        let id = startIndex;
         for(let x = 0; x < clipboard.length; x++) {
-
-        }
+            let row     = id.split('-')[0];
+            let col     = id.split('-')[1];
+            let tabCol  = tabs[row].tabs[col];
+            tabCol      = clipboard[x];
+            tabCol.id   = `${row}-${col}`;
+            id          = this.nextId(tabCol.id);
     }
-
+    return tabs;
+}
 
 const EditUtil = {
     buildListForNav: buildListForNav,
@@ -200,8 +209,7 @@ const EditUtil = {
     rangeDown: rangeDown,
     mergeObject:mergeObject,
     stripControlPanelValues:stripControlPanelValues,
-    fillSelectionWithValue: fillSelectionWithValue,
-    updateTabAtId: updateTabAtId
+    fillSelectionWithValue: fillSelectionWithValue
 }
 
 export default EditUtil;

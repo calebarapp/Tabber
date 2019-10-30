@@ -74,7 +74,7 @@ class Editor extends Component {
         let tabs        = this.state.tabs;
         let startIndex  = this.state.activeId[0];
         let clipboard   = this.state.clipboard;
-        let tabsNew     = EditUtil.pasteRangeFromPoint(clipboard, startIndex);
+        let tabsNew     = EditUtil.pasteRangeFromPoint(clipboard, startIndex, tabs);
         console.log(newTabs);
         this.setState({tabs: newTabs});
     }
