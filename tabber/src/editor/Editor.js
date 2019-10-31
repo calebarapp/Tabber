@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
-import { TabColumnObj } from './tab-column/tabColumnObject'
-import './tab-column/TabColumn.css';
-import './editor.css';
+import TabColumnObj from './tab-column/tabColumnObject'
 import TabRow from './tab-row/tab-row';
 import ControlPanel from './control-panel/control-panel';
 import MobileControlPanel from './control-panel__mobile/control-panel';
@@ -9,12 +7,15 @@ import Metadata from './Metadata/Metadata';
 import EditUtil from '../Utility/EditorUtil';
 import TopBar from './TopBar/TopBar'
 import config from '../config.js';
+import TabsUtil from "../Utility/TabsUtil";
+import './tab-column/TabColumn.css';
+import './editor.css';
 
 // In editor, map list of tab rows, tab row will be its own seperate component with another array passed to it as prop.
 // challenge will be manipulating the state of the root component...
 class Editor extends Component {
     state = {
-        tabs:               [],
+        document:           {rows:[]},
         activeId:           ['0-0'],
         selectedColumn:     new TabColumnObj('0-0'),
         highlightedTextBox: null,
@@ -36,7 +37,7 @@ class Editor extends Component {
     }
 
     componentDidMount() {
-        this.generateBar();
+        this.addRow();
         let defaultTuning = config.DefaultTuning;
         this.setState({defaultTuning:defaultTuning})
         //this.highlightInput();
@@ -47,47 +48,39 @@ class Editor extends Component {
     }
 
     //generates a new tab bar, creates 35 new tabColumnObj then updates the state.
-    generateBar() {
-        const stateArray = this.state.tabs
-        let newBar = {
-            notes: 'Insert notes...',
-            tabs: []
-        };
-        for (let x = 0; x < config.settings.ColumnInRow; x++) {
-            newBar.tabs.push(new TabColumnObj(`${this.state.tabs.length}-${x}`));
-        }
-        const newStateArray = [...stateArray, newBar];
-        this.setState({tabs: newStateArray});
-        return(newStateArray);
+    addRow = () => {
+        const document = this.state.document;
+        const newDocument = TabsUtil.addRow(document);
+        this.setState({tabs: newDocument});
     };
 
     getRange = (startIndex, endIndex, tabRange) => {
         let idRange = EditUtil.buildRange([startIndex, endIndex]);
-        console.log(idRange);
+        // missing functionality
         return idRange;
     }
 
     pasteClipboard = () => {
-        let tabs        = this.state.tabs;
+        let document        = this.state.document;
         let startIndex  = this.state.activeId[0];
         let clipboard   = this.state.clipboard;
-        let tabsNew     = EditUtil.pasteRangeFromPoint(clipboard, startIndex, tabs);
-        this.setState({tabs: tabsNew});
+        let newDocument     = EditUtil.pasteRangeFromPoint(clipboard, startIndex, document);
+        this.setState({document: newDocument});
     }
 
     copySelection = ()  => {
         let clipboard;
-        let tabRange    = this.state.tabs;
+        let document    = this.state.document;
         let startIndex  = this.state.activeId[0];
         let endIndex    = this.state.activeId[this.state.activeId.length - 1];
 
         if(startIndex === endIndex) {
             let row     = this.state.activeId[0].split('-')[0];
             let column  = this.state.activeId[0].split('-')[1];
-            clipboard   = [tabRange[row].tabs[column]]
+            clipboard   = [document[row].tabs[column]]
         }
         else {
-            clipboard   = this.getRange(startIndex, endIndex, tabRange);
+            clipboard   = this.getRange(startIndex, endIndex, document);
         }
         this.setState({clipboard:clipboard});
         console.log(clipboard);
@@ -114,15 +107,13 @@ class Editor extends Component {
     // sets state for the selectedColumn, activeID, and clears the Inputs on the control panel.
     tabChange = (id, newTabState = null, isShiftKey) => {
         // activate tab column editor
+        const document = this.state.document;
         let tabState;
         const indices = id.split('-');
         if(newTabState == null) {
-            tabState = this.state
-            .tabs[indices[0]]
-            .tabs[indices[1]];
+            tabState = document.rows[indices[0]].columns[indices[1]];
         } else {
-            tabState = newTabState.tabs[indices[0]]
-            .tabs[indices[1]];
+            tabState = newTabState.tabs[indices[0]][indices[1]];
         }
         //gets values for control panel inputs.
         let tabValues = EditUtil.mergeObject(tabState);
@@ -148,19 +139,21 @@ class Editor extends Component {
     // needs to generate bar before it attempts to `navigate` to the next row.
     NavigateTabColumn = (isShiftKey,i) => {
         const activeId = this.state.activeId;
-        let tabs = this.state.tabs;
+        let document = this.state.document;
 
-        if(this.state.tabs.length > 0)
+        if(document.rows.length > 0)
         {
+            let newId;
             let lastTabIndex = config.settings.ColumnInRow - 1;
+            
             let columnId = (this.state.activeId.length === 1) ? activeId[0] : activeId[activeId.length - 1];
             columnId = columnId.split('-')
                     .map(x => parseInt(x));
-            let newId;
+            
             // less than zero: last of previous row unless first row.
-            if(columnId[1] + i < 0){
-                if(columnId[0] > 0){
-                newId = `${columnId[0] - 1}-${lastTabIndex}`;
+            if(columnId[1] + i < 0) {
+                if(columnId[0] > 0) {
+                    newId = `${columnId[0] - 1}-${lastTabIndex}`;
                 } else {
                     // if no previous rows use old ID, it will be the first column of the sheet.
                     newId = `${columnId[0]}-${columnId[1]}`
@@ -171,8 +164,8 @@ class Editor extends Component {
             else if(columnId[1] === lastTabIndex) {
                 // if moving right
                 if(i === 1) {
-                    if(columnId[0] + 1 === this.state.tabs.length){
-                        tabs = this.generateBar();
+                    if(columnId[0] + 1 === document.rows.length){
+                        this.addRow();
                     }
                     newId = `${columnId[0] + 1}-${0}`;
                 }
@@ -184,14 +177,11 @@ class Editor extends Component {
                 newId = `${columnId[0]}-${columnId[1] + i}`;
             }
             newId = EditUtil.buildListForNav(newId, isShiftKey, i, this.state.activeId);
-            let newIdSplit = newId[newId.length - 1].split('-');
-            // Probably an issue with async...generatebar not reflected in state. Can generate bar return value that would be tabs and function can manipulate that?
-            let tabValues = tabs[newIdSplit[0]]
-                            .tabs[newIdSplit[1]];
-            tabValues = EditUtil.stripControlPanelValues(tabValues);
-            let selectedColumn = tabs[newIdSplit[0]].tabs[newIdSplit[1]];
+
+            let selectedColumn = TabsUtil.tabColumnAtId(newId, document);
             selectedColumn["id"] = newId[newId.length - 1];
-            //Figure out wha selectedolumn is when shift selecting with mouse. Replicate that here.
+            let tabValues = EditUtil.stripControlPanelValues(tabValues);
+
             this.setState({
                 activeId:newId,
                 selectedColumn,
@@ -209,14 +199,8 @@ class Editor extends Component {
 
     // updates the tab data to reflect user input. Called from the control panel component.
     updateTabData = (newColumn) => {
-        let newTabs = this.state.tabs;
-        const activeIdArr = this.state.activeId[0].split('-');
-        if(this.state.activeId.length > 1) {
-            newTabs = EditUtil.fillSelectionWithValue(newTabs, newColumn, this.state.activeId)
-        } else {
-            newTabs[activeIdArr[0]].tabs[activeIdArr[1]] = newColumn;
-        }
-        this.setState({tabs:newTabs});
+        const document = TabsUtil.updateTabData(newColumn, this.state.activeId, this.state.document);
+        this.setState({tabs:document});
     }
 
     // when a text box is selected this changes the state to focus on it.
@@ -232,26 +216,26 @@ class Editor extends Component {
     }
 
     deleteRow = (row) => {
-        let tabs = this.state.tabs;
+        let document = this.state.document;
         let tabsBeforeDeletedRow;
         let tabsAfterDeletedRow;
         // if deleting middle or end
-        if(row > 0 && tabs.length > 1){
-            tabsBeforeDeletedRow = tabs.slice(0, row);
-            tabsAfterDeletedRow = tabs.slice(row + 1);
-            tabs = tabsBeforeDeletedRow.concat(tabsAfterDeletedRow);
+        if(row > 0 && document.rows.length > 1){
+            tabsBeforeDeletedRow = document.rows.slice(0, row);
+            tabsAfterDeletedRow = document.rows.slice(row + 1);
+            document.rows = tabsBeforeDeletedRow.concat(tabsAfterDeletedRow);
         }
         // if deleteing begining
         else if( row === 0) {
-            if(tabs.length > 1){
-                tabs = tabs.slice(1);
+            if(document.rows.length > 1){
+                document.rows = document.rows.slice(1);
             } else {
-                tabs = [];
+                document.rows = [];
             }
         }
         this.setState({
-            tabs:tabs,
-            activeId: [this.state.activeId[0]]
+            document:   document,
+            activeId:   [this.state.activeId[0]]
         });
         this.controlPanel.inputs[0].focus();
     }
@@ -267,17 +251,6 @@ class Editor extends Component {
             tuning:tuning,
             defaultTuning: tuning
         })
-    }
-
-    _getValueOfTab = (string) => {
-        let id = this.state.activeId[0].split('-');
-        let value = this.state
-                    .tabs[id[0]]
-                    .tabs[id[1]][string]
-                    .split('')
-                    .filter((x) => x != '-')
-                    .join('');
-        return value;
     }
 
     render() {
@@ -299,7 +272,7 @@ class Editor extends Component {
                         pasteClipboard              = { this.pasteClipboard.bind(this ) }
                         updateControlPanelsInputs   = { this.updateControlPanelsInputs.bind(this) }
                         NavigateTabColumn           = { this.NavigateTabColumn.bind(this) }
-                        generateBar                 = { this.generateBar.bind(this) }
+                        addRow                      = { this.addRow.bind(this) }
                         tuning                      = { this.state.tuning }
                         ref = { (node) => { this.controlPanel = node }}
                     />
@@ -309,9 +282,9 @@ class Editor extends Component {
                         updateTabData               = { this.updateTabData.bind(this) }
                         inputs                      = { this.state.ControlPanelInputs}
                         NavigateTabColumn           = { this.NavigateTabColumn.bind(this) }
-                        generateBar                 = { this.generateBar.bind(this) }
+                        addRow                      = { this.addRow.bind(this) }
                         tuning                      = { this.state.tuning }
-                        getValueOfTab               = {this._getValueOfTab.bind(this)}
+                        getValueOfTab               = {TabsUtil.getValueOfTab.bind(this)}
                         updateControlPanelsInputs   = {this.updateControlPanelsInputs.bind(this)}
                         selectedString              = {this.updateSelectedString.bind(this)}
                         copySelection               = { this.copySelection.bind(this) }
@@ -324,7 +297,7 @@ class Editor extends Component {
                     <div className = "tab-display">
                         <div className="tab-display__tabs">
                         {
-                            this.state.tabs.map( (tabRow, index) => {
+                            this.state.document.rows.map( (tabRow, index) => {
                             return (
                             <TabRow
                                 key                 = {index}

@@ -8,4 +8,4 @@ function TabColumnObj(id) {
     this.E = `---`;
 }
 
-export {TabColumnObj}
+export default TabColumnObj

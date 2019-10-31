@@ -68,8 +68,6 @@ class ControlPanel extends Component {
         }
     }
 
-    //this.props.generateBar()
-
     rowClick = () => {
         //trigger dropdown
         this.setState({rowDropdownBool: !this.state.rowDropdownBool});
@@ -196,11 +194,10 @@ class ControlPanel extends Component {
                     <button 
                     type = "button" 
                     className = {addRowClass} 
-                    onClick={() => this.props.generateBar()}
+                    onClick={() => this.props.addRow()}
                     onClick={() => this.props.copySelection}
                     >
                         Add Row
-                        {/*<i class="fas fa-chevron-down dropdown-button"></i>*/}
                     </button>
                     <div className = {rowDropdownContainerClass} >
                         {/*<ul className = {rowDropdownClass}>

@@ -156,7 +156,7 @@ class ControlPanel extends Component {
                 </div>
 
                 <div className = 'mobile-button__container'>
-                    <button type = "button" className = "button" onClick={() => this.props.generateBar()}>Add row</button>
+                    <button type = "button" className = "button" onClick={() => this.props.addRow()}>Add row</button>
                     <button type = "button" className = "button disabled" onClick={() => this.props.copySelection()}>Copy</button>
                     <button type = "button" className = "button  disabled" onClick = {() => this.props.pasteClipboard()}>Paste</button>
                     <button type = "button" className = "button disabled">Insert</button>

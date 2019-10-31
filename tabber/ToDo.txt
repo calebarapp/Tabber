@@ -1,5 +1,10 @@
 ==================================================
 TODO:
+- Every instance of interaction with the Tab sturcture needs to be abstracted to a utility class.
+Every interaction in that class should follow the pattern:
+    - document:
+        - rows:
+            - columns
 - fillSelection is broken!
 - Unit tests for editor.
 - Redux
@@ -10,6 +15,7 @@ This is getting ridiculous...
 Style:
     - tab window should be bottom of screen in desktop mode.
     - button font size shrinks too much
+    - Block default for input.
 Markup:
     - Control Panel:
         - copy, paste, cut, and insert buttons.

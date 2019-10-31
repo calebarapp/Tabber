@@ -12,6 +12,7 @@ const mergeObject = (obj) => {
     return result;
 }
 
+//This should be re-evaluated
 const stripControlPanelValues = (tabColumn) => {
     let ControlPanelInputs = {};
     for(let x in tabColumn){
@@ -25,7 +26,6 @@ const stripControlPanelValues = (tabColumn) => {
 }
 
 const checkIdEquality = (x,y) => x === y
-
 
 //Builds range of id when multiple columns are selected (for selecting multiple columns right or below current selection).
 const rangeUp = (ids, firstId, secondId) => {
@@ -146,30 +146,6 @@ const buildListForNav = (newId, isShiftKey, i, activeId) => {
     return newId;
 }
 
-//Fill seclection should take a list of Ids and a new newColumn. It will Go through each column in the Id
-// list and replace it with the new value.
-const fillSelection = (newTabs, newColumn, activeId) => {
-    for(let x = 0; x < activeId.length; x++){
-        const id = activeId[x];
-        const idSplit = id.split('-');
-        // eslint-disable-next-line no-loop-func
-        newTabs[idSplit[0]].tabs = newTabs[idSplit[0]].tabs.map(curCol => {
-            if(curCol.id === id){
-                let col = new TabColumnObj();
-                col.id = id;
-                for(let y in col){
-                    if(y !== 'id') {
-                        col[y] = newColumn[y]
-                    }
-                }
-                return col;
-            } else {
-                return curCol;
-            }
-        });
-    }
-    return newTabs;
-}
 const EditUtil = {
     buildListForNav: buildListForNav,
     buildRange :buildRange,
@@ -178,7 +154,6 @@ const EditUtil = {
     rangeDown: rangeDown,
     mergeObject:mergeObject,
     stripControlPanelValues:stripControlPanelValues,
-    fillSelection: fillSelection,
     checkIdEquality: checkIdEquality
 }
 

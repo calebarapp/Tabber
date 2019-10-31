@@ -40,11 +40,10 @@ class TabRow extends Component {
             <div className = "tab-row__main-container" onMouseDown = {(x) => this.handleMouseDown(x)}>
                     <div className = "tab-row__sub-container">
                         <div className = "tab-row" onMouseDown = {this.disabler}>
-                            {/* creates a tab column for each tab column contained within tabRow prop */}
                             <div className = "container__tab-blocks">
 
                                 <div className = "container__tab-block">
-                                    {this.props.tabRow.tabs.slice(0,pivot).map((tab) => {
+                                    {this.props.tabRow.columns.slice(0,pivot).map((tab) => {
                                         return <TabColumn key = { tab.id }
                                         activeId = { this.props.activeId }
                                         tabClick = { this.props.tabClick }
@@ -55,7 +54,7 @@ class TabRow extends Component {
                                     }
                                 </div>
                                 <div className = "container__tab-block">
-                                    {this.props.tabRow.tabs.slice(pivot).map((tab) => {
+                                    {this.props.tabRow.columns.slice(pivot).map((tab) => {
                                         return <TabColumn key = { tab.id }
                                         activeId = { this.props.activeId }
                                         tabClick = { this.props.tabClick}
